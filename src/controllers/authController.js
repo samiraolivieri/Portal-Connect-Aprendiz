@@ -1,4 +1,5 @@
 const User = require('../models/userModel');
+const bcrypt = require('bcryptjs'); // 1. Importe o bcrypt
 
 exports.login = async (req, res) => {
   const { email, password } = req.body;
@@ -10,22 +11,25 @@ exports.login = async (req, res) => {
       return res.status(401).json({ message: "Usuário não encontrado." });
     }
 
-    // Comparação simples para o seu PI (em produção usaríamos bcrypt)
-    if (user.senha === password) {
-      // Retornamos os dados para o React saber qual tela mostrar (Aprendiz, Empresa ou SENAI)
+    // 2. O bcrypt compara a senha digitada com o "hash" salvo no MySQL
+    const senhaValida = await bcrypt.compare(password, user.senha);
+
+    if (senhaValida) {
+      // Retornamos os dados para o React saber qual tela mostrar
       return res.status(200).json({
-        message: "Login realizado!",
+        message: "Login realizado com sucesso!",
         user: {
           id: user.id,
           nome: user.nome,
-          perfil: user.perfil, // Aqui o React decide a rota: /aprendiz, /gestor ou /pedagogo
+          perfil: user.perfil, 
           unidade: user.unidade
         }
       });
     } else {
-      return res.status(401).json({ message: "Senha incorreta." });
+      return res.status(401).json({ message: "E-mail ou senha incorretos." });
     }
   } catch (error) {
-    res.status(500).json({ message: "Erro ao conectar com o banco de dados." });
+    console.error(error);
+    res.status(500).json({ message: "Erro ao processar o login." });
   }
 };
