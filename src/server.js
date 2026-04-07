@@ -13,5 +13,5 @@ app.use('/api/auth', authRoutes);
 
 const PORT = 5000;
 app.listen(PORT, () => {
-  console.log(`🚀 Portal Connect Brasil rodando na porta ${PORT}`);
+  console.log(`🚀 Portal Connect rodando na porta ${PORT}`);
 });
