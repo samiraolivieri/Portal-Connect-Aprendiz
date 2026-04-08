@@ -1,8 +1,15 @@
 const express = require('express');
 const cors = require('cors');
 const authRoutes = require('./routes/authRoutes');
-const atestadoRoutes = require('./routes/AtestadoRoutes')
 require('dotenv').config();
+
+// 1. IMPORTAÇÃO DAS ROTAS (Baseado na sua estrutura de pastas)
+const authRoutes = require('./routes/authRoutes');
+const atividadesRoutes = require('./routes/atividadesRoutes');
+const boletimRoutes = require('./routes/boletimRoutes');
+const comunicadosRoutes = require('./routes/comunicadosRoutes');
+const contatosRoutes = require('./routes/contatosRoutes');
+const oportunidadesRoutes = require('./routes/oportunidadesRoutes');
 
 const app = express();
 
@@ -11,9 +18,15 @@ app.use(express.json()); // Permite ler JSON enviado no corpo da requisição
 
 // Registra as rotas
 app.use('/api/auth', authRoutes);
-app.use('/api/atestado', atestadoRoutes)
+
 const PORT = 5000;
 app.listen(PORT, () => {
-  console.log(`🚀 Portal Connect rodando na porta ${PORT}`);
+    console.log(`
+    ====================================================
+    🚀 PORTAL CONNECT - BACKEND INICIADO
+    📡 Servidor rodando na porta: ${PORT}
+    🔗 URL base: http://localhost:${PORT}
+    ====================================================
+    `);
 });
 //TESTANDO GITHUB
