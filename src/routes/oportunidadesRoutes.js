@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('../controllers/oportunidadesController');
+const oportunidadesController = require('../controllers/oportunidadesController');
 
-// Rota para o mural de vagas do portal
-router.get('/oportunidades', controller.listarVagasAtivas);
+// Rota para listar as vagas
+router.get('/', oportunidadesController.getOportunidades);
 
 module.exports = router;

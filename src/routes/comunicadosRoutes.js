@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('../controllers/comunicadosController');
+const comunicadosController = require('../controllers/comunicadosController');
 
-// Rota para a tela principal do aprendiz
-router.get('/comunicados/aprendiz', controller.listarParaAprendiz);
+// Linha 6: Onde o erro estava! 
+// Se o nome aqui for diferente do que está no controller, o sistema trava.
+router.get('/', comunicadosController.getComunicados);
 
 module.exports = router;
