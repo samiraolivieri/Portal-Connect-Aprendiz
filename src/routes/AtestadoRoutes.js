@@ -17,7 +17,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({storage})
 
-router.post('/enviar-atestado', upload.single('atestado'), async (req, res) => {
+router.post('/enviar', upload.single('atestado'), async (req, res) => {
     try {
         if (!req.file) return res.status(400).send("Arquivo não enviado");
 
@@ -37,5 +37,17 @@ router.post('/enviar-atestado', upload.single('atestado'), async (req, res) => {
         res.status(500).send("Erro de conexão com o banco.");
     }
 });
+router.get('/listar/:id', async(req, res) => {
+    try {
+        const { id } = req.params;
+        const sql = "SELECT * FROM atestados_justificativas WHERE aprendiz_id = ? ORDER BY data_emissao"
+        const [atestados] = await db.query(sql, [id])
 
+        res.status(200).json(atestados)
+    } catch (error) {
+        console.error("Erro ao buscar o atestado", error)
+        res.status(500).json({error: "Erro ao buscar dados no banco"})
+        
+    }
+})
 module.exports = router;

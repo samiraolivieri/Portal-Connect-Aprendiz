@@ -6,10 +6,12 @@ exports.login = async (req, res) => {
 
   try {
     const user = await User.findByEmail(email);
+    console.log("Usuário encontrado:", user);
 
     if (!user) {
       return res.status(401).json({ message: "Usuário não encontrado." });
     }
+    console.log("Senha vinda do banco:", user.senha);
 
     // 2. O bcrypt compara a senha digitada com o "hash" salvo no MySQL
     const senhaValida = await bcrypt.compare(password, user.senha);
