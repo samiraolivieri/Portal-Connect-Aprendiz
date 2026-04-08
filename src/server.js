@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const authRoutes = require('./routes/authRoutes');
+const atestadoRoutes = require('./routes/AtestadoRoutes')
 require('dotenv').config();
 
 const app = express();
@@ -10,8 +11,9 @@ app.use(express.json()); // Permite ler JSON enviado no corpo da requisição
 
 // Registra as rotas
 app.use('/api/auth', authRoutes);
-
+app.use('/api/atestado', atestadoRoutes)
 const PORT = 5000;
 app.listen(PORT, () => {
   console.log(`🚀 Portal Connect rodando na porta ${PORT}`);
 });
+//TESTANDO GITHUB
