@@ -3,7 +3,8 @@ const cors = require('cors');
 require('dotenv').config();
 
 // 1. IMPORTAÇÃO DAS ROTAS (Baseado na sua estrutura de pastas)
-const authRoutes = require('./routes/authRoutes');
+const atestadoRoutes = require('./routes/AtestadoRoutes')
+
 const atividadesRoutes = require('./routes/atividadesRoutes');
 const boletimRoutes = require('./routes/boletimRoutes');
 const comunicadosRoutes = require('./routes/comunicadosRoutes');

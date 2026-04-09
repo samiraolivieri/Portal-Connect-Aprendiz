@@ -7,10 +7,12 @@ exports.login = async (req, res) => {
   try {
     // Como seu Model já retorna rows[0], 'user' já é o objeto do usuário.
     const user = await User.findByEmail(email);
+    console.log("Usuário encontrado:", user);
 
     if (!user) {
       return res.status(401).json({ message: "Usuário não encontrado." });
     }
+    console.log("Senha vinda do banco:", user.senha);
 
     // O bcrypt compara a senha digitada com a coluna 'senha' do banco
     const senhaValida = await bcrypt.compare(password, user.senha);
