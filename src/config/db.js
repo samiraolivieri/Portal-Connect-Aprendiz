@@ -6,7 +6,7 @@ const db = mysql.createPool({
   user: process.env.DB_USER || 'root',
   password: process.env.DB_PASSWORD || 'alunolab',
   database: process.env.DB_NAME || 'connect',
-  port: '3303'
+  port: 3303
 });
 
 module.exports = db.promise(); // Usamos promise para facilitar o código no controller
