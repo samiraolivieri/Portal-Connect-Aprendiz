@@ -3,16 +3,16 @@ const cors = require('cors');
 require('dotenv').config();
 
 // 1. IMPORTAÇÃO DAS ROTAS (Baseado na sua estrutura de pastas)
-const atestadoRoutes = require('./routes/AtestadoRoutes')
-
+const AtestadoRoutes = require('./routes/AtestadoRoutes')
 const atividadesRoutes = require('./routes/atividadesRoutes');
 const boletimRoutes = require('./routes/boletimRoutes');
 const comunicadosRoutes = require('./routes/comunicadosRoutes');
 const contatosRoutes = require('./routes/contatosRoutes');
 const oportunidadesRoutes = require('./routes/oportunidadesRoutes');
 const ucRoutes = require('./routes/ucRoutes');
-
+const authRoutes = require('./routes/authRoutes');
 const unidadesRoutes = require('./routes/unidadesRoutes');
+const documentosRoutes = require('./routes/documentosRoutes');
 
 const app = express();
 
@@ -30,6 +30,7 @@ app.use('/api/contatos', contatosRoutes);
 app.use('/api/oportunidades', oportunidadesRoutes);
 app.use('/api/atestados', AtestadoRoutes);
 app.use('/api/uc', ucRoutes);
+app.use('/documentos', documentosRoutes);
 
 const PORT = 5000;
 app.listen(PORT, () => {
