@@ -7,17 +7,35 @@ export default function Login() {
   const [senha, setSenha] = useState("");
 
   const handleLogin = async () => {
-  try {
-    const resposta = await axios.post("http://localhost:5000/api/auth/login", {
-      email: email,
-      password: senha // 🔥 aqui precisa ser "password"
-    });
-
-    console.log("Resposta do backend:", resposta.data);
-  } catch (erro) {
-    console.log("Erro:", erro);
-  }
-};
+    try {
+      const resposta = await axios.post("http://localhost:5000/api/auth/login", {
+        email: email,
+        password: senha
+      });
+  
+      // Salva os dados do usuário no localStorage
+      localStorage.setItem("usuario", JSON.stringify(resposta.data.user));
+  
+      console.log("Login realizado!", resposta.data.user);
+  
+      // Redireciona baseado no perfil
+      const perfil = resposta.data.user.perfil;
+if (perfil === "aprendiz") {
+  window.location.href = "/dashboard-aprendiz";
+} else if (perfil === "gestor") {
+  window.location.href = "/dashboard-gestor";
+} else if (perfil === "pedagogia") {
+  window.location.href = "/dashboard-pedagogia";
+}
+  
+    } catch (erro) {
+      if (erro.response?.status === 401) {
+        alert("E-mail ou senha incorretos!");
+      } else {
+        alert("Erro ao conectar com o servidor.");
+      }
+    }
+  };
 
   return (
     <div className="login-body">
