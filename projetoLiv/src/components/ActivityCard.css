@@ -1,0 +1,79 @@
+.activity-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 16px;
+  flex: 1;              /* cada card cresce igualmente */
+  min-width: 130px;     /* não encolhe demais */
+  max-width: 200px;     /* não estica demais */
+  min-height: 160px;    /* altura mínima consistente */
+  border-left: 4px solid #ccc;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+  transition: transform 0.15s ease;
+}
+.activity-card:hover {
+  transform: translateY(-2px);
+}
+
+.urgencia-alta  { border-left-color: #e74c3c; }
+.urgencia-media { border-left-color: #f39c12; }
+.urgencia-baixa { border-left-color: #27ae60; }
+
+.card-icone {
+  font-size: 1.3rem;
+  margin-bottom: 8px;
+}
+
+.urgencia-alta  .card-icone { color: #e74c3c; }
+.urgencia-media .card-icone { color: #f39c12; }
+.urgencia-baixa .card-icone { color: #27ae60; }
+
+.badge-urgencia {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 20px;
+  margin-bottom: 6px;
+  letter-spacing: 0.5px;
+}
+
+.badge-alta  { background: #fdecea; color: #c0392b; }
+.badge-media { background: #fef6e4; color: #b7770d; }
+.badge-baixa { background: #eafaf1; color: #1e8449; }
+
+.card-titulo {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #1a3a5a;
+  margin: 0 0 4px;
+  line-height: 1.3;
+}
+
+.card-status {
+  font-size: 0.75rem;
+  color: #777;
+  margin: 0 0 12px;
+}
+
+.card-btn {
+  background: transparent;
+  border: 1.5px solid #1a3a5a;
+  color: #1a3a5a;
+  border-radius: 6px;
+  padding: 5px 0;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  width: 100%;
+  text-align: center;
+}
+
+.card-btn:hover {
+  background: #1a3a5a;
+  color: #fff;
+}
