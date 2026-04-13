@@ -30,7 +30,7 @@ app.use('/api/contatos', contatosRoutes);
 app.use('/api/oportunidades', oportunidadesRoutes);
 app.use('/api/atestados', AtestadoRoutes);
 app.use('/api/uc', ucRoutes);
-app.use('/documentos', documentosRoutes);
+app.use('/api/documentos', documentosRoutes);
 
 const PORT = 5000;
 app.listen(PORT, () => {
