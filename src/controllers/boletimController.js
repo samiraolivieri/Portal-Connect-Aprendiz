@@ -1,25 +1,23 @@
 const Boletin = require('../models/boletim');
-
+ 
 exports.getBoletim = async (req, res) => {
   const { aprendizId } = req.params;
-
   try {
     const boletim = await Boletin.findByAprendizId(aprendizId);
-
-    if (boletim.length === 0) {
-      return res.status(404).json({ message: "Nenhum dado acadêmico encontrado." });
+ 
+    if (!boletim || boletim.length === 0) {
+      return res.status(200).json({ media_geral: "0.0", disciplinas: [] });
     }
-
-    // Calculando uma média rápida para o Dashboard (Visão Gerencial)
-    const mediaGeral = boletim.reduce((acc, curr) => acc + curr.nota, 0) / boletim.length;
-
+ 
+    const soma = boletim.reduce((acc, curr) => acc + (parseFloat(curr.nota) || 0), 0);
+    const media = soma / boletim.length;
+ 
     res.status(200).json({
-      aprendiz_id: aprendizId,
-      media_geral: mediaGeral.toFixed(1),
+      media_geral: media.toFixed(1),
       disciplinas: boletim
     });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Erro ao buscar dados do boletim." });
+    console.error("Erro no Controller:", error);
+    res.status(500).json({ message: "Erro interno" });
   }
 };

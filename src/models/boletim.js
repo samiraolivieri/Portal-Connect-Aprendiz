@@ -1,17 +1,25 @@
 const db = require('../config/db');
-
+ 
 const Boletin = {
-  // Busca o boletim completo de um aprendiz específico
   findByAprendizId: async (aprendizId) => {
     const query = `
-      SELECT b.id, b.nota, b.frequencia_p, u.nome as uc_nome 
+      SELECT
+        b.id,
+        b.nota,
+        b.frequencia_percentual,
+        u.nome_uc
       FROM boletins b
-      JOIN ucs u ON b.uc_id = u.id
+      LEFT JOIN unidades_curriculares u ON b.uc_id = u.id
       WHERE b.aprendiz_id = ?
     `;
-    const [rows] = await db.query(query, [aprendizId]);
-    return rows;
+    try {
+      const [rows] = await db.query(query, [aprendizId]);
+      return rows;
+    } catch (error) {
+      console.error("Erro no SQL:", error.message);
+      throw error;
+    }
   }
 };
-
+ 
 module.exports = Boletin;

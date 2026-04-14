@@ -8,6 +8,10 @@ export default function Login() {
 
   const handleLogin = async () => {
     try {
+      console.log("ENVIANDO LOGIN:", {
+        email,
+        password: senha
+      });
       const resposta = await axios.post("http://localhost:5000/api/auth/login", {
         email: email,
         password: senha
@@ -17,6 +21,7 @@ export default function Login() {
       localStorage.setItem("usuario", JSON.stringify(resposta.data.user));
 
       console.log("Login realizado!", resposta.data.user);
+
 
       // Redireciona baseado no nivel 
       const nivel = resposta.data.user.nivel;
@@ -59,10 +64,13 @@ export default function Login() {
           value={senha}
           onChange={(e) => setSenha(e.target.value)}
         />
-
-        <button className="btn" onClick={handleLogin}>
-          Entrar
-        </button>
+<button
+  type="button"
+  className="btn"
+  onClick={handleLogin}
+>
+  Entrar
+</button>
 
         <a href="#" className="forgot">Esqueceu a senha?</a>
       </div>
