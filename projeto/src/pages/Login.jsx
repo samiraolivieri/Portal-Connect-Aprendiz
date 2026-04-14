@@ -12,22 +12,22 @@ export default function Login() {
         email: email,
         password: senha
       });
-  
+
       // Salva os dados do usuário no localStorage
       localStorage.setItem("usuario", JSON.stringify(resposta.data.user));
-  
+
       console.log("Login realizado!", resposta.data.user);
-  
-      // Redireciona baseado no perfil
-      const perfil = resposta.data.user.perfil;
-if (perfil === "aprendiz") {
-  window.location.href = "/dashboard-aprendiz";
-} else if (perfil === "gestor") {
-  window.location.href = "/dashboard-gestor";
-} else if (perfil === "pedagogia") {
-  window.location.href = "/dashboard-pedagogia";
-}
-  
+
+      // Redireciona baseado no nivel 
+      const nivel = resposta.data.user.nivel;
+      if (nivel === "aprendiz") {
+        window.location.href = "/";
+      } else if (nivel === "gestor") {
+        window.location.href = "/dashboard-gestor";
+      } else if (nivel === "pedagogia") {
+        window.location.href = "/dashboard-pedagogia";
+      }
+
     } catch (erro) {
       if (erro.response?.status === 401) {
         alert("E-mail ou senha incorretos!");
