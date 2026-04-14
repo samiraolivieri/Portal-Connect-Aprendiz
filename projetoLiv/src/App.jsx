@@ -5,6 +5,7 @@ import './App.css';
 
 import Mural from './pages/Mural.jsx';
 import Carreiras from './pages/Carreiras.jsx';
+import Boletim from './pages/Boletim.jsx';
 
 function App() {
   return (
@@ -16,9 +17,13 @@ function App() {
           <Route path="/" element={<Dashboard />} />
 
           <Route
-            path="/boletim"
-            element={<h1 style={{ color: "black" }}>Página de Boletim</h1>}
-          />
+  path="/boletim"
+  element={
+    <div style={{ color: "black" }}>
+      <Boletim />
+    </div>
+  }
+/>
 
           <Route
             path="/justificativas"
