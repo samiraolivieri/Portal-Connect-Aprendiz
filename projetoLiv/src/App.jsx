@@ -1,8 +1,10 @@
 import { Routes, Route } from 'react-router-dom';
 import Sidebar from './components/Sidebar/Sidebar.jsx';
 import Dashboard from './pages/Dashboard.jsx';
-// Importe as outras páginas que vamos criar (mesmo que vazias agora)
-// import Boletim from './pages/Boletim'; 
+// import Boletim from './pages/Boletim';
+// import Justificativas from './pages/Justificativas';
+// import MuralAvisos from './pages/MuralAvisos';
+// import Carreiras from './pages/Carreiras';
 import './App.css';
 
 function App() {

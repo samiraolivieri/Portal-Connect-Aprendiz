@@ -19,7 +19,7 @@ const Dashboard = () => {
   return (
     <div className="dashboard-container">
 
-      <header className="dash-header">
+<header className="dash-header">
         <h1>OLÁ, NIVALDO ARAÚJO</h1>
         <div className="header-icons">
           <FaBell />
