@@ -8,6 +8,10 @@ export default function Login() {
 
   const handleLogin = async () => {
     try {
+      console.log("ENVIANDO LOGIN:", {
+        email,
+        password: senha
+      });
       const resposta = await axios.post("http://localhost:5000/api/auth/login", {
         email: email,
         password: senha
@@ -28,13 +32,12 @@ if (perfil === "aprendiz") {
   window.location.href = "/dashboard-pedagogia";
 }
   
-    } catch (erro) {
-      if (erro.response?.status === 401) {
-        alert("E-mail ou senha incorretos!");
-      } else {
-        alert("Erro ao conectar com o servidor.");
-      }
-    }
+} catch (erro) {
+  console.log("❌ ERRO COMPLETO:", erro);
+  console.log("❌ STATUS:", erro.response?.status);
+  console.log("❌ DATA:", erro.response?.data);
+  console.log("❌ MESSAGE:", erro.message);
+}
   };
 
   return (
@@ -59,10 +62,13 @@ if (perfil === "aprendiz") {
           value={senha}
           onChange={(e) => setSenha(e.target.value)}
         />
-
-        <button className="btn" onClick={handleLogin}>
-          Entrar
-        </button>
+<button
+  type="button"
+  className="btn"
+  onClick={handleLogin}
+>
+  Entrar
+</button>
 
         <a href="#" className="forgot">Esqueceu a senha?</a>
       </div>
