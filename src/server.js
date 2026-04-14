@@ -15,6 +15,7 @@ const unidadesRoutes = require('./routes/unidadesRoutes');
 const documentosRoutes = require('./routes/documentosRoutes');
 
 const app = express();
+console.log("CORS e Express carregados com sucesso!");
 
 app.use(cors()); // Permite que seu React (front) acesse o Node (back)
 app.use(express.json()); // Permite ler JSON enviado no corpo da requisição

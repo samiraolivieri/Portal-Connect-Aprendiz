@@ -1,0 +1,113 @@
+/* Reutilizando a base do seu Dashboard.css */
+
+.resumo-boletim-section {
+    background-color: #f0f4f8; /* Um tom de azul bem clarinho para diferenciar */
+    border: 2px solid #1a3a5a;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 24px;
+}
+
+.stats-grid {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-item span {
+    font-size: 0.75rem;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.stat-item h2 {
+    margin: 5px 0 0;
+    color: #1a3a5a;
+    font-size: 1.8rem;
+}
+
+.status-highlight {
+    color: #27ae60 !important; /* Verde para situação regular */
+}
+
+.btn-download {
+    background-color: #1a3a5a;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-download:hover {
+    background-color: #142d47;
+}
+
+/* Tags de Status dentro da tabela */
+.tag-status {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.aprovado {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.reprovado {
+    background-color: #fff3e0;
+    color: #ef6c00;
+}
+
+@media print {
+    /* 1. Esconde a navegação (menu lateral/topo) */
+    nav, .sidebar, .nav-container, .menu-lateral { 
+      display: none !important;
+    }
+  
+    /* 2. Esconde os ícones do header e o botão de download */
+    .header-icons, .btn-download {
+      display: none !important;
+    }
+  
+    /* 3. Garante que o conteúdo principal ocupe a tela toda no PDF */
+    .dashboard-container {
+      margin: 0 !important;
+      padding: 0 !important;
+      width: 100% !important;
+      box-shadow: none !important;
+    }
+  
+    /* 4. Remove fundos cinzas ou sombras para economizar tinta e ficar profissional */
+    body {
+      background: white !important;
+    }
+  
+    .resumo-academico {
+      box-shadow: none !important;
+      border: 1px solid #eee;
+    }
+    table {
+        page-break-inside: auto;
+      }
+      tr {
+        page-break-inside: avoid;
+        page-break-after: auto;
+      }
+    }
