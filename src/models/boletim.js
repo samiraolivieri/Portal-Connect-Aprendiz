@@ -1,13 +1,13 @@
 const db = require('../config/db');
-
+ 
 const Boletin = {
   findByAprendizId: async (aprendizId) => {
     const query = `
-      SELECT 
-        b.id, 
-        b.nota, 
-        b.frequencia_percentual, 
-        u.nome_uc 
+      SELECT
+        b.id,
+        b.nota,
+        b.frequencia_percentual,
+        u.nome_uc
       FROM boletins b
       LEFT JOIN unidades_curriculares u ON b.uc_id = u.id
       WHERE b.aprendiz_id = ?
@@ -21,5 +21,5 @@ const Boletin = {
     }
   }
 };
-
+ 
 module.exports = Boletin;

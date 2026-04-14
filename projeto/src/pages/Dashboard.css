@@ -1,0 +1,211 @@
+/* Container que envolve todo o conteúdo à direita da Sidebar */
+.dashboard-container {
+  width: 100%;
+  padding: 30px;
+  box-sizing: border-box;
+}
+
+/* Header com o nome do usuário e ícones */
+.dash-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.dash-header h1 {
+  font-size: 2.2rem;
+  color: #1a3a5a; /* Tom de azul escuro profissional */
+  margin: 0;
+  font-weight: 800;
+}
+
+.header-icons {
+  display: flex;
+  gap: 20px;
+  font-size: 1.5rem;
+  color: #555;
+  cursor: pointer;
+}
+
+/* Seção principal dos cards */
+.atividades-section {
+  background-color: #fdf6f0; /* Fundo laranja bem suave */
+  border: 2px solid #f39c12; /* Borda laranja principal */
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.atividades-section h3 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 1rem;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Grid que coloca os ActivityCards lado a lado */
+.cards-grid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap; /* Permite quebrar linha se a tela diminuir */
+  gap: 16px;      /* Espaço entre um card e outro */
+  width: 100%;
+  overflow-x: auto; /* Habilita o scroll horizontal */
+  padding-bottom: 10px
+}
+
+
+/* Ajuste fino para os títulos das seções abaixo (Resumo Acadêmico, etc) */
+.dashboard-content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Duas colunas para as tabelas e mural */
+  gap: 30px;
+  margin-top: 30px;
+}
+
+.resumo-academico {
+  margin-top: 30px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.tabela-notas {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+.tabela-notas th, .tabela-notas td {
+  text-align: left;
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  color: #333;
+}
+
+.tabela-notas th {
+  background-color: #f8f9fa;
+  font-weight: bold;
+}
+
+.dashboard-content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.resumo-academico {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.resumo-academico h3,
+.mural-unidade h3 {
+  font-size: 0.85rem;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 0 0 16px;
+}
+
+.tabela-notas {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabela-notas th,
+.tabela-notas td {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid #eee;
+  font-size: 0.85rem;
+  color: #333;
+}
+
+.tabela-notas th {
+  background-color: #f8f9fa;
+  font-weight: 700;
+}
+
+/* Mural */
+.mural-unidade {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.mural-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.mural-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.mural-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.mural-avatar {
+  width: 38px;
+  height: 38px;
+  min-width: 38px;
+  border-radius: 50%;
+  background: #1a3a5a;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.mural-corpo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mural-meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.mural-autor {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #1a3a5a;
+}
+
+.mural-cargo {
+  font-size: 0.75rem;
+  color: #888;
+}
+
+.mural-mensagem {
+  font-size: 0.82rem;
+  color: #444;
+  margin: 2px 0 0;
+  line-height: 1.4;
+}
+
+.mural-tempo {
+  font-size: 0.7rem;
+  color: #aaa;
+}
+
