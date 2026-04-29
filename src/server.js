@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
+const path = require('path');
 
 // 1. IMPORTAÇÃO DAS ROTAS
 const AtestadoRoutes = require('./routes/AtestadoRoutes');
@@ -43,6 +44,8 @@ app.use('/api/turmas', turmasRoutes);
 // --- REGISTRO DA NOVA ROTA ---
 app.use('/api/materiais', materialRoutes); 
 
+//Deixa a pasta upploasd publica
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 const PORT = 5000;
 app.listen(PORT, () => {

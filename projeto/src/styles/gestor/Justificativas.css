@@ -1,0 +1,91 @@
+/* Overlay ocupa a tela toda e escurece o fundo */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  width: 400px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.modal-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.btn-analisar { background: #005aa3; color: white; border: none; padding: 10px; cursor: pointer; border-radius: 5px; }
+.btn-analisar:hover {background-color: #2a6fdf;}
+.group-decisao { display: flex; gap: 10px; justify-content: center; }
+
+.btn-aceitar { background: #189b36; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px; flex: 1; }
+.btn-aceitar:hover {background-color: #08b12f;}
+.btn-recusar { background: #b65862; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px; flex: 1; }
+.btn-recusar:hover {background-color: #ca2c3c;}
+
+.btn-voltar { background: transparent; border: 1px solid #ccc; padding: 8px; cursor: pointer; border-radius: 5px; }
+.gestao-container {
+    background-color: #f4f7f6;
+    min-height: 100vh;
+    padding: 20px;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.card-atividades {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.tabela-atividades {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.tabela-atividades th {
+    text-align: left;
+    color: #666;
+    font-size: 0.85rem;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.tabela-atividades td {
+    padding: 15px 10px;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+/* Cores das linhas baseadas no status (da imagem) */
+.recem-colocado { border-left: 5px solid #28a745; background-color: #f8fff9; }
+.pendente-alerta { border-left: 5px solid #ffc107; background-color: #fffdf5; }
+.vencido { border-left: 5px solid #dc3545; background-color: #fff9f9; }
+
+.btn-verificar {
+    background-color: #005aa3;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.75rem;
+}
+
+.btn-verificar:hover {
+    background-color: #2a6fdf;
+}
