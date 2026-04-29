@@ -28,7 +28,7 @@ const Dashboard = () => {
       </header>
 
       <section className="atividades-section">
-        <h3>CARD DE ATIVIDADES PENDENTES</h3>
+        <h3>ATIVIDADES PENDENTES</h3>
         <div className="cards-grid">
           {atividadesPendentes.map(item => (
             <ActivityCard
