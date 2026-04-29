@@ -3,6 +3,8 @@ import Login from './pages/aprendiz/Login.jsx';
 import Sidebar from './components/Sidebar/Sidebar.jsx';
 import Dashboard from './pages/aprendiz/Dashboard.jsx';
 import DashboardGestor from './pages/gestor/DashboardGestor.jsx';
+// Importe as outras páginas que vamos criar (mesmo que vazias agora)
+// import Boletim from './pages/Boletim'; 
 import './App.css';
 import Desempenho from './pages/gestor/Desempenho.jsx';
 
@@ -13,7 +15,11 @@ import Boletim from './pages/aprendiz/Boletim.jsx';
 
 
 import SidebarGestor from './components/Sidebar/SidebarGestor.jsx';
+import Boletim from './pages/aprendiz/Boletim.jsx'
 
+import JustificativasGestor from './pages/gestor/Justificativas.jsx'
+import JustificativasPedagogo from './pages/pedagogo/Justificativas.jsx'
+import Login from './pages/aprendiz/Login.jsx'
 
 function App() {
 
@@ -76,6 +82,19 @@ function App() {
 
 
             
+          <Route
+          path='/gestor/justificativas'
+          element={<JustificativasGestor/>}
+>
+
+          </Route>
+          <Route
+          path='/pedagogo/justificativas'
+          element={<JustificativasPedagogo/>}>
+
+          </Route>
+          <Route path='/login' element={<Login/>}></Route>
+
         </Routes>
       </main>
     </div>

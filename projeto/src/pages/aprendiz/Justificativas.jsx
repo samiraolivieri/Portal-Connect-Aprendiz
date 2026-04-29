@@ -1,44 +1,38 @@
 import React, { useEffect, useState } from 'react';
 import '../../styles/Justificativas.css';
+import '../../styles/Justificativas.css'; // Verifique se o caminho está correto conforme sua estrutura
 import { FaCloudUploadAlt, FaHistory, FaFileAlt } from 'react-icons/fa';
 import axios from 'axios';
+
 const Justificativas = () => {
   const usuarioLogado = localStorage.getItem("usuario");
-
   const usuarioObj = usuarioLogado ? JSON.parse(usuarioLogado) : null;
   const userId = usuarioObj ? usuarioObj.id : '';
-  const [formData, setFormData] = useState({
-    titulo: '',
-    motivo: '',
-    data: '',
-    //dataFim: '',
-    arquivo: null,
-    descricao: '',
-    aprendiz_id: userId
-  });
+
   const estadoInicial = {
     titulo: '',
     motivo: '',
+    data: '',
     arquivo: null,
     descricao: '',
     aprendiz_id: userId
   };
 
+  const [formData, setFormData] = useState(estadoInicial);
   const [historico, setHistorico] = useState([]);
+
   useEffect(() => {
     const buscarHistorico = async () => {
-      if (!userId) return
-
+      if (!userId) return;
       try {
-        const resposta = await axios.get(`http://localhost:5000/api/atestados/listar/${userId}`)
-        setHistorico(resposta.data)
+        const resposta = await axios.get(`http://localhost:5000/api/atestados/listar/${userId}`);
+        setHistorico(resposta.data);
       } catch (error) {
         console.error("Erro ao carregar histórico:", error);
       }
-    }
-    buscarHistorico()
-
-  }, [userId])
+    };
+    buscarHistorico();
+  }, [userId]);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -51,37 +45,33 @@ const Justificativas = () => {
   const handleEnviar = async (e) => {
     if (e) e.preventDefault();
 
-
-
     const data = new FormData();
     data.append('aprendiz_id', formData.aprendiz_id);
     data.append('titulo', formData.titulo);
     data.append('motivo', formData.motivo);
     data.append('descricao', formData.descricao);
     data.append('data_emissao', formData.data);
-
     data.append('atestado', formData.arquivo);
 
     try {
-      const resposta = await axios.post("http://localhost:5000/api/atestados/enviar", data, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
+      await axios.post("http://localhost:5000/api/atestados/enviar", data, {
+        headers: { 'Content-Type': 'multipart/form-data' }
       });
 
-      console.log("Sucesso:", resposta.data);
       alert("Atestado enviado com sucesso!");
+      
+      // Recarrega a lista
       const novaLista = await axios.get(`http://localhost:5000/api/atestados/listar/${userId}`);
       setHistorico(novaLista.data);
 
+      // Limpa tudo
       setFormData(estadoInicial);
       e.target.reset();
     } catch (error) {
       console.error("Erro detalhado:", error.response?.data || error.message);
-      alert("Erro ao enviar atestados. Verifique o console.");
+      alert("Erro ao enviar atestados.");
     }
   };
-
 
   return (
     <div className="atestado-container">
@@ -90,26 +80,30 @@ const Justificativas = () => {
       </header>
 
       <div className="atestado-grid">
-        {/* Formulário de Envio */}
         <section className="form-atestado">
           <h3><FaFileAlt /> NOVA JUSTIFICATIVA</h3>
 
-          <div className="form-group">
-            <label>Título da Justificativa</label>
-            <input
-              type="text"
-              name="titulo"
-              placeholder="Ex: Atestado Médico - Clínica Geral"
-              value={formData.titulo}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
           <form onSubmit={handleEnviar}>
             <div className="form-group">
+              <label>Título da Justificativa</label>
+              <input
+                type="text"
+                name="titulo"
+                placeholder="Ex: Atestado Médico"
+                value={formData.titulo}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className="form-group">
               <label>Motivo do Afastamento</label>
-              <select name="motivo" onChange={handleChange} required>
+              <select 
+                name="motivo" 
+                value={formData.motivo} 
+                onChange={handleChange} 
+                required
+              >
                 <option value="">Selecione...</option>
                 <option value="medico">Atestado Médico</option>
                 <option value="luto">Luto</option>
@@ -118,19 +112,17 @@ const Justificativas = () => {
               </select>
             </div>
 
-
-            <div className="form-row">
-              <div className="form-group">
-                <label>Data</label>
-                <input type="date" name="data" onChange={handleChange} required />
-              </div>
-              {/*          <div className="form-group">
-                <label>Data Fim</label>
-                <input type="date" name="dataFim" onChange={handleChange} required />
-              </div>
-            
-*/}
+            <div className="form-group">
+              <label>Data da Justificativa</label>
+              <input 
+                type="date" 
+                name="data" 
+                value={formData.data} 
+                onChange={handleChange} 
+                required 
+              />
             </div>
+
             <div className="form-group">
               <label className="upload-label">
                 <FaCloudUploadAlt /> Upload do Documento (PDF/JPG)
@@ -141,7 +133,12 @@ const Justificativas = () => {
 
             <div className="form-group">
               <label>Descrição</label>
-              <textarea name="descricao" rows="3" onChange={handleChange}></textarea>
+              <textarea 
+                name="descricao" 
+                rows="3" 
+                value={formData.descricao} 
+                onChange={handleChange}
+              ></textarea>
             </div>
 
             <button type="submit" className="btn-enviar">ENVIAR</button>
@@ -155,11 +152,17 @@ const Justificativas = () => {
               <div key={item.id} className="historico-item">
                 <div className="historico-info">
                   <strong>{item.titulo}</strong>
-                  <span> Enviado em: {new Date(item.data_emissao).toLocaleDateString('pt-BR')}</span>
+                  <span>  Referente a:  {new Date(item.data_emissao).toLocaleDateString('pt-BR')}</span>
                 </div>
-                <span className={`status-badge ${item.status.replace(' ', '-').toLowerCase()}`}>
-                  {item.status}
-                </span>
+                <div className="status-container">
+                   <span className={`status-badge`}>
+                      Instituição: <span className={`status-badge-${item.status_instituicao.toLowerCase()}`}>{item.status_instituicao}</span>
+                      <br />
+                   </span>  
+                   <span className={`status-badge`}>
+                      Empresa: <span  className={`status-badge-${item.status_empresa.toLowerCase()}`}>{item.status_empresa}</span>
+                   </span>
+                </div>
               </div>
             ))}
           </div>
