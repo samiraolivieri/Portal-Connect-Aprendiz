@@ -4,30 +4,32 @@ require('dotenv').config();
 const path = require('path');
 
 // 1. IMPORTAÇÃO DAS ROTAS
-const AtestadoRoutes = require('./routes/AtestadoRoutes');
+const authRoutes = require('./routes/authRoutes');
+const unidadesRoutes = require('./routes/unidadesRoutes');
 const atividadesRoutes = require('./routes/atividadesRoutes');
 const boletimRoutes = require('./routes/boletimRoutes');
 const comunicadosRoutes = require('./routes/comunicadosRoutes');
 const contatosRoutes = require('./routes/contatosRoutes');
 const oportunidadesRoutes = require('./routes/oportunidadesRoutes');
+const AtestadoRoutes = require('./routes/AtestadoRoutes');
 const ucRoutes = require('./routes/ucRoutes');
-const authRoutes = require('./routes/authRoutes');
-const unidadesRoutes = require('./routes/unidadesRoutes');
 const documentosRoutes = require('./routes/documentosRoutes');
-const desempenhoRoutes = require('./routes/desempenhoRoutes'); 
+const desempenhoRoutes = require('./routes/desempenhoRoutes');
 const contrachequeRoutes = require('./routes/contrachequeRoutes'); 
 const turmasRoutes = require('./routes/turmasRoutes');
-// --- IMPORTAÇÃO DA NOVA ROTA ---
 const materialRoutes = require('./routes/materialRoutes'); 
-// routes/materiaisRoutes.js (ou seu arquivo de rotas)
-const app = express();
-console.log("CORS e Express carregados com sucesso!");
+const visitaRoutes = require('./routes/visitaRoutes');
 
+const app = express();
+
+// 2. MIDDLEWARES
 app.use(cors()); 
 app.use(express.json()); 
-app.use('/uploads', express.static('uploads'));
 
-// Registra as rotas
+// 3. PASTA PÚBLICA (Para exibição de arquivos/documentos)
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// 4. REGISTRO DAS ROTAS DA API
 app.use('/api/auth', authRoutes);
 app.use('/api/unidades', unidadesRoutes);
 app.use('/api/atividades', atividadesRoutes);
@@ -41,13 +43,11 @@ app.use('/api/documentos', documentosRoutes);
 app.use('/api/desempenho', desempenhoRoutes); 
 app.use('/api/contracheque', contrachequeRoutes); 
 app.use('/api/turmas', turmasRoutes);
-// --- REGISTRO DA NOVA ROTA ---
 app.use('/api/materiais', materialRoutes); 
+app.use('/api/visitas', visitaRoutes);
 
-//Deixa a pasta upploasd publica
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
-const PORT = 5000;
+// 5. INICIALIZAÇÃO DO SERVIDOR
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log(`
     ====================================================

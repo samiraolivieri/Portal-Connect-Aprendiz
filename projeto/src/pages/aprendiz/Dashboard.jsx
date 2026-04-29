@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Calendar from 'react-calendar'; 
@@ -54,19 +53,6 @@ const Dashboard = () => {
     { nome: "Vilma Nascimento", cargo: "Pedagogia", email: "amaior@ensino.com", tel: "(21) 88888-8888" }
   ];
 
-=======
-import React, { useState } from 'react';
-import './Dashboard.css';
-import ActivityCard from '../../components/ActivityCard.jsx';
-import ContatoPopup from '../../components/ContatoPopup.jsx';
-import { atividadesPendentes, muralUnidade, contatos } from '../../services/mockData.js';
-import { FaBell, FaUserCircle } from 'react-icons/fa';
-
-const Dashboard = () => {
-  const [contatoSelecionado, setContatoSelecionado] = useState(null);
-
-  // Futuramente: buscar da API GET /api/contatos
->>>>>>> 11a60779e0432f45af36e6f2129d7bda39dd33e7
   const abrirContato = (autorNome) => {
     const encontrado = contatos.find(c =>
       c.responsavel.toLowerCase().includes(autorNome.split(' ')[0].toLowerCase())
@@ -74,7 +60,6 @@ const Dashboard = () => {
     setContatoSelecionado(encontrado || contatos[0]);
   };
 
-<<<<<<< HEAD
   const handleLogout = () => {
     localStorage.removeItem('usuario');
     navigate('/');
@@ -99,49 +84,17 @@ const Dashboard = () => {
               </div>
             )}
           </div>
-=======
-  return (
-    <div className="dashboard-container">
-
-<header className="dash-header">
-        <h1>OLÁ, NIVALDO ARAÚJO</h1>
-        <div className="header-icons">
-          <FaBell />
-          <FaUserCircle />
->>>>>>> 11a60779e0432f45af36e6f2129d7bda39dd33e7
         </div>
       </header>
 
       <section className="atividades-section">
-<<<<<<< HEAD
         <h3>CALENDÁRIO DE ATIVIDADES</h3>
         <div className="calendar-wrapper" style={{ display: 'flex', justifyContent: 'center', padding: '10px' }}>
           <Calendar onChange={setDate} value={date} />
-=======
-        <h3>CARD DE ATIVIDADES PENDENTES</h3>
-        <div className="cards-grid">
-          {atividadesPendentes.map(item => (
-            <ActivityCard
-              key={item.id}
-              titulo={item.titulo}
-              status={item.status}
-              urgencia={item.urgencia}
-              tipo={item.tipo}
-              acao={item.acao}
-            />
-          ))}
->>>>>>> 11a60779e0432f45af36e6f2129d7bda39dd33e7
         </div>
       </section>
 
       <div className="dashboard-content-grid">
-<<<<<<< HEAD
-        <section className="resumo-academico">
-          <h3>RESUMO ACADÊMICO</h3>
-          <table className="tabela-notas">
-            <thead><tr><th>Disciplina</th><th>% Frequência</th><th>Notas</th></tr></thead>
-=======
-
         <section className="resumo-academico">
           <h3>RESUMO ACADÊMICO (Notas & Faltas)</h3>
           <table className="tabela-notas">
@@ -152,7 +105,6 @@ const Dashboard = () => {
                 <th>Notas</th>
               </tr>
             </thead>
->>>>>>> 11a60779e0432f45af36e6f2129d7bda39dd33e7
             <tbody>
               <tr><td>Lógica de Programação</td><td>95%</td><td>8.5</td></tr>
               <tr><td>Banco de Dados</td><td>88%</td><td>7.0</td></tr>
@@ -165,39 +117,23 @@ const Dashboard = () => {
           <div className="mural-lista">
             {muralUnidade.map(post => (
               <div key={post.id} className="mural-item">
-<<<<<<< HEAD
-                <div className="mural-avatar" onClick={() => abrirContato(post.autor)}>{post.autor.charAt(0)}</div>
-                <div className="mural-corpo">
-                  <span className="mural-autor" onClick={() => abrirContato(post.autor)} style={{ cursor: 'pointer' }}>{post.autor}</span>
-                  <p className="mural-mensagem">{post.mensagem}</p>
-=======
-                <div
-                  className="mural-avatar"
-                  onClick={() => abrirContato(post.autor)}
-                  title="Ver contato"
-                >
+                <div className="mural-avatar" onClick={() => abrirContato(post.autor)} title="Ver contato">
                   {post.autor.charAt(0)}
                 </div>
                 <div className="mural-corpo">
                   <div className="mural-meta">
-                    <span
-                      className="mural-autor"
-                      onClick={() => abrirContato(post.autor)}
-                      style={{ cursor: 'pointer' }}
-                    >
+                    <span className="mural-autor" onClick={() => abrirContato(post.autor)} style={{ cursor: 'pointer' }}>
                       {post.autor}
                     </span>
                     <span className="mural-cargo">{post.cargo}</span>
                   </div>
                   <p className="mural-mensagem">{post.mensagem}</p>
                   <span className="mural-tempo">{post.tempo}</span>
->>>>>>> 11a60779e0432f45af36e6f2129d7bda39dd33e7
                 </div>
               </div>
             ))}
           </div>
         </section>
-<<<<<<< HEAD
       </div>
 
       <section className="docs-pedagogico-section">
@@ -225,78 +161,84 @@ const Dashboard = () => {
         </div>
       </section>
 
-      {/* --- MODAIS COM LÓGICA DE CLIQUE CORRIGIDA --- */}
+      {/* --- MODAIS --- */}
       
-      {/* Modal Contatos */}
-      <div className={`contact-overlay ${showContactModal ? 'active' : ''}`} onClick={() => setShowContactModal(false)}>
-        <div className="contact-window" onClick={(e) => e.stopPropagation()}>
-          <div className="contact-header">
-            <h4>Contatos Responsáveis</h4>
-            <button className="btn-close-contact" onClick={() => setShowContactModal(false)}><FaTimes /></button>
-          </div>
-          <div className="contact-list">
-            {contatosSuporte.map((c, index) => (
-              <div key={index} className="contact-card">
-                <strong>{c.nome}</strong>
-                <span>{c.cargo}</span>
-                <div className="contact-actions">
-                  <a href={`mailto:${c.email}`} className="action-link mail"><FaEnvelope /> Email</a>
-                  <a href={`tel:${c.tel}`} className="action-link phone">{c.tel}</a>
+      {/* Modal Contatos Suporte */}
+      {showContactModal && (
+        <div className="contact-overlay active" onClick={() => setShowContactModal(false)}>
+          <div className="contact-window" onClick={(e) => e.stopPropagation()}>
+            <div className="contact-header">
+              <h4>Contatos Responsáveis</h4>
+              <button className="btn-close-contact" onClick={() => setShowContactModal(false)}><FaTimes /></button>
+            </div>
+            <div className="contact-list">
+              {contatosSuporte.map((c, index) => (
+                <div key={index} className="contact-card">
+                  <strong>{c.nome}</strong>
+                  <span>{c.cargo}</span>
+                  <div className="contact-actions">
+                    <a href={`mailto:${c.email}`} className="action-link mail"><FaEnvelope /> Email</a>
+                    <a href={`tel:${c.tel}`} className="action-link phone">{c.tel}</a>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* Modal Contracheques */}
-      <div className={`contact-overlay ${showPaycheckModal ? 'active' : ''}`} onClick={() => setShowPaycheckModal(false)}>
-        <div className="contact-window" onClick={(e) => e.stopPropagation()}>
-          <div className="contact-header">
-            <h4>Meus Contracheques</h4>
-            <button className="btn-close-contact" onClick={() => setShowPaycheckModal(false)}><FaTimes /></button>
-          </div>
-          <div className="contact-list">
-            {Array.isArray(listaContracheques) && listaContracheques.length > 0 ? (
-              listaContracheques.map((item) => (
-                <div key={item.id} className="contact-card">
-                  <div className="contact-info">
-                    <strong>Competência: {item.mes_referencia}</strong>
-                    <p style={{ margin: '5px 0 0 0', fontSize: '0.85rem', color: '#555' }}>Empresa: Petrobras</p>
+      {showPaycheckModal && (
+        <div className="contact-overlay active" onClick={() => setShowPaycheckModal(false)}>
+          <div className="contact-window" onClick={(e) => e.stopPropagation()}>
+            <div className="contact-header">
+              <h4>Meus Contracheques</h4>
+              <button className="btn-close-contact" onClick={() => setShowPaycheckModal(false)}><FaTimes /></button>
+            </div>
+            <div className="contact-list">
+              {listaContracheques.length > 0 ? (
+                listaContracheques.map((item) => (
+                  <div key={item.id} className="contact-card">
+                    <div className="contact-info">
+                      <strong>Competência: {item.mes_referencia}</strong>
+                      <p style={{ fontSize: '0.85rem', color: '#555' }}>Empresa: Petrobras</p>
+                    </div>
+                    <div className="contact-actions">
+                      <a href={`http://localhost:5000/${item.caminho_arquivo}`} target="_blank" rel="noopener noreferrer" className="action-link mail" style={{ backgroundColor: '#007bff' }}>
+                        <FaDownload style={{marginRight: '5px'}}/> Visualizar
+                      </a>
+                    </div>
                   </div>
-                  <div className="contact-actions">
-                    <a href={`http://localhost:5000/${item.caminho_arquivo}`} target="_blank" rel="noopener noreferrer" className="action-link mail" style={{ backgroundColor: '#007bff' }}>
-                      <FaDownload style={{marginRight: '5px'}}/> Visualizar
-                    </a>
-                  </div>
-                </div>
-              ))
-            ) : <p style={{padding: '20px'}}>Nenhum contracheque.</p>}
+                ))
+              ) : <p style={{padding: '20px'}}>Nenhum contracheque.</p>}
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* Modal Materiais */}
-      <div className={`contact-overlay ${showMaterialModal ? 'active' : ''}`} onClick={() => setShowMaterialModal(false)}>
-        <div className="contact-window" onClick={(e) => e.stopPropagation()}>
-          <div className="contact-header">
-            <h4>Materiais Pedagógicos</h4>
-            <button className="btn-close-contact" onClick={() => setShowMaterialModal(false)}><FaTimes /></button>
-          </div>
-          <div className="contact-list">
-            {Array.isArray(listaMateriais) && listaMateriais.length > 0 ? (
-              listaMateriais.map((mat) => (
-                <div key={mat.id} className="contact-card">
-                  <strong>{mat.titulo}</strong>
-                  <a href={`http://localhost:5000/uploads/${mat.arquivo_path}`} target="_blank" rel="noopener noreferrer" className="action-link mail" style={{ backgroundColor: '#28a745' }}>
-                    <FaDownload style={{marginRight: '5px'}}/> Baixar Material
-                  </a>
-                </div>
-              ))
-            ) : <p style={{padding: '20px'}}>Nenhum material disponível.</p>}
+      {showMaterialModal && (
+        <div className="contact-overlay active" onClick={() => setShowMaterialModal(false)}>
+          <div className="contact-window" onClick={(e) => e.stopPropagation()}>
+            <div className="contact-header">
+              <h4>Materiais Pedagógicos</h4>
+              <button className="btn-close-contact" onClick={() => setShowMaterialModal(false)}><FaTimes /></button>
+            </div>
+            <div className="contact-list">
+              {listaMateriais.length > 0 ? (
+                listaMateriais.map((mat) => (
+                  <div key={mat.id} className="contact-card">
+                    <strong>{mat.titulo}</strong>
+                    <a href={`http://localhost:5000/uploads/${mat.arquivo_path}`} target="_blank" rel="noopener noreferrer" className="action-link mail" style={{ backgroundColor: '#28a745' }}>
+                      <FaDownload style={{marginRight: '5px'}}/> Baixar Material
+                    </a>
+                  </div>
+                ))
+              ) : <p style={{padding: '20px'}}>Nenhum material disponível.</p>}
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       <div className="floating-contact" onClick={() => setShowContactModal(true)}>
         <FaComments />
@@ -306,19 +248,6 @@ const Dashboard = () => {
       {contatoSelecionado && (
         <ContatoPopup contato={contatoSelecionado} onClose={() => setContatoSelecionado(null)} />
       )}
-=======
-
-      </div>
-
-      {/* Pop-up de contato */}
-      {contatoSelecionado && (
-        <ContatoPopup
-          contato={contatoSelecionado}
-          onClose={() => setContatoSelecionado(null)}
-        />
-      )}
-
->>>>>>> 11a60779e0432f45af36e6f2129d7bda39dd33e7
     </div>
   );
 };

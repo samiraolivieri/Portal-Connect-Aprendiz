@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
-<<<<<<< HEAD
+
 import '../../styles/Justificativas.css';
-=======
-import '../../styles/Justificativas.css'; // Verifique se o caminho está correto conforme sua estrutura
->>>>>>> 11a60779e0432f45af36e6f2129d7bda39dd33e7
+
 import { FaCloudUploadAlt, FaHistory, FaFileAlt } from 'react-icons/fa';
 import axios from 'axios';
 

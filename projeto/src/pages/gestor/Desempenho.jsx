@@ -68,7 +68,6 @@ const Desempenho = () => {
                     <h2>{aprendizes.length}</h2>
                 </div>
             </section>
-
             <section className="tabela-container">
                 <h3>Detalhamento por Aprendiz</h3>
                 <table className="tabela-desempenho">
