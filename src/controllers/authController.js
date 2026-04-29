@@ -24,8 +24,9 @@ exports.login = async (req, res) => {
         user: {
           id: user.id,
           nome: user.nome,
-          nivel: user.nivel,      // No seu banco a coluna é 'nivel'
-          unidade: user.unidade_id // No seu banco a coluna é 'unidade_id'
+          nivel: user.nivel,
+          unidade: user.unidade_id,
+          turma_id: user.turma_id 
         }
       });
     } else {

@@ -19,7 +19,9 @@
     align-items: center;
     margin-bottom: 25px;
   }
-  
+  .hero h2{
+    color: white;
+  }
   .hero button {
     background: white;
     color: #0d47a1;

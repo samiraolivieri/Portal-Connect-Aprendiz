@@ -13,6 +13,7 @@ const ucRoutes = require('./routes/ucRoutes');
 const authRoutes = require('./routes/authRoutes');
 const unidadesRoutes = require('./routes/unidadesRoutes');
 const documentosRoutes = require('./routes/documentosRoutes');
+const pedagogoRoutes = require("./routes/pedagogoRoutes");
 
 const app = express();
 console.log("CORS e Express carregados com sucesso!");
@@ -32,6 +33,7 @@ app.use('/api/oportunidades', oportunidadesRoutes);
 app.use('/api/atestados', AtestadoRoutes);
 app.use('/api/uc', ucRoutes);
 app.use('/api/documentos', documentosRoutes);
+app.use("/api/pedagogo", pedagogoRoutes);
 
 const PORT = 5000;
 app.listen(PORT, () => {
