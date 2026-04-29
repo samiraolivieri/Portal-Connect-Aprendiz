@@ -18,7 +18,7 @@ const SidebarGestor = () => {
             <li><FaThLarge /> Visão Geral</li>
           </Link>
           
-          <Link to="/atestados" className={location.pathname === "/atestados" ? "active" : ""}>
+          <Link to="/gestor/justificativas" className={location.pathname === "/atestados" ? "active" : ""}>
             <li><FaFileAlt />Validar Atestados</li>
           </Link>
           
