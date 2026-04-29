@@ -85,8 +85,9 @@
     font-weight: bold;
   }
   
-  .status-badge.aprovado { background: #d4edda; color: #155724; }
-  .status-badge.em-análise { background: #fff3cd; color: #856404; }
+  .status-badge-aprovado { background: #d4edda; color: #155724; }
+  .status-badge-pendente { background: #fff3cd; color: #856404; }
+  .status-badge-recusado { background: #ffcdcd; color: #850404; }
   
   @media (max-width: 768px) {
     .atestado-grid { grid-template-columns: 1fr; }

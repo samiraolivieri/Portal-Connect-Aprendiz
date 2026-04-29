@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import "../styles/mural.css";
+import "../../styles/mural.css";
 
 /* 🔥 SEUS AVISOS FIXOS (mantidos) */
 const avisosFixos = [

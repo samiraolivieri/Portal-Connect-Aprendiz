@@ -1,15 +1,18 @@
 import { Routes, Route } from 'react-router-dom';
 import Sidebar from './components/Sidebar/Sidebar.jsx';
-import Dashboard from './pages/Dashboard.jsx';
+import Dashboard from './pages/aprendiz/Dashboard.jsx';
 // Importe as outras páginas que vamos criar (mesmo que vazias agora)
 // import Boletim from './pages/Boletim'; 
 import './App.css';
 
-import Mural from './pages/Mural.jsx';
-import Carreiras from './pages/Carreiras.jsx';
-import Justificativas from './pages/Justificativas.jsx'
-import Boletim from './pages/Boletim.jsx'
+import Mural from './pages/aprendiz/Mural.jsx';
+import Carreiras from './pages/aprendiz/Carreiras.jsx';
+import Justificativas from './pages/aprendiz/Justificativas.jsx'
+import Boletim from './pages/aprendiz/Boletim.jsx'
 
+import JustificativasGestor from './pages/gestor/Justificativas.jsx'
+import JustificativasPedagogo from './pages/pedagogo/Justificativas.jsx'
+import Login from './pages/aprendiz/Login.jsx'
 
 function App() {
   return (
@@ -47,6 +50,19 @@ function App() {
               </div>
             }
           />
+
+          <Route
+          path='/gestor/justificativas'
+          element={<JustificativasGestor/>}
+>
+
+          </Route>
+          <Route
+          path='/pedagogo/justificativas'
+          element={<JustificativasPedagogo/>}>
+
+          </Route>
+          <Route path='/login' element={<Login/>}></Route>
 
         </Routes>
       </main>

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './Dashboard.css';
-import ActivityCard from '../components/ActivityCard.jsx';
-import ContatoPopup from '../components/ContatoPopup.jsx';
-import { atividadesPendentes, muralUnidade, contatos } from '../services/mockData.js';
+import ActivityCard from '../../components/ActivityCard.jsx';
+import ContatoPopup from '../../components/ContatoPopup.jsx';
+import { atividadesPendentes, muralUnidade, contatos } from '../../services/mockData.js';
 import { FaBell, FaUserCircle } from 'react-icons/fa';
 
 const Dashboard = () => {

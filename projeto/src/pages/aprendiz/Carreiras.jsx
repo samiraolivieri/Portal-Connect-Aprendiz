@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import "../styles/carreiras.css";
+import "../../styles/carreiras.css";
 
 export default function Carreiras() {
   const [modal, setModal] = useState("");
