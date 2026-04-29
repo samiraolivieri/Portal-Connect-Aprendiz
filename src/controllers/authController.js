@@ -29,7 +29,8 @@ exports.login = async (req, res) => {
           id: user.id,
           nome: user.nome,
           nivel: user.nivel,
-          unidade: user.unidade_id
+          unidade: user.unidade_id,
+          turma_id: user.turma_id 
         }
       });
     } else {

@@ -18,11 +18,13 @@ import DashboardGestor from './pages/gestor/DashboardGestor.jsx';
 import Desempenho from './pages/gestor/Desempenho.jsx'; 
 import Contracheque from './pages/gestor/Contracheque.jsx';
 import JustificativasGestor from './pages/gestor/Justificativas.jsx';
+import Comunicados from './pages/gestor/Comunicados.jsx';
 
 // --- PÁGINAS PEDAGOGO ---
 import GerirTurmas from './pages/pedagogo/GerirTurmas.jsx';
 import PublicarMaterial from './pages/pedagogo/PublicarMaterial.jsx';
 import JustificativasPedagogo from './pages/pedagogo/Justificativas.jsx';
+import Pedagogo from "./pages/pedagogo/Pedagogo";
 
 function App() {
   const location = useLocation();
@@ -32,14 +34,18 @@ function App() {
   const isGestorPage = location.pathname.startsWith("/gestor");
   const isPedagogoPage = location.pathname.startsWith("/pedagogo");
 
+  // Ajuste de layout para o pedagogo (conforme sua lógica anterior)
+  const layoutClass = isPedagogoPage ? "" : "app-layout";
+  const contentClass = isPedagogoPage ? "" : "content";
+
   return (
-    <div className="app-layout">
-      {/* Lógica da Sidebar: Se não for login, escolhe qual sidebar mostrar */}
+    <div className={layoutClass}>
+      {/* Lógica da Sidebar: Se não for login, escolhe qual mostrar */}
       {!isLoginPage && (
         (isGestorPage || isPedagogoPage) ? <SidebarGestor /> : <Sidebar />
       )}
 
-      <main className="content">
+      <main className={contentClass}>
         <Routes>
           {/* Rota Inicial / Login */}
           <Route path="/" element={<Login />} />
@@ -57,8 +63,10 @@ function App() {
           <Route path="/gestor/desempenho" element={<Desempenho />} />
           <Route path="/gestor/contracheque" element={<Contracheque />} />
           <Route path="/gestor/justificativas" element={<JustificativasGestor />} />
+          <Route path="/gestor/comunicados" element={<Comunicados />} />
 
           {/* Rotas do Pedagogo */}
+          <Route path="/pedagogo" element={<Pedagogo />} />
           <Route path="/pedagogo/gerirturmas" element={<GerirTurmas />} />
           <Route path="/pedagogo/publicarmaterial" element={<PublicarMaterial />} />
           <Route path="/pedagogo/justificativas" element={<JustificativasPedagogo />} />

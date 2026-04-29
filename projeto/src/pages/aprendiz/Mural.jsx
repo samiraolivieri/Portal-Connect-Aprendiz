@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import "../../styles/mural.css";
 
-/* 🔥 SEUS AVISOS FIXOS (mantidos) */
+/* 🔥 AVISOS FIXOS */
 const avisosFixos = [
   {
     id: 1,
@@ -31,7 +31,7 @@ const avisosFixos = [
     descricao: "Evento dia 25/04",
     tipo: "evento",
     autor: "Equipe",
-    data: "10/04/2026",
+    data: "10/04/2026"
   },
   {
     id: 4,
@@ -68,19 +68,32 @@ const avisosFixos = [
 export default function Mural() {
   const [avisosApi, setAvisosApi] = useState([]);
 
-  // 🔥 BUSCA DO BACKEND
   useEffect(() => {
     axios.get("http://localhost:5000/api/comunicados")
       .then((res) => {
-        console.log("DADOS DO BACKEND:", res.data); // 👈 AQUI
-        setAvisosApi(res.data);
+        const dadosFormatados = res.data.map((item) => ({
+          id: item.id,
+          titulo: item.titulo,
+
+          // 🔥 AGORA ACEITA conteudo OU descricao
+          descricao: item.descricao || item.conteudo,
+
+          local: item.local,
+          horario: item.horario,
+          tipo: item.tipo || "info",
+          autor: item.autor || "Administração",
+          data: item.data || item.data_publicacao,
+          destaque: item.destaque,
+          status: item.status
+        }));
+
+        setAvisosApi(dadosFormatados);
       })
       .catch((err) => {
         console.error("Erro ao buscar avisos:", err);
       });
   }, []);
 
-  // 🔥 JUNTA FIXOS + BACKEND
   const avisos = [...avisosFixos, ...avisosApi];
 
   return (
@@ -98,17 +111,18 @@ export default function Mural() {
         .map((aviso) => (
           <div key={aviso.id} className="aviso destaque-amarelo">
             📢 <strong>{aviso.titulo}</strong> — {aviso.descricao} <br />
-            ⏰ {aviso.horario} | 📍 {aviso.local}
+            {aviso.horario && <>⏰ {aviso.horario}</>}
+            {aviso.local && <> | 📍 {aviso.local}</>}
           </div>
         ))}
 
-      {/* Lista de avisos */}
+      {/* Lista */}
       <div className="mural-grid">
         {avisos
           .filter((aviso) => !aviso.destaque)
           .map((aviso) => (
             <div key={aviso.id} className={`aviso-card ${aviso.tipo}`}>
-
+              
               <div className="conteudo">
                 {aviso.status === "novo" && (
                   <span className="novo">NOVO</span>
@@ -126,7 +140,7 @@ export default function Mural() {
 
               <div className="info">
                 <span>👤 {aviso.autor}</span>
-                <span>📅 {aviso.data || aviso.data_publicacao}</span>
+                <span>📅 {aviso.data}</span>
               </div>
 
             </div>

@@ -3,7 +3,7 @@ const cors = require('cors');
 require('dotenv').config();
 const path = require('path');
 
-// 1. IMPORTAÇÃO DAS ROTAS
+// 1. IMPORTAÇÃO DAS ROTAS (Uma de cada, sem repetir)
 const authRoutes = require('./routes/authRoutes');
 const unidadesRoutes = require('./routes/unidadesRoutes');
 const atividadesRoutes = require('./routes/atividadesRoutes');
@@ -14,11 +14,12 @@ const oportunidadesRoutes = require('./routes/oportunidadesRoutes');
 const AtestadoRoutes = require('./routes/AtestadoRoutes');
 const ucRoutes = require('./routes/ucRoutes');
 const documentosRoutes = require('./routes/documentosRoutes');
+const pedagogoRoutes = require("./routes/pedagogoRoutes");
+const visitaRoutes = require('./routes/visitaRoutes');
 const desempenhoRoutes = require('./routes/desempenhoRoutes');
 const contrachequeRoutes = require('./routes/contrachequeRoutes'); 
 const turmasRoutes = require('./routes/turmasRoutes');
 const materialRoutes = require('./routes/materialRoutes'); 
-const visitaRoutes = require('./routes/visitaRoutes');
 
 const app = express();
 
@@ -26,10 +27,10 @@ const app = express();
 app.use(cors()); 
 app.use(express.json()); 
 
-// 3. PASTA PÚBLICA (Para exibição de arquivos/documentos)
+// 3. PASTA PÚBLICA (Configurada apenas uma vez)
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// 4. REGISTRO DAS ROTAS DA API
+// 4. REGISTRO DAS ROTAS DA API (Organizadas para fácil leitura)
 app.use('/api/auth', authRoutes);
 app.use('/api/unidades', unidadesRoutes);
 app.use('/api/atividades', atividadesRoutes);
@@ -45,6 +46,7 @@ app.use('/api/contracheque', contrachequeRoutes);
 app.use('/api/turmas', turmasRoutes);
 app.use('/api/materiais', materialRoutes); 
 app.use('/api/visitas', visitaRoutes);
+app.use('/api/pedagogo', pedagogoRoutes);
 
 // 5. INICIALIZAÇÃO DO SERVIDOR
 const PORT = process.env.PORT || 5000;
