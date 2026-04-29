@@ -26,7 +26,7 @@ const SidebarGestor = () => {
             <li><FaBriefcase /> Desempenho</li>
           </Link>
 
-          <Link to="comunicados" className={location.pathname === "/comunicados" ? "active" : ""}>
+          <Link to="/gestor/comunicados" className={location.pathname === "/comunicados" ? "active" : ""}>
             <li><FaBullhorn /> Comunicados Oficiais</li>
           </Link>
           <Link to="/gestor/contracheques" className={location.pathname === "/contracheques" ? "active" : ""}>

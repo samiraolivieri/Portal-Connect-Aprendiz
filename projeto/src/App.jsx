@@ -31,8 +31,8 @@ function App() {
 
   // Definição das condições de visualização
   const isLoginPage = location.pathname === "/" || location.pathname === "/login";
-  const isGestorPage = location.pathname.startsWith("/gestor");
-  const isPedagogoPage = location.pathname.startsWith("/pedagogo");
+  const isGestorPage = location.pathname.startsWith("/gestor/dashboard");
+  const isPedagogoPage = location.pathname.startsWith("/pedagogo/dashboard");
 
   // Ajuste de layout para o pedagogo (conforme sua lógica anterior)
   const layoutClass = isPedagogoPage ? "" : "app-layout";
