@@ -1,0 +1,505 @@
+/* Container que envolve todo o conteúdo à direita da Sidebar */
+.dashboard-container {
+  width: 100%;
+  padding: 30px;
+  box-sizing: border-box;
+}
+
+/* Header com o nome do usuário e ícones */
+.dash-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.dash-header h1 {
+  font-size: 2.2rem;
+  color: #1a3a5a; /* Tom de azul escuro profissional */
+  margin: 0;
+  font-weight: 800;
+}
+
+.header-icons {
+  display: flex;
+  gap: 20px;
+  font-size: 1.5rem;
+  color: #555;
+  cursor: pointer;
+}
+
+/* Seção principal dos cards */
+/* Seção principal onde está o calendário */
+.atividades-section {
+  background-color: #fff; /* Fundo branco para combinar com o resto */
+  border: none;           /* Removemos a borda laranja */
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); /* Sombra mais suave para combinar com os outros cards */
+}
+
+.atividades-section h3 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 1rem;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Grid que coloca os ActivityCards lado a lado com Scroll */
+.cards-grid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;      /* IMPORTANTE: Impede os cards de irem para baixo */
+  gap: 20px;              /* Espaço entre um card e outro */
+  width: 100%;
+  overflow-x: auto;       /* Habilita o scroll horizontal */
+  padding: 10px 5px 20px 5px; /* Espaço para a sombra não cortar e para o scroll */
+  
+  /* Esconde a barra de scroll no Chrome/Safari (opcional, para ficar mais limpo) */
+  scrollbar-width: thin; 
+  scrollbar-color: #1a3a5a #f0f0f0;
+}
+
+/* Estilo da barra de scroll para Chrome, Edge e Safari */
+.cards-grid::-webkit-scrollbar {
+  height: 8px; /* Altura da barrinha horizontal */
+}
+
+.cards-grid::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.cards-grid::-webkit-scrollbar-thumb {
+  background: #1a3a5a;
+  border-radius: 10px;
+}
+
+/* Grid que coloca as tabelas e mural */
+.dashboard-content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.resumo-academico {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.resumo-academico h3,
+.mural-unidade h3,
+.docs-pedagogico-section h3 { /* Adicionei o h3 novo aqui também */
+  font-size: 0.85rem;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 0 0 16px;
+}
+
+.tabela-notas {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabela-notas th,
+.tabela-notas td {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid #eee;
+  font-size: 0.85rem;
+  color: #333;
+}
+
+.tabela-notas th {
+  background-color: #f8f9fa;
+  font-weight: 700;
+}
+
+/* Mural */
+.mural-unidade {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.mural-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.mural-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.mural-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.mural-avatar {
+  width: 38px;
+  height: 38px;
+  min-width: 38px;
+  border-radius: 50%;
+  background: #1a3a5a;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.mural-corpo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mural-meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.mural-autor {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #1a3a5a;
+}
+
+.mural-cargo {
+  font-size: 0.75rem;
+  color: #888;
+}
+
+.mural-mensagem {
+  font-size: 0.82rem;
+  color: #444;
+  margin: 2px 0 0;
+  line-height: 1.4;
+}
+
+.mural-tempo {
+  font-size: 0.7rem;
+  color: #aaa;
+}
+
+/* ============================================================
+   ESTILOS NOVOS: DOCUMENTOS E MATERIAL PEDAGÓGICO
+   ============================================================ */
+
+.docs-pedagogico-section {
+  margin-top: 24px;
+}
+
+.section-docs-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.doc-item-card {
+  background: white;
+  border-radius: 12px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+}
+
+.doc-item-card:hover {
+  transform: translateY(-3px);
+}
+
+.doc-icon-circle {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+}
+
+.blue-icon { background-color: #e3f2fd; color: #1a3a5a; }
+.green-icon { background-color: #e8f5e9; color: #2e7d32; }
+
+.doc-text {
+  flex-grow: 1;
+}
+
+.doc-text h4 {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #1a3a5a;
+  font-weight: 700;
+}
+
+.doc-text p {
+  margin: 2px 0;
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.doc-status {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 12px;
+  text-transform: uppercase;
+}
+
+.available { background: #fff3e0; color: #e67e22; }
+.update { background: #e0f2f1; color: #00897b; }
+
+.btn-view-doc {
+  background: transparent;
+  border: 1.5px solid #1a3a5a;
+  color: #1a3a5a;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-view-doc:hover {
+  background: #1a3a5a;
+  color: #fff;
+}
+/* Container relativo para posicionar o pop-up */
+.icon-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* Estilo Base do Pop-up (Dropdown) */
+.dropdown-popup {
+  position: absolute;
+  top: 45px; /* Fica logo abaixo do ícone */
+  right: 0;
+  width: 280px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  border: 1px solid #eee;
+  padding: 15px;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.dropdown-popup h4 {
+  margin: 0 0 10px 0;
+  color: #1a3a5a;
+  font-size: 0.9rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 8px;
+}
+
+.dropdown-popup ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dropdown-popup li {
+  padding: 10px;
+  font-size: 0.85rem;
+  color: #444;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.dropdown-popup li:hover {
+  background: #f5f8fa;
+}
+
+/* Detalhes específicos do Perfil */
+.user-info-header {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.user-info-header strong { color: #1a3a5a; font-size: 0.9rem; }
+.user-info-header span { color: #888; font-size: 0.75rem; }
+
+.logout-opt {
+  color: #d9534f !important; /* Vermelho para o Sair */
+  font-weight: bold;
+}
+
+/* Animação para o pop-up aparecer suavemente */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsividade simples */
+@media (max-width: 768px) {
+  .section-docs-container, 
+  .dashboard-content-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================================
+   ESTILOS DO SUPORTE FLUTUANTE (NOVO)
+   ============================================================ */
+
+.floating-contact {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background-color: #1a3a5a;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  z-index: 999;
+}
+
+.floating-contact:hover {
+  transform: translateY(-5px);
+  background-color: #2a4a6a;
+}
+
+.contact-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: flex-end; 
+  align-items: flex-end;
+  z-index: 10000;
+  backdrop-filter: blur(2px);
+  
+  /* --- AQUI ESTÁ A CORREÇÃO --- */
+  pointer-events: none; /* Faz o mouse atravessar o overlay invisível */
+  opacity: 0;           /* Começa invisível */
+  transition: opacity 0.3s ease;
+}
+
+/* Criamos uma classe para ativar o modal */
+.contact-overlay.active {
+  display: flex;
+  opacity: 1;
+  pointer-events: auto; /* Permite cliques apenas quando o modal está aberto */
+}
+.contact-window {
+  width: 320px;
+  background: white;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  animation: slideUp 0.3s ease-out;
+
+  /* --- AQUI ESTÁ O SEGREDO DO RECUO --- */
+  margin-right: 50px; /* Ajuste esse valor para afastar mais ou menos da direita */
+}
+
+.contact-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #f0f4f8;
+  padding-bottom: 10px;
+}
+
+.contact-header h4 {
+  margin: 0;
+  color: #1a3a5a;
+}
+
+.btn-close-contact {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: #888;
+  cursor: pointer;
+}
+
+.contact-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.contact-card {
+  background: #f8fafc;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #edf2f7;
+}
+
+.contact-info strong {
+  display: block;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.contact-info span {
+  color: #666;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+
+.contact-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.action-link {
+  flex: 1;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.action-link.mail { background-color: #e3f2fd; color: #1a3a5a; }
+.action-link.phone { background-color: #e8f5e9; color: #2e7d32; }
+.calendar-wrapper .react-calendar {
+  width: 100%;
+  max-width: 400px; /* Ajuste aqui o tamanho do calendário */
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+@keyframes slideUp {
+  from { transform: translateY(50px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}

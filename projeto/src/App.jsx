@@ -1,53 +1,57 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom'; // Adicionei o useLocation aqui
 import Sidebar from './components/Sidebar/Sidebar.jsx';
-import Dashboard from './pages/Dashboard.jsx';
-// Importe as outras páginas que vamos criar (mesmo que vazias agora)
-// import Boletim from './pages/Boletim'; 
 import './App.css';
 
-import Mural from './pages/Mural.jsx';
-import Carreiras from './pages/Carreiras.jsx';
-import Justificativas from './pages/Justificativas.jsx'
-import Boletim from './pages/Boletim.jsx'
+// --- IMPORTS DO APRENDIZ ---
+import Login from './pages/aprendiz/Login.jsx'
+import Dashboard from './pages/aprendiz/Dashboard.jsx';
+import Mural from './pages/aprendiz/Mural.jsx';
+import Carreiras from './pages/aprendiz/Carreiras.jsx';
+import Justificativas from './pages/aprendiz/Justificativas.jsx';
+import Boletim from './pages/aprendiz/Boletim.jsx';
 
+// --- IMPORTS DO GESTOR ---
+import Desempenho from './pages/gestor/Desempenho.jsx'; 
+import Contracheque from './pages/gestor/Contracheque.jsx';
+import GerirTurmas from './pages/pedagogo/GerirTurmas.jsx';
+import PublicarMaterial from './pages/pedagogo/PublicarMaterial.jsx';
 
 function App() {
+  const location = useLocation(); // Hook para saber em qual URL estamos
+
+  // Verificamos se a rota atual é a do login ("/")
+  const isLoginPage = location.pathname === "/";
+
   return (
     <div className="app-layout">
-      <Sidebar />
+      {/* Se NÃO for a página de login, mostra a Sidebar */}
+      {!isLoginPage && <Sidebar />}
 
       <main className="content">
         <Routes>
-          <Route path="/" element={<Dashboard />} />
+          {/* Rotas do Aprendiz */}
+          <Route path="/" element={<Login />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/boletim" element={<Boletim />} />
+          <Route path="/justificativas" element={<Justificativas />} />
+          
+          <Route path="/mural" element={
+            <div style={{ color: "black" }}>
+              <Mural />
+            </div>
+          } />
 
-          <Route
-            path="/boletim"
-            element={<Boletim />}
-          />
+          <Route path="/carreiras" element={
+            <div style={{ color: "black" }}>
+              <Carreiras />
+            </div>
+          } />
 
-          <Route
-            path="/justificativas"
-            element={<Justificativas/>}
-          />
-
-          <Route
-            path="/mural"
-            element={
-              <div style={{ color: "black" }}>
-                <Mural />
-              </div>
-            }
-          />
-
-          <Route
-            path="/carreiras"
-            element={
-              <div style={{ color: "black" }}>
-                <Carreiras />
-              </div>
-            }
-          />
-
+          {/* --- NOVAS ROTAS DO GESTOR --- */}
+          <Route path="/gestor/desempenho" element={<Desempenho />} />
+          <Route path="/gestor/contracheque" element={<Contracheque />} />
+          <Route path="/pedagogo/gerirturmas" element={<GerirTurmas />} />
+          <Route path="/pedagogo/publicarmaterial" element={<PublicarMaterial />} />
         </Routes>
       </main>
     </div>

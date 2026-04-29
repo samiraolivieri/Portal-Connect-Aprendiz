@@ -1,0 +1,147 @@
+/* --- RESET GLOBAL E CONTAINER --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.gerir-turmas-container {
+    padding: 30px;
+    width: 100%;
+}
+
+.titulo-pagina {
+    color: #1a3a5a;
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+/* --- CARDS --- */
+.card-turma {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    border-top: 5px solid #1a3a5a;
+    margin-bottom: 30px;
+    overflow-x: auto;
+}
+
+.titulo-secao {
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 25px;
+}
+
+/* --- FORMULÁRIO --- */
+.form-turma {
+    display: flex;
+    gap: 15px;
+    align-items: flex-end; 
+    flex-wrap: wrap;
+}
+
+.input-group {
+    flex: 1;
+    min-width: 250px;
+}
+
+/* Classe para campos que devem ocupar mais espaço (ex: Descrição) */
+.full-width {
+    flex: 2;
+}
+
+.input-field {
+    width: 100%;
+    height: 48px;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+/* --- ESTILO DA CAIXA DE UPLOAD --- */
+.file-upload-box {
+    border: 2px dashed #1a3a5a;
+    background-color: #f8f9fa;
+    padding: 15px;
+    text-align: center;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 48px;
+    transition: all 0.3s;
+}
+
+.file-upload-box:hover {
+    background-color: #eef2f7;
+    border-color: #112942;
+}
+
+.hidden-file-input {
+    display: none;
+}
+
+.upload-text {
+    font-size: 0.9rem;
+    color: #1a3a5a;
+    font-weight: 600;
+}
+
+/* --- BOTÕES --- */
+.btn-adicionar {
+    height: 48px;
+    padding: 0 30px;
+    background-color: #1a3a5a;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: 800;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.3s;
+}
+
+.btn-adicionar:hover {
+    background-color: #112942;
+}
+
+/* --- LAYOUT GRID (Formulário ao lado da Lista) --- */
+.layout-grid {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.lista-materiais {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.item-lista {
+    padding: 12px;
+    border-left: 4px solid #1a3a5a;
+    background: #f8f9fa;
+    border-radius: 4px;
+    transition: transform 0.2s, background 0.2s;
+}
+
+.item-lista:hover {
+    background: #f1f5f9;
+    transform: translateX(5px);
+}
+
+/* --- RESPONSIVIDADE --- */
+@media (max-width: 900px) {
+    .layout-grid { flex-direction: column; }
+}
+
+@media (max-width: 768px) {
+    .form-turma { flex-direction: column; align-items: stretch; }
+    .full-width { flex: 1; }
+}

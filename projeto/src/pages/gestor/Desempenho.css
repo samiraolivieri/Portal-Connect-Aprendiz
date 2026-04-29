@@ -1,0 +1,135 @@
+.desempenho-page {
+    padding: 30px;
+    background-color: transparent;
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.desempenho-header h1 {
+    color: #002b5c; /* Azul escuro das suas imagens */
+    margin-bottom: 5px;
+}
+
+.desempenho-header p {
+    color: #64748b;
+    margin-bottom: 30px;
+}
+
+/* Estilo dos Cards de Resumo */
+.resumo-cards {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.card-info {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    flex: 1;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border-bottom: 4px solid #002b5c;
+}
+
+.card-info span {
+    font-size: 0.85rem;
+    color: #64748b;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.card-info h2 {
+    font-size: 2rem;
+    color: #1e293b;
+    margin-top: 10px;
+}
+
+/* Estilo da Tabela */
+.tabela-container {
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+}
+
+.tabela-container h3 {
+    margin-bottom: 20px;
+    color: #334155;
+}
+
+.tabela-desempenho {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tabela-desempenho th {
+    text-align: left;
+    padding: 15px;
+    background-color: #f1f5f9;
+    color: #002b5c;
+    font-weight: 600;
+}
+
+.tabela-desempenho td {
+    padding: 15px;
+    border-bottom: 1px solid #e2e8f0;
+    color: #475569;
+}
+
+.col-nome {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 500;
+}
+
+.avatar {
+    width: 32px;
+    height: 32px;
+    background: #002b5c;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+}
+
+/* Badges e Botões */
+.status-label {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+
+.status-label.bom {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.status-label.alerta {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+.btn-ver {
+    background: none;
+    border: 1px solid #002b5c;
+    color: #002b5c;
+    padding: 5px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-ver:hover {
+    background: #002b5c;
+    color: white;
+}
+
+.loading {
+    text-align: center;
+    padding: 40px;
+    color: #94a3b8;
+}
