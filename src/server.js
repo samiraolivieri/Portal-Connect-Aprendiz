@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
+const path = require('path');
 
 // 1. IMPORTAÇÃO DAS ROTAS (Baseado na sua estrutura de pastas)
 const AtestadoRoutes = require('./routes/AtestadoRoutes')

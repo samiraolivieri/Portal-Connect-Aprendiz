@@ -8,6 +8,9 @@ import Justificativas from './pages/aprendiz/Justificativas.jsx';
 import Boletim from './pages/aprendiz/Boletim.jsx';
 import Comunicados from './pages/gestor/Comunicados.jsx';
 import Pedagogo from "./pages/pedagogo/Pedagogo";
+import JustificativasGestor from "./pages/gestor/Justificativas.jsx"
+import JustificativasPedagogo from "./pages/pedagogo/Justificativas.jsx"
+
 import './App.css';
 
 
@@ -34,6 +37,8 @@ function App() {
           <Route path="/carreiras" element={<Carreiras />} />
           <Route path="/comunicados" element={<Comunicados />} />
           <Route path="/pedagogo" element={<Pedagogo />} />
+          <Route path="/gestor/justificativas" element={<JustificativasGestor />} />
+          <Route path="/pedagogo/justificativas" element={<JustificativasPedagogo />} />
         </Routes>
       </main>
     </div>
