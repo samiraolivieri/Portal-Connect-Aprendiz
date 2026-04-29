@@ -61,7 +61,7 @@ function App() {
           {/* Rotas do Gestor */}
           <Route path="/gestor/dashboard" element={<DashboardGestor />} />
           <Route path="/gestor/desempenho" element={<Desempenho />} />
-          <Route path="/gestor/contracheque" element={<Contracheque />} />
+          <Route path="/gestor/contracheques" element={<Contracheque />} />
           <Route path="/gestor/justificativas" element={<JustificativasGestor />} />
           <Route path="/gestor/comunicados" element={<Comunicados />} />
 

@@ -29,7 +29,7 @@ const SidebarGestor = () => {
           <Link to="comunicados" className={location.pathname === "/comunicados" ? "active" : ""}>
             <li><FaBullhorn /> Comunicados Oficiais</li>
           </Link>
-          <Link to="gestor/contracheques" className={location.pathname === "/contracheques" ? "active" : ""}>
+          <Link to="/gestor/contracheques" className={location.pathname === "/contracheques" ? "active" : ""}>
             <li><FaFileAlt /> Contracheques</li>
           </Link>
         </ul>
