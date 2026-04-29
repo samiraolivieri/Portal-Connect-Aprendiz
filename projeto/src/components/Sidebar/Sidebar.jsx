@@ -14,7 +14,7 @@ const Sidebar = () => {
       <nav className="sidebar-nav">
       <ul>
           {/* Usamos o Link no lugar de <li> comum para não recarregar a página */}
-          <Link to="/" className={location.pathname === "/" ? "active" : ""}>
+          <Link to="/dashboard" className={location.pathname === "/dashboard" ? "active" : ""}>
             <li><FaThLarge /> Dashboard</li>
           </Link>
           
