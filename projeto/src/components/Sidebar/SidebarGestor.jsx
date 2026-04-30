@@ -18,7 +18,7 @@ const SidebarGestor = () => {
             <li><FaThLarge /> Visão Geral</li>
           </Link>
           
-          <Link to="/atestados" className={location.pathname === "/atestados" ? "active" : ""}>
+          <Link to="/gestor/justificativas" className={location.pathname === "/gestor/justificativas" ? "active" : ""}>
             <li><FaFileAlt />Validar Atestados</li>
           </Link>
           
@@ -26,10 +26,10 @@ const SidebarGestor = () => {
             <li><FaBriefcase /> Desempenho</li>
           </Link>
 
-          <Link to="comunicados" className={location.pathname === "/comunicados" ? "active" : ""}>
+          <Link to="/gestor/comunicados" className={location.pathname === "/gestor/comunicados" ? "active" : ""}>
             <li><FaBullhorn /> Comunicados Oficiais</li>
           </Link>
-          <Link to="gestor/contracheques" className={location.pathname === "/contracheques" ? "active" : ""}>
+          <Link to="/gestor/contracheques" className={location.pathname === "/gestor/contracheques" ? "active" : ""}>
             <li><FaFileAlt /> Contracheques</li>
           </Link>
         </ul>

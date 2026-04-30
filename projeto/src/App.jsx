@@ -31,8 +31,8 @@ function App() {
 
   // Definição das condições de visualização
   const isLoginPage = location.pathname === "/" || location.pathname === "/login";
-  const isGestorPage = location.pathname.startsWith("/gestor");
-  const isPedagogoPage = location.pathname.startsWith("/pedagogo");
+  const isGestorPage = location.pathname.startsWith("/gestor/dashboard");
+  const isPedagogoPage = location.pathname.startsWith("/pedagogo/dashboard");
 
   // Ajuste de layout para o pedagogo (conforme sua lógica anterior)
   const layoutClass = isPedagogoPage ? "" : "app-layout";
@@ -61,7 +61,7 @@ function App() {
           {/* Rotas do Gestor */}
           <Route path="/gestor/dashboard" element={<DashboardGestor />} />
           <Route path="/gestor/desempenho" element={<Desempenho />} />
-          <Route path="/gestor/contracheque" element={<Contracheque />} />
+          <Route path="/gestor/contracheques" element={<Contracheque />} />
           <Route path="/gestor/justificativas" element={<JustificativasGestor />} />
           <Route path="/gestor/comunicados" element={<Comunicados />} />
 
