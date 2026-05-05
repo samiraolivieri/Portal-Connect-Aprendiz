@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../../styles/gestor/Justificativas.css';
+import { FaFileAlt } from 'react-icons/fa';
 
 const GestaoAprendizes = () => {
   const [atividades, setAtividades] = useState([]);
@@ -38,7 +39,16 @@ const GestaoAprendizes = () => {
 
   return (
     <div className="gestao-container">
-      <h1>GESTÃO DE APRENDIZES</h1>
+
+      <header className="dash-header">
+  <div className="titulo-pagina">
+    <h1>
+      <FaFileAlt className="icon-titulo" /> 
+      Validação de Justificativas
+    </h1>
+  </div>
+</header>
+
       
       <table className="tabela-atividades">
         <thead>

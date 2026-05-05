@@ -1,9 +1,19 @@
 import { useState, useEffect } from "react";
 import "../../styles/carreiras.css";
+// Adicionado ícones para o modal e botão flutuante
+import { FaComments, FaTimes, FaEnvelope } from 'react-icons/fa';
 
 export default function Carreiras() {
   const [modal, setModal] = useState("");
   const [vagas, setVagas] = useState([]);
+
+  // Estados para o Modal de Contatos/Suporte
+  const [showContactModal, setShowContactModal] = useState(false);
+
+  const contatosSuporte = [
+    { nome: "Sérgio Carvalho", cargo: "Gestor", email: "serginho@empresa.com", tel: "(21) 99999-9999" },
+    { nome: "Vilma Nascimento", cargo: "Pedagogia", email: "amaior@ensino.com", tel: "(21) 88888-8888" }
+  ];
 
   // Busca vagas do back-end
   useEffect(() => {
@@ -28,7 +38,7 @@ export default function Carreiras() {
       {/* Stats Cards */}
       <div className="stats">
         <div className="stat-card" onClick={() => setModal("vagas")}>
-          <h3>{3 + vagas.length}</h3> {/* Soma as estáticas + dinâmicas */}
+          <h3>{3 + vagas.length}</h3>
           <p>Vagas Abertas</p>
         </div>
 
@@ -47,7 +57,6 @@ export default function Carreiras() {
       <div className="section">
         <h2>💼 Últimas Oportunidades</h2>
         <div className="grid">
-          {/* Vagas Estáticas */}
           <div className="item-card">
             <h3>Jovem Aprendiz</h3>
             <p>Firjan • RJ</p>
@@ -61,7 +70,6 @@ export default function Carreiras() {
             <p>Home Office</p>
           </div>
 
-          {/* Vagas vindas do Back-end */}
           {vagas.map((vaga) => (
             <div className="item-card" key={vaga.id}>
               <h3>{vaga.titulo}</h3>
@@ -88,13 +96,12 @@ export default function Carreiras() {
         <div className="event">Workshop LinkedIn - 25/04</div>
       </div>
 
-      {/* --- MODAL / POPUP --- */}
+      {/* --- MODAIS DE CONTEÚDO (VAGAS/CURSOS/EVENTOS) --- */}
       {modal && (
         <div className="overlay" onClick={() => setModal("")}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
             <button className="fechar" onClick={() => setModal("")}>X</button>
 
-            {/* Conteúdo Modal VAGAS */}
             {modal === "vagas" && (
               <>
                 <h2>💼 Vagas Abertas</h2>
@@ -106,7 +113,6 @@ export default function Carreiras() {
                   <VagaItem titulo="Jovem Aprendiz em Logística - SENAI" link="https://www.firjan.com.br/" />
                   <VagaItem titulo="Estágio em Suporte Técnico - SENAI" link="https://www.firjan.com.br/" />
                   
-                  {/* Vagas dinâmicas no Modal */}
                   {vagas.map(vaga => (
                     <VagaItem key={vaga.id} titulo={`${vaga.titulo} - ${vaga.empresa}`} link={vaga.link_externo || "#"} />
                   ))}
@@ -114,7 +120,6 @@ export default function Carreiras() {
               </>
             )}
 
-            {/* Conteúdo Modal CURSOS */}
             {modal === "cursos" && (
               <>
                 <h2>🎓 Cursos Disponíveis</h2>
@@ -131,7 +136,6 @@ export default function Carreiras() {
               </>
             )}
 
-            {/* Conteúdo Modal EVENTOS */}
             {modal === "eventos" && (
               <>
                 <h2>📅 Próximos Eventos</h2>
@@ -142,11 +146,45 @@ export default function Carreiras() {
           </div>
         </div>
       )}
+
+      {/* --- NOVO: MODAL DE SUPORTE/CONTATOS --- */}
+      {showContactModal && (
+        <div className="contact-overlay active" onClick={() => setShowContactModal(false)}>
+          <div className="contact-window" onClick={(e) => e.stopPropagation()}>
+            <div className="contact-header">
+              <h4>Contatos Responsáveis</h4>
+              <button className="btn-close-contact" onClick={() => setShowContactModal(false)}>
+                <FaTimes />
+              </button>
+            </div>
+            <div className="contact-list">
+              {contatosSuporte.map((c, index) => (
+                <div key={index} className="contact-card">
+                  <strong>{c.nome}</strong>
+                  <span> | {c.cargo}</span>
+                  <div className="contact-actions">
+                    <a href={`mailto:${c.email}`} className="action-link mail">
+                      <FaEnvelope /> Email
+                    </a>
+                    <a href={`tel:${c.tel}`} className="action-link phone">{c.tel}</a>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* BOTÃO FLUTUANTE DE SUPORTE */}
+      <div className="floating-contact" onClick={() => setShowContactModal(true)}>
+        <FaComments />
+        <span>Contatos</span>
+      </div>
     </div>
   );
 }
 
-// Sub-componentes para limpar o código principal
+// Sub-componentes permanecem iguais
 function VagaItem({ titulo, link }) {
   return (
     <div className="curso-item">

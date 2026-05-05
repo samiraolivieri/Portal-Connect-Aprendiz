@@ -1,34 +1,47 @@
 import React, { useState, useEffect } from 'react';
 import './DashboardGestor.css';
 import axios from 'axios';
-// import { agendarVisita } from '../;
+import { useNavigate } from 'react-router-dom';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { FaThLarge, FaFileAlt, FaBullhorn, FaBriefcase, FaBell, FaUserCircle, FaComments } from 'react-icons/fa';
+import { 
+  FaThLarge, 
+  FaBell, 
+  FaUserCircle, 
+  FaComments, 
+  FaEnvelope, 
+  FaTimes 
+} from 'react-icons/fa';
 import 'react-calendar/dist/Calendar.css';
 import Calendar from 'react-calendar';
-import ContatoPopup from '../../components/ContatoPopup';
-
-
-const data = [
-  { mes: 'Jan', performance: 65 },
-  { mes: 'Fev', performance: 70 },
-  { mes: 'Mar', performance: 80 },
-  { mes: 'Abr', performance: 85 },
-];
 
 const DashboardGestor = () => {
+  // 1. Estados de Autenticação e Menu (vindo do código da amiga)
+  const navigate = useNavigate();
+  const usuarioLogado = JSON.parse(localStorage.getItem('usuario')) || { nome: 'Gestor', cargo: 'Gestor Petrobras' };
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  // 2. Estados de Visitas e Gráficos
   const [dataVisita, setDataVisita] = useState(new Date());
   const [minhasVisitas, setMinhasVisitas] = useState([]);
+  const [dadosGrafico, setDadosGrafico] = useState([]);
 
-
+  // 3. Estados de Contato (Integrando sua lógica de aprendizes do banco)
   const [showContactModal, setShowContactModal] = useState(false);
-  const [contatoSelecionado, setContatoSelecionado] = useState(null);
+  const [aprendizes, setAprendizes] = useState([]);
 
+  // Informação fixa da Pedagoga
+  const contatoPedagoga = { 
+    nome: "Vilma Nascimento", 
+    cargo: "Pedagogia", 
+    email: "amaior@ensino.com", 
+    tel: "(21) 88888-8888" 
+  };
+
+  // --- LÓGICA DE CARREGAMENTO DE DADOS ---
 
   const carregarVisitas = async () => {
     try {
-      const gestorId = 1; // ID que existe no seu banco
+      const gestorId = usuarioLogado.id || 1;
       const response = await axios.get(`http://localhost:5000/api/visitas/listar/${gestorId}`);
       setMinhasVisitas(response.data);
     } catch (error) {
@@ -36,38 +49,20 @@ const DashboardGestor = () => {
     }
   };
 
-
-
-  useEffect(() => {
-    carregarVisitas();
-  }, []);
-
-  const handleAgendar = async () => {
+  const carregarAprendizes = async () => {
     try {
-      // Formata a data selecionada no react-calendar para o MySQL (YYYY-MM-DD)
-      const ano = dataVisita.getFullYear();
-      const mes = String(dataVisita.getMonth() + 1).padStart(2, '0');
-      const dia = String(dataVisita.getDate()).padStart(2, '0');
-      const dataFormatada = `${ano}-${mes}-${dia}`;
-      // Supondo que o ID do gestor logado seja 1
-      // (Ajuste a porta 5000 se o seu backend usar outra)
-      await axios.post('http://localhost:5000/api/visitas/agendar', {
-        gestor_id: 1,
-        data_visita: dataFormatada
-      });
-
-      alert('Visita agendada com sucesso!');
-      carregarVisitas();
+      const response = await axios.get('http://localhost:5000/api/auth/aprendizes');
+      setAprendizes(response.data);
     } catch (error) {
-      console.error(error);
-      alert('Erro ao agendar. Verifique se o servidor está rodando.');
+      console.error("Erro ao carregar aprendizes:", error);
     }
   };
 
-  const [dadosGrafico, setDadosGrafico] = useState([]);
-
   useEffect(() => {
-    const buscarDados = async () => {
+    carregarVisitas();
+    carregarAprendizes();
+
+    const buscarDadosGrafico = async () => {
       try {
         const response = await axios.get('http://localhost:5000/api/visitas/desempenho-turma');
         setDadosGrafico(response.data);
@@ -75,52 +70,85 @@ const DashboardGestor = () => {
         console.error("Erro na requisição do gráfico:", error);
       }
     };
-    buscarDados();
+    buscarDadosGrafico();
   }, []);
 
+  // --- HANDLERS ---
+
+  const handleLogout = () => {
+    localStorage.removeItem('usuario');
+    navigate('/');
+  };
+
+  const handleAgendar = async () => {
+    try {
+      const ano = dataVisita.getFullYear();
+      const mes = String(dataVisita.getMonth() + 1).padStart(2, '0');
+      const dia = String(dataVisita.getDate()).padStart(2, '0');
+      const dataFormatada = `${ano}-${mes}-${dia}`;
+
+      await axios.post('http://localhost:5000/api/visitas/agendar', {
+        gestor_id: usuarioLogado.id || 1,
+        data_visita: dataFormatada
+      });
+
+      alert('Visita agendada com sucesso!');
+      carregarVisitas();
+    } catch (error) {
+      alert('Erro ao agendar visita.');
+    }
+  };
 
   return (
     <div className="dashboard-container">
-
       <header className="dash-header">
         <h1> <FaThLarge /> GESTÃO DE APRENDIZES</h1>
+        
         <div className="header-icons">
           <FaBell />
-          <FaUserCircle />
+          {/* Menu de Usuário com Logout */}
+          <div className="icon-wrapper" onClick={() => setIsMenuOpen(!isMenuOpen)} style={{ cursor: 'pointer', position: 'relative' }}>
+            <FaUserCircle />
+            {isMenuOpen && (
+              <div className="dropdown-popup">
+                <div className="user-info-header">
+                  <strong>{usuarioLogado.nome}</strong>
+                  <span>{usuarioLogado.nivel === 'gestor' ? 'Gestor' : 'Administrador'} - Petrobras</span>
+                </div>
+                <ul>
+                  <li className="logout-opt" onClick={handleLogout}>Sair do Sistema</li>
+                </ul>
+              </div>
+            )}
+          </div>
         </div>
       </header>
-      {/* Box de Alerta Prioritário */}
 
-
+      {/* Seção de Visitas */}
       <section className="visitas-agendadas-section">
         <h3>VISITAS TÉCNICAS AGENDADAS</h3>
         <div className="visitas-lista">
-          {minhasVisitas.length === 0 ? (
-            <p>Nenhuma visita agendada para este gestor.</p>
-          ) : (
-            <table className="pendencias-table">
-              <thead>
-                <tr>
-                  <th>Data da Visita</th>
-                  <th>Status</th>
-                  <th>Criado em</th>
+          <table className="pendencias-table">
+            <thead>
+              <tr>
+                <th>Data da Visita</th>
+                <th>Status</th>
+                <th>Criado em</th>
+              </tr>
+            </thead>
+            <tbody>
+              {minhasVisitas.map((visita) => (
+                <tr key={visita.id}>
+                  <td>{new Date(visita.data_visita).toLocaleDateString('pt-BR')}</td>
+                  <td><span className={`status-badge-${(visita.status).toLowerCase()}`} >{visita.status}</span></td>
+                  <td>{new Date(visita.data_criacao).toLocaleString('pt-BR')}</td>
                 </tr>
-              </thead>
-              <tbody>
-                {minhasVisitas.map((visita) => (
-                  <tr key={visita.id}>
-                    {/* Formata a data para o padrão brasileiro ao exibir */}
-                    <td>{new Date(visita.data_visita).toLocaleDateString('pt-BR')}</td>
-                    <td><span className={`status-badge-${(visita.status).toLowerCase()}`} >{visita.status}</span></td>
-                    <td>{new Date(visita.data_criacao).toLocaleString('pt-BR')}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
+              ))}
+            </tbody>
+          </table>
         </div>
       </section>
-      {/* Grid Principal */}
+
       <div className="gestor-grid">
         <div className="monitoramento-card">
           <h3>MONITORAMENTO DE APRENDIZAGEM</h3>
@@ -129,15 +157,9 @@ const DashboardGestor = () => {
               <LineChart data={dadosGrafico}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} />
                 <XAxis dataKey="mes" />
-                <YAxis domain={[0, 10]} /> {/* Ajustado para escala de notas 0-10 */}
+                <YAxis domain={[0, 10]} />
                 <Tooltip />
-                <Line
-                  type="monotone"
-                  dataKey="performance"
-                  stroke="#2980b9"
-                  strokeWidth={3}
-                  name="Média da Turma"
-                />
+                <Line type="monotone" dataKey="performance" stroke="#2980b9" strokeWidth={3} name="Média da Turma" />
               </LineChart>
             </ResponsiveContainer>
           </div>
@@ -146,42 +168,71 @@ const DashboardGestor = () => {
         <div className="acoes-rapidas">
           <h3>AGENDAR VISITA TÉCNICA</h3>
           <div className="calendario-wrapper">
-            <Calendar
-              onChange={setDataVisita}
-              value={dataVisita}
-              locale="pt-BR" // Para mostrar em Português
-            />
+            <Calendar onChange={setDataVisita} value={dataVisita} locale="pt-BR" />
           </div>
-
           <button className="btn-confirmar" onClick={handleAgendar}> CONFIRMAR</button>
-        </div>
-
-        <div className="floating-contact" onClick={() => setShowContactModal(true)}>
-          <FaComments />
-          <span>Contatos</span>
         </div>
       </div>
 
-      {contatoSelecionado && (
-        <ContatoPopup
-          contato={contatoSelecionado}
-          onClose={() => setContatoSelecionado(null)}
-        />
-        
+      {/* BOTÃO FLUTUANTE DE CONTATOS */}
+      <div className="floating-contact" onClick={() => setShowContactModal(true)}>
+        <FaComments />
+        <span>Contatos</span>
+      </div>
+
+      {/* MODAL DE CONTATOS (Unificado: Pedagogia + Alunos do Banco) */}
+      {showContactModal && (
+        <div className="contact-overlay active" onClick={() => setShowContactModal(false)}>
+          <div className="contact-window" onClick={(e) => e.stopPropagation()}>
+            <div className="contact-header">
+              <h4>Lista de Contatos</h4>
+              <button className="btn-close-contact" onClick={() => setShowContactModal(false)}>
+                <FaTimes />
+              </button>
+            </div>
+            
+            <div className="contact-list" style={{ maxHeight: '450px', overflowY: 'auto' }}>
+              
+              {/* SEÇÃO: PEDAGOGIA */}
+              <div style={{ padding: '10px 5px', fontWeight: 'bold', color: '#1a3a5a', fontSize: '0.9rem' }}>
+                PEDAGOGIA
+              </div>
+              <div className="contact-card">
+                <strong>{contatoPedagoga.nome}</strong> <span> | {contatoPedagoga.cargo}</span>
+                <div className="contact-actions">
+                  <a href={`mailto:${contatoPedagoga.email}`} className="action-link mail">
+                    <FaEnvelope /> Email
+                  </a>
+                  <a href={`tel:${contatoPedagoga.tel}`} className="action-link phone">{contatoPedagoga.tel}</a>
+                </div>
+              </div>
+
+              <hr style={{ margin: '15px 0', opacity: '0.1' }} />
+
+              {/* SEÇÃO: APRENDIZES (DINÂMICO DO SEU BANCO) */}
+              <div style={{ padding: '10px 5px', fontWeight: 'bold', color: '#1a3a5a', fontSize: '0.9rem' }}>
+                APRENDIZES CADASTRADOS
+              </div>
+              {aprendizes.length > 0 ? (
+                aprendizes.map((aluno) => (
+                  <div key={aluno.id} className="contact-card">
+                    <strong>{aluno.nome}</strong> <span> | Aprendiz</span>
+                    <div className="contact-actions">
+                      <a href={`mailto:${aluno.email}`} className="action-link mail" title={aluno.email}>
+                        <FaEnvelope /> Email
+                      </a>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p style={{ padding: '10px', fontSize: '0.8rem' }}>Nenhum aprendiz encontrado.</p>
+              )}
+            </div>
+          </div>
+        </div>
       )}
-
-
-
     </div>
-
-
-
-
   );
-
-
 };
-
-
 
 export default DashboardGestor;

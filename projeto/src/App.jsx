@@ -24,23 +24,25 @@ import Comunicados from './pages/gestor/Comunicados.jsx';
 import GerirTurmas from './pages/pedagogo/GerirTurmas.jsx';
 import PublicarMaterial from './pages/pedagogo/PublicarMaterial.jsx';
 import JustificativasPedagogo from './pages/pedagogo/Justificativas.jsx';
-import Pedagogo from "./pages/pedagogo/Pedagogo";
+import Pedagogo from "./pages/pedagogo/Pedagogo"; // Verifique se o arquivo é Pedagogo.jsx ou pedagogo.jsx
 
 function App() {
   const location = useLocation();
 
-  // Definição das condições de visualização
+  // 1. Definição das condições de visualização (Simplificadas para evitar telas em branco)
   const isLoginPage = location.pathname === "/" || location.pathname === "/login";
-  const isGestorPage = location.pathname.startsWith("/gestor/dashboard");
-  const isPedagogoPage = location.pathname.startsWith("/pedagogo/dashboard");
+  
+  // Agora as variáveis verificam o prefixo da rota inteira
+  const isGestorPage = location.pathname.startsWith("/gestor");
+  const isPedagogoPage = location.pathname.startsWith("/pedagogo");
 
-  // Ajuste de layout para o pedagogo (conforme sua lógica anterior)
+  // 2. Ajuste de layout dinâmico
   const layoutClass = isPedagogoPage ? "" : "app-layout";
   const contentClass = isPedagogoPage ? "" : "content";
 
   return (
     <div className={layoutClass}>
-      {/* Lógica da Sidebar: Se não for login, escolhe qual mostrar */}
+      {/* 3. Lógica da Sidebar: Se não for login, decide qual mostrar */}
       {!isLoginPage && (
         (isGestorPage || isPedagogoPage) ? <SidebarGestor /> : <Sidebar />
       )}
@@ -61,7 +63,7 @@ function App() {
           {/* Rotas do Gestor */}
           <Route path="/gestor/dashboard" element={<DashboardGestor />} />
           <Route path="/gestor/desempenho" element={<Desempenho />} />
-          <Route path="/gestor/contracheques" element={<Contracheque />} />
+          <Route path="/gestor/contracheque" element={<Contracheque />} />
           <Route path="/gestor/justificativas" element={<JustificativasGestor />} />
           <Route path="/gestor/comunicados" element={<Comunicados />} />
 

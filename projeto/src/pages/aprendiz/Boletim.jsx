@@ -1,38 +1,50 @@
 import React, { useState, useEffect } from 'react';
 import './Boletim.css';
-import { FaBell, FaUserCircle, FaFileDownload } from 'react-icons/fa';
- 
+import { 
+  FaBell, 
+  FaUserCircle, 
+  FaFileDownload, 
+  FaComments, 
+  FaTimes, 
+  FaEnvelope 
+} from 'react-icons/fa';
+
 const Boletim = () => {
   const [dados, setDados] = useState(null);
   const [loading, setLoading] = useState(true);
   const [erro, setErro] = useState(null);
- 
+
+  // Estados para o Modal de Contatos
+  const [showContactModal, setShowContactModal] = useState(false);
+
+  const contatosSuporte = [
+    { nome: "Sérgio Carvalho", cargo: "Gestor", email: "serginho@empresa.com", tel: "(21) 99999-9999" },
+    { nome: "Vilma Nascimento", cargo: "Pedagogia", email: "amaior@ensino.com", tel: "(21) 88888-8888" }
+  ];
+
   useEffect(() => {
     const aprendizId = 1;
     const url = `http://localhost:5000/api/boletim/aprendiz/${aprendizId}`;
-    console.log("Chamando URL:", url);
- 
+    
     fetch(url)
       .then((res) => {
         if (!res.ok) throw new Error('Erro ao buscar boletim');
         return res.json();
       })
       .then((data) => {
-        console.log("Dados recebidos:", data);
         setDados(data);
         setLoading(false);
       })
       .catch((err) => {
-        console.log("Erro completo:", err);
         setErro(err.message);
         setLoading(false);
       });
-  }, []); // 👈 useEffect DENTRO do componente, antes do return
- 
+  }, []);
+
   if (loading) return <p>Carregando boletim...</p>;
   if (erro)    return <p>Erro: {erro}</p>;
   if (!dados)  return <p>Nenhum dado encontrado.</p>;
- 
+
   return (
     <div className="dashboard-container">
       <header className="dash-header">
@@ -42,7 +54,7 @@ const Boletim = () => {
           <FaUserCircle />
         </div>
       </header>
- 
+
       <section className="resumo-boletim-section">
         <div className="stats-grid">
           <div className="stat-item">
@@ -58,7 +70,7 @@ const Boletim = () => {
           </button>
         </div>
       </section>
- 
+
       <div className="dashboard-content-grid" style={{ gridTemplateColumns: '1fr' }}>
         <section className="resumo-academico">
           <h3>DETALHAMENTO POR UNIDADE CURRICULAR</h3>
@@ -94,8 +106,42 @@ const Boletim = () => {
           </table>
         </section>
       </div>
+
+      {/* --- MODAL DE CONTATOS --- */}
+      {showContactModal && (
+        <div className="contact-overlay active" onClick={() => setShowContactModal(false)}>
+          <div className="contact-window" onClick={(e) => e.stopPropagation()}>
+            <div className="contact-header">
+              <h4>Contatos Responsáveis</h4>
+              <button className="btn-close-contact" onClick={() => setShowContactModal(false)}>
+                <FaTimes />
+              </button>
+            </div>
+            <div className="contact-list">
+              {contatosSuporte.map((c, index) => (
+                <div key={index} className="contact-card">
+                  <strong>{c.nome}</strong>
+                  <span> | {c.cargo}</span>
+                  <div className="contact-actions">
+                    <a href={`mailto:${c.email}`} className="action-link mail">
+                      <FaEnvelope /> Email
+                    </a>
+                    <a href={`tel:${c.tel}`} className="action-link phone">{c.tel}</a>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* BOTÃO FLUTUANTE */}
+      <div className="floating-contact" onClick={() => setShowContactModal(true)}>
+        <FaComments />
+        <span>Contatos</span>
+      </div>
     </div>
   );
 };
- 
+
 export default Boletim;

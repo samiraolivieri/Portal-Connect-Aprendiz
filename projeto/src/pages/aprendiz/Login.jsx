@@ -18,9 +18,7 @@ export default function Login() {
         password: senha
       });
 
-      // --- AJUSTE IMPORTANTE ---
-      // Salvamos o objeto do usuário completo. 
-      // O Dashboard vai ler isso para mostrar o "OLÁ, NOME" e buscar o ID.
+      // Salvamos o objeto do usuário completo
       localStorage.setItem("usuario", JSON.stringify(resposta.data.user));
 
       console.log("Login realizado!", resposta.data.user);
@@ -29,13 +27,15 @@ export default function Login() {
       const nivel = resposta.data.user.nivel;
       
       if (nivel === "aprendiz") {
-        // Agora o Nivaldo ou Henrique serão redirecionados para o Dashboard que criamos
         window.location.href = "/dashboard";
-      } else if (nivel === "gestor") {
-        // Redireciona para a tela onde você faz o upload dos contracheques
-        window.location.href = "/gestor/contracheque"; 
-      } else if (nivel === "pedagogia") {
-        window.location.href = "/dashboard-pedagogia";
+      } 
+      else if (nivel === "gestor") {
+        // CORREÇÃO: Agora redireciona para o Dashboard do Gestor
+        window.location.href = "/gestor/dashboard"; 
+      } 
+      else if (nivel === "pedagogia" || nivel === "pedagogo") {
+        // CORREÇÃO: Redireciona para a rota correta definida no seu App.jsx
+        window.location.href = "/pedagogo";
       }
 
     } catch (erro) {

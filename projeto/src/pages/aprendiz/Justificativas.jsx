@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import '../../styles/Justificativas.css';
-
-import { FaCloudUploadAlt, FaHistory, FaFileAlt } from 'react-icons/fa';
+import { 
+  FaCloudUploadAlt, 
+  FaHistory, 
+  FaFileAlt, 
+  FaComments, 
+  FaTimes, 
+  FaEnvelope 
+} from 'react-icons/fa';
 import axios from 'axios';
 
 const Justificativas = () => {
@@ -20,6 +26,14 @@ const Justificativas = () => {
 
   const [formData, setFormData] = useState(estadoInicial);
   const [historico, setHistorico] = useState([]);
+
+  // Estados para o Modal de Contatos
+  const [showContactModal, setShowContactModal] = useState(false);
+
+  const contatosSuporte = [
+    { nome: "Sérgio Carvalho", cargo: "Gestor", email: "serginho@empresa.com", tel: "(21) 99999-9999" },
+    { nome: "Vilma Nascimento", cargo: "Pedagogia", email: "amaior@ensino.com", tel: "(21) 88888-8888" }
+  ];
 
   useEffect(() => {
     const buscarHistorico = async () => {
@@ -60,11 +74,9 @@ const Justificativas = () => {
 
       alert("Atestado enviado com sucesso!");
       
-      // Recarrega a lista
       const novaLista = await axios.get(`http://localhost:5000/api/atestados/listar/${userId}`);
       setHistorico(novaLista.data);
 
-      // Limpa tudo
       setFormData(estadoInicial);
       e.target.reset();
     } catch (error) {
@@ -156,17 +168,51 @@ const Justificativas = () => {
                 </div>
                 <div className="status-container">
                    <span className={`status-badge`}>
-                      Instituição: <span className={`status-badge-${item.status_instituicao.toLowerCase()}`}>{item.status_instituicao}</span>
-                      <br />
+                     Instituição: <span className={`status-badge-${item.status_instituicao.toLowerCase()}`}>{item.status_instituicao}</span>
+                     <br />
                    </span>  
                    <span className={`status-badge`}>
-                      Empresa: <span  className={`status-badge-${item.status_empresa.toLowerCase()}`}>{item.status_empresa}</span>
+                     Empresa: <span  className={`status-badge-${item.status_empresa.toLowerCase()}`}>{item.status_empresa}</span>
                    </span>
                 </div>
               </div>
             ))}
           </div>
         </section>
+      </div>
+
+      {/* --- MODAL DE CONTATOS --- */}
+      {showContactModal && (
+        <div className="contact-overlay active" onClick={() => setShowContactModal(false)}>
+          <div className="contact-window" onClick={(e) => e.stopPropagation()}>
+            <div className="contact-header">
+              <h4>Contatos Responsáveis</h4>
+              <button className="btn-close-contact" onClick={() => setShowContactModal(false)}>
+                <FaTimes />
+              </button>
+            </div>
+            <div className="contact-list">
+              {contatosSuporte.map((c, index) => (
+                <div key={index} className="contact-card">
+                  <strong>{c.nome}</strong>
+                  <span> | {c.cargo}</span>
+                  <div className="contact-actions">
+                    <a href={`mailto:${c.email}`} className="action-link mail">
+                      <FaEnvelope /> Email
+                    </a>
+                    <a href={`tel:${c.tel}`} className="action-link phone">{c.tel}</a>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* BOTÃO FLUTUANTE */}
+      <div className="floating-contact" onClick={() => setShowContactModal(true)}>
+        <FaComments />
+        <span>Contatos</span>
       </div>
     </div>
   );
