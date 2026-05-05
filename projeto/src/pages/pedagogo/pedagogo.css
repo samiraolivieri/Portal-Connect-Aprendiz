@@ -10,19 +10,20 @@
     font-family: "Segoe UI", Arial, sans-serif;
     min-height: 100vh;
     background-color: #eef2f5;
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* 🔥 controla a tela toda */
+    
 }
 
-/* HEADER */
-.pedagogo .header {
-    height: 70px;
-    background: #1a4f9f;
-    color: white;
+
+.topo-pedagogo {
+    padding: 30px 25px 10px 25px;
+    margin-top: 10px;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 25px;
-    font-weight: bold;
-    margin-left: 250px;
 }
 
 /* MAIN */
@@ -36,9 +37,6 @@
     height: 100vh;
     background: #1a4f9f;
     color: white;
-    position: fixed;
-    left: 0;
-    top: 0;
     overflow-y: auto;
 }
 
@@ -78,11 +76,10 @@
 
 /* CONTENT */
 .pedagogo .content {
-    margin-left: 250px;
     padding: 25px;
-    width: calc(100% - 250px);
-    min-height: calc(100vh - 70px);
-
+    height: 100%; /* 🔥 em vez de 100vh */
+    overflow-y: hidden;
+    
     background-image: url("../assets/imagemFundo2.png");
     background-repeat: no-repeat;
     background-position: center top;
@@ -252,81 +249,45 @@
     margin-top: 20px;
 }
 
-/* ===== TURMA CARD MELHORADO ===== */
-
-.turma-card {
-    background: #ffffff;
-    border-radius: 16px;
-    padding: 28px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-}
-
-.turma-card h2 {
-    font-size: 24px;
-    font-weight: 700;
-    color: #0f172a;
-    margin-bottom: 20px;
-}
-
-.turma-card .turma-body {
-    display: grid;
-    grid-template-columns: 1fr 260px;
-    gap: 30px;
-    align-items: start;
-}
-
-/* LISTA DE ALUNOS MELHORADA */
-.turma-card .listaAlunos {
-    background: #f8fafc;
-    border-radius: 12px;
-    padding: 10px 0;
-}
-
-.turma-card .itemAluno {
-    padding: 14px 18px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 15px;
-    color: #1e293b;
-    transition: 0.2s;
-}
-
-.turma-card .itemAluno:hover {
-    background: #eef2f7;
-    cursor: pointer;
-}
-
-.turma-card .itemAluno:not(:last-child) {
-    border-bottom: 1px solid #e5e7eb;
-}
 
 /* PAINEL DE AÇÃO MELHORADO */
-.turma-card .painelAcao {
-    background: linear-gradient(135deg, #e6f4ea, #f0fdf4);
-    border: 1px solid #198754;
+ .painelAcao {
+    background: linear-gradient(135deg, #e6f4ea, #f0fdf4); /* verde claro */
+    border: 2px solid #198754; /* borda verde forte */
     border-radius: 14px;
-    padding: 12px;
-    text-align: center;
-    max-width: 260px;
-    margin: 0 auto;
-}
 
+    padding: 16px;
+    width: 260px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
 .painelAcao h3 {
     font-size: 14px;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     color: #166534;
 }
+
 
 /* BOTÕES AJUSTADOS */
 .painelAcao .botao,
 .painelAcao .botaoSecundario {
     width: 100%;
-    height: 32px;
-    font-size: 12px;
-    border-radius: 6px;
-    margin-top: 6px;
+    height: 36px;
+    margin-top: 10px;
+
+    border-radius: 8px;
+    border: 1.5px solid #198754;
+
+    background: transparent;
+    color: #198754;
+
     font-weight: 600;
+    cursor: pointer;
     transition: 0.2s;
 }
 

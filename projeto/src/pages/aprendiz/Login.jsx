@@ -35,6 +35,10 @@ export default function Login() {
       } 
       else if (nivel === "pedagogia" || nivel === "pedagogo") {
         // CORREÇÃO: Redireciona para a rota correta definida no seu App.jsx
+      } else if (nivel === "gestor") {
+        // Redireciona para a tela onde você faz o upload dos contracheques
+        window.location.href = "/gestor/contracheque"; 
+      } else if (nivel === "pedagogia") {
         window.location.href = "/pedagogo";
       }
 

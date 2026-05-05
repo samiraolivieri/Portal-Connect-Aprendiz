@@ -24,8 +24,9 @@ import Comunicados from './pages/gestor/Comunicados.jsx';
 import GerirTurmas from './pages/pedagogo/GerirTurmas.jsx';
 import PublicarMaterial from './pages/pedagogo/PublicarMaterial.jsx';
 import JustificativasPedagogo from './pages/pedagogo/Justificativas.jsx';
-import Pedagogo from "./pages/pedagogo/Pedagogo"; // Verifique se o arquivo é Pedagogo.jsx ou pedagogo.jsx
 
+import Pedagogo from "./pages/pedagogo/Pedagogo.jsx";
+import SidebarPedagogo from './components/pedagogo/Sidebar.jsx';
 function App() {
   const location = useLocation();
 
@@ -36,16 +37,18 @@ function App() {
   const isGestorPage = location.pathname.startsWith("/gestor");
   const isPedagogoPage = location.pathname.startsWith("/pedagogo");
 
-  // 2. Ajuste de layout dinâmico
-  const layoutClass = isPedagogoPage ? "" : "app-layout";
-  const contentClass = isPedagogoPage ? "" : "content";
+  // Ajuste de layout para o pedagogo (conforme sua lógica anterior)
+const layoutClass = "app-layout";
+const contentClass = "content";
 
   return (
     <div className={layoutClass}>
       {/* 3. Lógica da Sidebar: Se não for login, decide qual mostrar */}
       {!isLoginPage && (
-        (isGestorPage || isPedagogoPage) ? <SidebarGestor /> : <Sidebar />
-      )}
+  isGestorPage ? <SidebarGestor /> :
+  isPedagogoPage ? <SidebarPedagogo /> :
+  <Sidebar />
+)}
 
       <main className={contentClass}>
         <Routes>
@@ -68,7 +71,7 @@ function App() {
           <Route path="/gestor/comunicados" element={<Comunicados />} />
 
           {/* Rotas do Pedagogo */}
-          <Route path="/pedagogo" element={<Pedagogo />} />
+          <Route path="/pedagogo/" element={<Pedagogo />} />         
           <Route path="/pedagogo/gerirturmas" element={<GerirTurmas />} />
           <Route path="/pedagogo/publicarmaterial" element={<PublicarMaterial />} />
           <Route path="/pedagogo/justificativas" element={<JustificativasPedagogo />} />
