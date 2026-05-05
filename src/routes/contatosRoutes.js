@@ -6,4 +6,5 @@ const contatosController = require('../controllers/contatosController');
 // O nome depois do ponto deve ser getContatos
 router.get('/', contatosController.getContatos);
 
+
 module.exports = router;
