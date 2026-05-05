@@ -35,7 +35,7 @@ export default function Login() {
         // Redireciona para a tela onde você faz o upload dos contracheques
         window.location.href = "/gestor/contracheque"; 
       } else if (nivel === "pedagogia") {
-        window.location.href = "/dashboard-pedagogia";
+        window.location.href = "/pedagogo";
       }
 
     } catch (erro) {
