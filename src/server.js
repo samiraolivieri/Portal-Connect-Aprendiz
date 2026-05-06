@@ -21,6 +21,7 @@ const contrachequeRoutes = require('./routes/contrachequeRoutes');
 const turmasRoutes = require('./routes/turmasRoutes');
 const materialRoutes = require('./routes/materialRoutes'); 
 
+
 const app = express();
 
 // 2. MIDDLEWARES

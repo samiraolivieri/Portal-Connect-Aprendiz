@@ -92,3 +92,29 @@
   @media (max-width: 768px) {
     .atestado-grid { grid-template-columns: 1fr; }
   }
+
+  .status-Pendente{
+  background-color: #fef7e2;
+    color: #99861b;
+  border-radius: 10px;
+  display: inline;
+
+  padding: 5px;
+}
+.status-Recusado{
+  background-color: #ffc9c5;
+  color: #991b1b;
+  display: inline;
+
+  border-radius: 10px;
+  padding: 5px;
+}
+.status-Aprovado{
+  background-color: #e2feed;
+    display: inline;
+
+
+    color: #1f991b;
+  border-radius: 10px;
+  padding: 5px;
+}

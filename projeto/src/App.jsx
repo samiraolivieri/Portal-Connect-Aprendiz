@@ -24,6 +24,7 @@ import Comunicados from './pages/gestor/Comunicados.jsx';
 import GerirTurmas from './pages/pedagogo/GerirTurmas.jsx';
 import PublicarMaterial from './pages/pedagogo/PublicarMaterial.jsx';
 import JustificativasPedagogo from './pages/pedagogo/Justificativas.jsx';
+import VisitasPedagogo from './pages/pedagogo/Visitas.jsx';
 
 import Pedagogo from "./pages/pedagogo/Pedagogo.jsx";
 import SidebarPedagogo from './components/pedagogo/Sidebar.jsx';
@@ -75,6 +76,8 @@ const contentClass = "content";
           <Route path="/pedagogo/gerirturmas" element={<GerirTurmas />} />
           <Route path="/pedagogo/publicarmaterial" element={<PublicarMaterial />} />
           <Route path="/pedagogo/justificativas" element={<JustificativasPedagogo />} />
+          <Route path="/pedagogo/visitas" element={<VisitasPedagogo />} />
+
         </Routes>
       </main>
     </div>

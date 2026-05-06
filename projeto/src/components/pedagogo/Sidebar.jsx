@@ -36,6 +36,9 @@ const SidebarPedagogo = () => {
 <Link to="/pedagogo/publicarmaterial" className={location.pathname === "/pedagogo/publicarmaterial" ? "active" : ""}>
   <li><FaBoxOpen /> Publicar Material</li>
 </Link>
+<Link to="/pedagogo/visitas" className={location.pathname === "/pedagogo/visitas" ? "active" : ""}>
+  <li><FaBoxOpen /> Validar Visitas</li>
+</Link>
 
         </ul>
       </nav>
