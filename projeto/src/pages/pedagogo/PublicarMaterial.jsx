@@ -1,14 +1,34 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "./PublicarMaterial.css";
+// ✅ Importação dos ícones necessários para o modal e botões
+import { 
+  FaComments, 
+  FaEnvelope, 
+  FaTimes, 
+  FaUserTie, 
+  FaUsers, 
+  FaCloudUploadAlt 
+} from "react-icons/fa";
 
 export default function PublicarMaterial() {
     const [turmas, setTurmas] = useState([]);
-    const [materiais, setMateriais] = useState([]); // Novo estado para a lista
+    const [materiais, setMateriais] = useState([]);
     const [material, setMaterial] = useState({ titulo: "", descricao: "", link_material: "", turma_id: "" });
     const [arquivo, setArquivo] = useState(null);
+    
+    // ✅ Estados para o Modal de Contatos
+    const [aprendizes, setAprendizes] = useState([]);
+    const [showContactModal, setShowContactModal] = useState(false);
 
-    // Carrega turmas e materiais iniciais
+    // ✅ Informação fixa do Gestor (Sérgio Carvalho)
+    const contatoGestor = { 
+        nome: "Sérgio Carvalho", 
+        email: "sergio.carvalho@petrobras.com.br", 
+        tel: "(21) 99999-7777" 
+    };
+
+    // Carrega turmas, materiais e lista de contatos
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -17,6 +37,10 @@ export default function PublicarMaterial() {
                 
                 const resMateriais = await axios.get("http://localhost:5000/api/materiais");
                 setMateriais(resMateriais.data);
+
+                // ✅ Busca a lista de aprendizes para o modal de contatos
+                const resContatos = await axios.get("http://localhost:5000/api/turmas/dados/lancamento");
+                setAprendizes(resContatos.data.alunos || []);
             } catch (err) {
                 console.error("Erro ao carregar dados", err);
             }
@@ -45,11 +69,9 @@ export default function PublicarMaterial() {
             });
             alert("Material publicado com sucesso!");
             
-            // Limpa o formulário
             setMaterial({ titulo: "", descricao: "", link_material: "", turma_id: "" });
             setArquivo(null);
             
-            // Atualiza a lista na hora, sem precisar recarregar a página
             const res = await axios.get("http://localhost:5000/api/materiais");
             setMateriais(res.data);
             
@@ -61,14 +83,13 @@ export default function PublicarMaterial() {
 
     return (
         <div className="gerir-turmas-container">
-            <h2 className="titulo-pagina">Publicar Material</h2>
+            {/* ✅ Título com o emoji padronizado */}
+            <h2 className="titulo-pagina"> Publicar Material</h2>
             
-            {/* O Grid que divide a tela em duas colunas */}
             <div className="layout-grid">
-                
                 {/* PAINEL ESQUERDO: FORMULÁRIO */}
                 <div className="card-turma" style={{ flex: 2 }}>
-                    <h3 className="titulo-secao">Novo Conteúdo</h3>
+                    <h3 className="titulo-secao"><FaCloudUploadAlt /> Novo Conteúdo</h3>
                     
                     <div className="form-turma">
                         <div className="input-group">
@@ -117,8 +138,64 @@ export default function PublicarMaterial() {
                         ))}
                     </div>
                 </div>
-
             </div>
+
+            {/* ✅ BOTÃO FLUTUANTE DE CONTATOS */}
+            <div className="floating-contact" onClick={() => setShowContactModal(true)}>
+                <FaComments />
+                <span>Contatos</span>
+            </div>
+
+            {/* ✅ MODAL DE CONTATOS UNIFICADO */}
+            {showContactModal && (
+                <div className="contact-overlay active" onClick={() => setShowContactModal(false)}>
+                    <div className="contact-window" onClick={(e) => e.stopPropagation()}>
+                        <div className="contact-header">
+                            <h4>Lista de Contatos</h4>
+                            <button className="btn-close-contact" onClick={() => setShowContactModal(false)}>
+                                <FaTimes />
+                            </button>
+                        </div>
+                        
+                        <div className="contact-list" style={{ maxHeight: '450px', overflowY: 'auto' }}>
+                            {/* SEÇÃO: GESTÃO */}
+                            <div style={{ padding: '10px 5px', fontWeight: 'bold', color: '#1a3a5a', fontSize: '0.9rem' }}>
+                               GESTÃO
+                            </div>
+                            <div className="contact-card" style={{ borderLeft: '4px solid #1a3a5a' }}>
+                                <strong>{contatoGestor.nome}</strong>
+                                <div className="contact-actions">
+                                    <a href={`mailto:${contatoGestor.email}`} className="action-link mail">
+                                        <FaEnvelope /> Email
+                                    </a>
+                                    <span className="action-link phone">{contatoGestor.tel}</span>
+                                </div>
+                            </div>
+
+                            <hr style={{ margin: '15px 0', opacity: '0.1' }} />
+
+                            {/* SEÇÃO: APRENDIZES */}
+                            <div style={{ padding: '10px 5px', fontWeight: 'bold', color: '#1a3a5a', fontSize: '0.9rem' }}>
+                                APRENDIZES CADASTRADOS
+                            </div>
+                            {aprendizes.length > 0 ? (
+                                aprendizes.map((aluno) => (
+                                    <div key={aluno.id} className="contact-card">
+                                        <strong>{aluno.nome}</strong> <span> | Aprendiz</span>
+                                        <div className="contact-actions">
+                                            <a href={`mailto:${aluno.email}`} className="action-link mail">
+                                                <FaEnvelope /> Email
+                                            </a>
+                                        </div>
+                                    </div>
+                                ))
+                            ) : (
+                                <p style={{ padding: '10px', fontSize: '0.8rem' }}>Nenhum aprendiz encontrado.</p>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

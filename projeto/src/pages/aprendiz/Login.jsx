@@ -68,7 +68,6 @@ export default function Login() {
         <button type="button" className="btn" onClick={handleLogin}>
           Entrar
         </button>
-        <a href="#" className="forgot">Esqueceu a senha?</a>
       </div>
     </div>
   );
