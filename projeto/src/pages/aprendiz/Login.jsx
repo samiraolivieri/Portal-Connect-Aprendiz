@@ -1,5 +1,5 @@
+import React, { useState } from "react"; // Importação completa para evitar erros de referência
 import "../../styles/login.css";
-import { useState } from "react";
 import axios from "axios";
 
 export default function Login() {
@@ -8,38 +8,32 @@ export default function Login() {
 
   const handleLogin = async () => {
     try {
-      console.log("ENVIANDO LOGIN:", {
-        email,
-        password: senha
-      });
+      console.log("ENVIANDO LOGIN:", { email, password: senha });
       
       const resposta = await axios.post("http://localhost:5000/api/auth/login", {
         email: email,
         password: senha
       });
 
-      // Salvamos o objeto do usuário completo
+      // Salvamos o objeto do usuário completo no localStorage para usar no Portal Connect
       localStorage.setItem("usuario", JSON.stringify(resposta.data.user));
-
       console.log("Login realizado!", resposta.data.user);
 
-      // Redireciona baseado no nível de acesso
       const nivel = resposta.data.user.nivel;
       
+      // LÓGICA DE REDIRECIONAMENTO AJUSTADA
       if (nivel === "aprendiz") {
         window.location.href = "/dashboard";
       } 
       else if (nivel === "gestor") {
-        // CORREÇÃO: Agora redireciona para o Dashboard do Gestor
         window.location.href = "/gestor/dashboard"; 
       } 
       else if (nivel === "pedagogia" || nivel === "pedagogo") {
-        // CORREÇÃO: Redireciona para a rota correta definida no seu App.jsx
-      } else if (nivel === "gestor") {
-        // Redireciona para a tela onde você faz o upload dos contracheques
-        window.location.href = "/gestor/contracheque"; 
-      } else if (nivel === "pedagogia") {
-        window.location.href = "/pedagogo";
+        // CORREÇÃO: Agora redireciona para a rota correta que você definiu no App.jsx
+        window.location.href = "/pedagogo"; 
+      }
+      else {
+        alert("Nível de acesso não reconhecido.");
       }
 
     } catch (erro) {
@@ -47,7 +41,7 @@ export default function Login() {
       if (erro.response?.status === 401) {
         alert("E-mail ou senha incorretos!");
       } else {
-        alert("Erro ao conectar com o servidor. Verifique se o Back-end está rodando.");
+        alert("Erro ao conectar com o servidor. Verifique o Back-end.");
       }
     }
   };
@@ -55,10 +49,8 @@ export default function Login() {
   return (
     <div className="login-body">
       <img src="/logo3.png" alt="Logo" className="logo-top" />
-
       <div className="login-container">
         <h2>BEM-VINDO AO PORTAL</h2>
-
         <input
           className="input"
           placeholder="Email"
@@ -66,7 +58,6 @@ export default function Login() {
           type="email"
           onChange={(e) => setEmail(e.target.value)}
         />
-
         <input
           className="input"
           type="password"
@@ -74,15 +65,9 @@ export default function Login() {
           value={senha}
           onChange={(e) => setSenha(e.target.value)}
         />
-
-        <button
-          type="button"
-          className="btn"
-          onClick={handleLogin}
-        >
+        <button type="button" className="btn" onClick={handleLogin}>
           Entrar
         </button>
-
         <a href="#" className="forgot">Esqueceu a senha?</a>
       </div>
     </div>
