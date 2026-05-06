@@ -9,7 +9,6 @@
 .pedagogo {
     font-family: "Segoe UI", Arial, sans-serif;
     min-height: 100vh;
-    background-color: #eef2f5;
     display: flex;
     flex-direction: column;
     height: 100vh; /* 🔥 controla a tela toda */
@@ -20,7 +19,7 @@
 .topo-pedagogo {
     padding: 30px 25px 10px 25px;
     margin-top: 10px;
-
+    color: #143d7c;
     display: flex;
     align-items: center;
     justify-content: space-between;
