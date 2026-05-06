@@ -1,0 +1,292 @@
+.comunicados-page {
+    padding: 30px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .com-topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+  }
+  
+  .com-topo h1 {
+    color: #163b68;
+    font-size: 2rem;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  
+  .btn-novo {
+    background: #1d5ca8;
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    gap: 8px;
+  }
+  
+  .btn-novo:hover {
+    background: #154988;
+  }
+  
+  /* Resumo */
+  .resumo-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 25px;
+  }
+  
+  .resumo-card {
+    background: white;
+    border-radius: 12px;
+    padding: 18px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+  }
+  
+  .resumo-card span {
+    display: block;
+    color: #666;
+    font-size: 0.9rem;
+  }
+  
+  .resumo-card strong {
+    font-size: 1.8rem;
+    color: #163b68;
+  }
+  
+  /* Busca */
+  .barra-busca {
+    background: white;
+    border-radius: 10px;
+    padding: 12px 16px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.04);
+  }
+  
+  .barra-busca input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 1rem;
+  }
+  
+  /* Tabela */
+  .tabela-box {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    overflow-x: auto;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  thead {
+    background: #f5f7fa;
+  }
+  
+  th, td {
+    text-align: left;
+    padding: 14px;
+    border-bottom: 1px solid #eee;
+  }
+  
+  th {
+    color: #333;
+  }
+  
+  .badge {
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: bold;
+  }
+  
+  .badge.alta {
+    background: #ffe5e5;
+    color: #d80000;
+  }
+  
+  .badge.media {
+    background: #fff4d8;
+    color: #b37a00;
+  }
+  
+  .badge.normal {
+    background: #e4f7e7;
+    color: #1c7d2d;
+  }
+  
+  .acoes {
+    display: flex;
+    gap: 8px;
+  }
+  
+  .acoes button {
+    border: none;
+    background: #f1f4f8;
+    padding: 8px;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  
+  .acoes button:hover {
+    background: #dbe6f3;
+  }
+  .filtros {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 18px 0 22px;
+  }
+  
+  .filtros button {
+    border: 1px solid #d6dce5;
+    background: #ffffff;
+    color: #163b68;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s ease;
+  }
+  
+  .filtros button:hover {
+    background: #eef4fb;
+    border-color: #1d5ca8;
+  }
+  
+  .filtros button.ativo {
+    background: #1d5ca8;
+    color: #ffffff;
+    border-color: #1d5ca8;
+    box-shadow: 0 4px 10px rgba(29, 92, 168, 0.18);
+  }
+  /* FUNDO ESCURO */
+.modal-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 23, 42, 0.45);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    padding: 20px;
+  }
+  
+  /* CAIXA MODAL */
+  .modal {
+    background: #ffffff;
+    width: 100%;
+    max-width: 620px;
+    border-radius: 18px;
+    padding: 28px;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.18);
+    animation: surgir 0.25s ease;
+  }
+  
+  /* ANIMAÇÃO */
+  @keyframes surgir {
+    from {
+      opacity: 0;
+      transform: translateY(12px) scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+  
+  .modal h2 {
+    margin: 0 0 18px;
+    color: #163b68;
+    font-size: 1.6rem;
+    font-weight: 800;
+  }
+  
+  /* CAMPOS */
+  .modal input,
+  .modal select,
+  .modal textarea {
+    width: 100%;
+    margin-bottom: 14px;
+    padding: 12px 14px;
+    border: 1px solid #d7deea;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    outline: none;
+    background: #f8fafc;
+    box-sizing: border-box;
+    transition: 0.2s ease;
+  }
+  
+  .modal textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+  
+  .modal input:focus,
+  .modal select:focus,
+  .modal textarea:focus {
+    border-color: #1d5ca8;
+    background: #ffffff;
+    box-shadow: 0 0 0 4px rgba(29, 92, 168, 0.10);
+  }
+  
+  /* LINHA COM 2 OU 3 CAMPOS */
+  .form-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 12px;
+  }
+  
+  /* BOTÕES */
+  .modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 8px;
+  }
+  
+  .modal-buttons button {
+    border: none;
+    padding: 11px 18px;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s ease;
+  }
+  
+  .modal-buttons button:first-child {
+    background: #1d5ca8;
+    color: #fff;
+  }
+  
+  .modal-buttons button:first-child:hover {
+    background: #154988;
+  }
+  
+  .modal-buttons button:last-child {
+    background: #eef2f7;
+    color: #334155;
+  }
+  
+  .modal-buttons button:last-child:hover {
+    background: #dde5ef;
+  }

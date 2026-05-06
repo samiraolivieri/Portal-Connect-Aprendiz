@@ -1,0 +1,147 @@
+.carreiras-container {
+    padding: 30px;
+  }
+  
+  .titulo {
+    font-size: 34px;
+    font-weight: bold;
+    margin-bottom: 25px;
+  }
+  
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #0d47a1, #1976d2);
+    color: white;
+    padding: 30px;
+    border-radius: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+  }
+  .hero h2{
+    color: white;
+  }
+  .hero button {
+    background: white;
+    color: #0d47a1;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-weight: bold;
+    transition: 0.3s;
+  }
+  
+  .hero button:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+  }
+  
+  /* STATS */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin: 25px 0;
+  }
+  
+  /* CARDS GERAIS */
+  .stat-card,
+  .item-card,
+  .event,
+  .section {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    transition: 0.3s;
+  }
+  
+  /* GRID */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+  }
+  
+  /* HOVER */
+  .stat-card:hover,
+  .item-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 22px rgba(0,0,0,0.12);
+    cursor: pointer;
+  }
+  
+  .item-card:hover,
+  .event:hover {
+    background: #f5f9ff;
+  }
+  
+  .event:hover {
+    transform: translateX(5px);
+    cursor: pointer;
+  }
+  
+  .section {
+    margin-top: 20px;
+  }
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal {
+    background: white;
+    width: 420px;
+    max-width: 90%;
+    padding: 25px;
+    border-radius: 18px;
+    position: relative;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+  }
+  
+  .modal h2 {
+    margin-bottom: 15px;
+  }
+  
+  .modal p {
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .fechar {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    border: none;
+    background: #eee;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  .curso-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .btn-link {
+    background: #1976d2;
+    color: white;
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: 0.3s;
+  }
+  
+  .btn-link:hover {
+    background: #0d47a1;
+  }

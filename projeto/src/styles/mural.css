@@ -1,0 +1,118 @@
+.mural-container {
+  width: 100%;
+  height: calc(100vh - 20px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px 30px 30px;
+  box-sizing: border-box;
+}
+  
+  .titulo {
+    font-size: 28px;
+    margin-bottom: 0 0 20px 0;
+  }
+  
+  /* Destaques */
+  .destaque {
+    background: #fff3cd;
+    border-left: 6px solid #ffc107;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-weight: bold;
+  }
+  
+  .destaque-amarelo {
+    background: #fff3cd;
+    border-left: 6px solid #ffc107;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    color: #856404;
+  }
+  
+  /* Grid */
+  .mural-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  
+  /* Card */
+  .aviso-card {
+    background: white;
+    padding: 18px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* 🔥 ESSENCIAL */
+    min-height: 180px;
+  
+    transition: 0.3s;
+  }
+  
+  .aviso-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  /* Conteúdo interno */
+  .conteudo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  /* Status */
+  .novo {
+    background: #ef4444;
+    color: white;
+    font-size: 10px;
+    padding: 3px 6px;
+    border-radius: 6px;
+    width: fit-content;
+    font-weight: bold;
+  }
+  
+  /* Texto */
+  .aviso-card h3 {
+    font-size: 16px;
+    font-weight: bold;
+    color: #222;
+  }
+  
+  .descricao {
+    font-size: 14px;
+    color: #444;
+  }
+  
+  /* Detalhes */
+  .detalhes {
+    display: flex;
+    flex-direction: column;
+    font-size: 13px;
+    color: #666;
+  }
+  
+  /* Rodapé */
+  .info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #888;
+    margin-top: 10px;
+  }
+  
+  /* Tipos */
+  .aviso-card.info {
+    border-left: 5px solid #3b82f6;
+  }
+  
+  .aviso-card.urgente {
+    border-left: 5px solid #ef4444;
+  }
+  
+  .aviso-card.evento {
+    border-left: 5px solid #10b981;
+  }

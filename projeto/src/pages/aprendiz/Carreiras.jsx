@@ -1,0 +1,204 @@
+import { useState, useEffect } from "react";
+import "../../styles/carreiras.css";
+// Adicionado ícones para o modal e botão flutuante
+import { FaComments, FaTimes, FaEnvelope } from 'react-icons/fa';
+
+export default function Carreiras() {
+  const [modal, setModal] = useState("");
+  const [vagas, setVagas] = useState([]);
+
+  // Estados para o Modal de Contatos/Suporte
+  const [showContactModal, setShowContactModal] = useState(false);
+
+  const contatosSuporte = [
+    { nome: "Sérgio Carvalho", cargo: "Gestor", email: "serginho@empresa.com", tel: "(21) 99999-9999" },
+    { nome: "Vilma Nascimento", cargo: "Pedagogia", email: "amaior@ensino.com", tel: "(21) 88888-8888" }
+  ];
+
+  // Busca vagas do back-end
+  useEffect(() => {
+    fetch("http://localhost:5000/api/oportunidades")
+      .then((res) => res.json())
+      .then((data) => setVagas(data))
+      .catch((error) => console.log("Erro ao carregar vagas:", error));
+  }, []);
+
+  return (
+    <div className="carreiras-container">
+      <h1 className="titulo">Portal Carreiras</h1>
+
+      {/* Hero Section */}
+      <div className="hero">
+        <div>
+          <h2>Construa seu futuro profissional 🚀</h2>
+          <p>Vagas, cursos e eventos em um só lugar.</p>
+        </div>
+      </div>
+
+      {/* Stats Cards */}
+      <div className="stats">
+        <div className="stat-card" onClick={() => setModal("vagas")}>
+          <h3>{3 + vagas.length}</h3>
+          <p>Vagas Abertas</p>
+        </div>
+
+        <div className="stat-card" onClick={() => setModal("cursos")}>
+          <h3>8</h3>
+          <p>Cursos Disponíveis</p>
+        </div>
+
+        <div className="stat-card" onClick={() => setModal("eventos")}>
+          <h3>2</h3>
+          <p>Eventos</p>
+        </div>
+      </div>
+
+      {/* Seção de Vagas */}
+      <div className="section">
+        <h2>💼 Últimas Oportunidades</h2>
+        <div className="grid">
+          <div className="item-card">
+            <h3>Jovem Aprendiz</h3>
+            <p>Firjan • RJ</p>
+          </div>
+          <div className="item-card">
+            <h3>Estágio TI</h3>
+            <p>Globo • RJ</p>
+          </div>
+          <div className="item-card">
+            <h3>Assistente ADM</h3>
+            <p>Home Office</p>
+          </div>
+
+          {vagas.map((vaga) => (
+            <div className="item-card" key={vaga.id}>
+              <h3>{vaga.titulo}</h3>
+              <p>{vaga.empresa || "Empresa parceira"}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Seção de Cursos */}
+      <div className="section">
+        <h2>🎓 Cursos em Destaque</h2>
+        <div className="grid">
+          <div className="item-card">Excel Básico</div>
+          <div className="item-card">Power BI</div>
+          <div className="item-card">Programação Web</div>
+        </div>
+      </div>
+
+      {/* Seção de Eventos */}
+      <div className="section">
+        <h2>📅 Próximos Eventos</h2>
+        <div className="event">Feira de Estágio - 20/04</div>
+        <div className="event">Workshop LinkedIn - 25/04</div>
+      </div>
+
+      {/* --- MODAIS DE CONTEÚDO (VAGAS/CURSOS/EVENTOS) --- */}
+      {modal && (
+        <div className="overlay" onClick={() => setModal("")}>
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
+            <button className="fechar" onClick={() => setModal("")}>X</button>
+
+            {modal === "vagas" && (
+              <>
+                <h2>💼 Vagas Abertas</h2>
+                <div className="modal-scroll-area">
+                  <VagaItem titulo="Jovem Aprendiz - Firjan" link="https://www.linkedin.com/jobs/" />
+                  <VagaItem titulo="Estágio TI - Globo" link="https://www.gupy.io/" />
+                  <VagaItem titulo="Assistente ADM - Home Office" link="https://www.infojobs.com.br/" />
+                  <VagaItem titulo="Auxiliar Administrativo - SENAI" link="https://www.firjan.com.br/" />
+                  <VagaItem titulo="Jovem Aprendiz em Logística - SENAI" link="https://www.firjan.com.br/" />
+                  <VagaItem titulo="Estágio em Suporte Técnico - SENAI" link="https://www.firjan.com.br/" />
+                  
+                  {vagas.map(vaga => (
+                    <VagaItem key={vaga.id} titulo={`${vaga.titulo} - ${vaga.empresa}`} link={vaga.link_externo || "#"} />
+                  ))}
+                </div>
+              </>
+            )}
+
+            {modal === "cursos" && (
+              <>
+                <h2>🎓 Cursos Disponíveis</h2>
+                <div className="modal-scroll-area">
+                  <CursoItem titulo="Excel Básico" link="https://www.ev.org.br/" />
+                  <CursoItem titulo="Power BI" link="https://www.coursera.org/" />
+                  <CursoItem titulo="Programação Web" link="https://www.udemy.com/" />
+                  <CursoItem titulo="Marketing Digital" link="https://www.coursera.org/" />
+                  <CursoItem titulo="Informática Básica" link="https://www.ev.org.br/" />
+                  <CursoItem titulo="Design Gráfico" link="https://www.udemy.com/" />
+                  <CursoItem titulo="Atendimento ao Cliente" link="https://www.sebrae.com.br/" />
+                  <CursoItem titulo="Inglês para Iniciantes" link="https://www.duolingo.com/" />
+                </div>
+              </>
+            )}
+
+            {modal === "eventos" && (
+              <>
+                <h2>📅 Próximos Eventos</h2>
+                <div className="curso-item"><p>Feira de Estágio - 20/04</p></div>
+                <div className="curso-item"><p>Workshop LinkedIn - 25/04</p></div>
+              </>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* --- NOVO: MODAL DE SUPORTE/CONTATOS --- */}
+      {showContactModal && (
+        <div className="contact-overlay active" onClick={() => setShowContactModal(false)}>
+          <div className="contact-window" onClick={(e) => e.stopPropagation()}>
+            <div className="contact-header">
+              <h4>Contatos Responsáveis</h4>
+              <button className="btn-close-contact" onClick={() => setShowContactModal(false)}>
+                <FaTimes />
+              </button>
+            </div>
+            <div className="contact-list">
+              {contatosSuporte.map((c, index) => (
+                <div key={index} className="contact-card">
+                  <strong>{c.nome}</strong>
+                  <span> | {c.cargo}</span>
+                  <div className="contact-actions">
+                    <a href={`mailto:${c.email}`} className="action-link mail">
+                      <FaEnvelope /> Email
+                    </a>
+                    <a href={`tel:${c.tel}`} className="action-link phone">{c.tel}</a>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* BOTÃO FLUTUANTE DE SUPORTE */}
+      <div className="floating-contact" onClick={() => setShowContactModal(true)}>
+        <FaComments />
+        <span>Contatos</span>
+      </div>
+    </div>
+  );
+}
+
+// Sub-componentes permanecem iguais
+function VagaItem({ titulo, link }) {
+  return (
+    <div className="curso-item">
+      <p>{titulo}</p>
+      <a href={link} target="_blank" rel="noreferrer" className="btn-link">Candidatar-se</a>
+    </div>
+  );
+}
+
+function CursoItem({ titulo, link }) {
+  return (
+    <div className="curso-item">
+      <p>{titulo}</p>
+      <a href={link} target="_blank" rel="noreferrer" className="btn-link">Inscrever-se</a>
+    </div>
+  );
+}

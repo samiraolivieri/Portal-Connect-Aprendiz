@@ -1,0 +1,170 @@
+.pendencias-section {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  margin-bottom: 25px;
+}
+
+.pendencias-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+.pendencias-table th, .pendencias-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+/* Cores dos Status */
+.status-verde { border-left: 5px solid #27ae60; background-color: #e8f8f0; }
+.status-laranja { border-left: 5px solid #f39c12; background-color: #fff9ed; }
+.status-vermelho { border-left: 5px solid #e74c3c; background-color: #fdecea; }
+
+.pendencias-table button {
+  background: #2980b9;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+  
+  .btn-verificar { background: #2980b9; color: white; border: none; padding: 10px 20px; }
+  .btn-email { background: #27ae60; color: white; border: none; padding: 10px 20px; }
+  
+  .gestor-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+  }
+  
+  .monitoramento-card, .acoes-rapidas {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+
+  .acoes-rapidas {
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Força preencher a altura do card pai */
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+  }
+  
+  .react-calendar {
+    width: 100% !important; /* Força ele a preencher a largura do seu card */
+    border: none !important;
+    font-family: inherit;
+  }
+  
+  .calendario-wrapper {
+    margin: 10px 0;
+    flex-grow: 1;
+  }
+  
+  .calendario-input {
+    width: 100%;
+    padding: 10px;
+    /* Isso força o navegador a renderizar uma interface de data mais visível */
+    font-size: 16px;
+  }
+  
+  .btn-confirmar {
+    width: 100%;
+    padding: 12px;
+    background-color: #2980b9;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: auto; /* Empurra o botão para o final do card */
+  }
+
+  /* Seção de Visitas Agendadas */
+.visitas-agendadas-section {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  margin: 20px 0;
+}
+
+.visitas-agendadas-section h3, .monitoramento-card h3, .pendencias-section h3, .acoes-rapidas h3 {
+  color: #2c3e50;
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+  border-left: 4px solid #2980b9;
+  padding-left: 10px;
+}
+
+/* Container que envolve a lista de visitas */
+.visitas-lista {
+  max-height: 300px; /* Define a altura fixa da seção */
+  overflow-y: auto;  /* Ativa o scroll vertical apenas quando necessário */
+  padding-right: 10px; /* Espaço para a barra de rolagem não cobrir o conteúdo */
+  border: 1px solid #eee; /* Opcional: ajuda a delimitar a área fixa */
+  border-radius: 8px;
+}
+
+/* Personalização da barra de rolagem (opcional, para ficar mais moderna) */
+.visitas-lista::-webkit-scrollbar {
+  width: 8px;
+}
+
+.visitas-lista::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.visitas-lista::-webkit-scrollbar-thumb {
+  background: #bdc3c7;
+  border-radius: 10px;
+}
+
+.visitas-lista::-webkit-scrollbar-thumb:hover {
+  background: #95a5a6;
+}
+
+/* Garante que o cabeçalho da tabela fique fixo no topo enquanto você rola */
+.pendencias-table thead th {
+  position: sticky;
+  top: 0;
+  background-color: #fdfdfd;
+  z-index: 1;
+  box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.1);
+}
+
+.status-badge-pendente{
+  background-color: #fef7e2;
+    color: #99861b;
+  border-radius: 10px;
+  padding: 5px;
+}
+.status-badge-confirmado{
+  background-color: #e2feed;
+    color: #1f991b;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+.floating-contact {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background-color: #1a3a5a;
+  color: white;
+  padding: 15px 20px;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  z-index: 1000;
+}

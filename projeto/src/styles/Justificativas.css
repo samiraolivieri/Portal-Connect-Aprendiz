@@ -1,0 +1,94 @@
+.atestado-container {
+    padding: 20px;
+    animation: fadeIn 0.5s ease-in;
+  }
+  
+  .atestado-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+    margin-top: 20px;
+  }
+  
+  .form-atestado, .historico-atestados {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+  
+  .form-row {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+    color: #333;
+  }
+  
+  .form-group input, .form-group select, .form-group textarea {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .upload-label {
+    border: 2px dashed #005aa3;
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+    color: #005aa3;
+    transition: 0.3s;
+  }
+  
+  .upload-label:hover {
+    background: #f0f7ff;
+  }
+  
+  .upload-label input { display: none; }
+  
+  .btn-enviar {
+    background-color: #005aa3;
+    color: white;
+    border: none;
+    padding: 12px;
+    width: 100%;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .btn-enviar:hover { background-color: #003d6e; }
+  
+  .historico-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .status-badge {
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-weight: bold;
+  }
+  
+  .status-badge-aprovado { background: #d4edda; color: #155724; }
+  .status-badge-pendente { background: #fff3cd; color: #856404; }
+  .status-badge-recusado { background: #ffcdcd; color: #850404; }
+  
+  @media (max-width: 768px) {
+    .atestado-grid { grid-template-columns: 1fr; }
+  }
