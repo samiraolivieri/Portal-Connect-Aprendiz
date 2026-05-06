@@ -24,7 +24,7 @@ const SidebarGestor = () => {
           {/* Link para Validar Atestados */}
           <Link to="/gestor/justificativas">
             <li className={location.pathname === "/gestor/justificativas" ? "active" : ""}>
-              <FaFileAlt /> Validar Atestados
+              <FaFileAlt /> Validar Justificativa
             </li>
           </Link>
           
