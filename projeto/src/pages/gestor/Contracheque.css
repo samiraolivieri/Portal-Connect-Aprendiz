@@ -1,35 +1,61 @@
-/* --- CONTAINER --- */
+/* --- CONTAINER E PÁGINA --- */
 .contracheque-container {
   padding: 30px;
   width: 100%;
   box-sizing: border-box;
+  background-color: transparent;
+  min-height: 100vh;
 }
 
-.titulo-pagina {
+/* --- HEADER COM PERFIL (Igual ao Desempenho) --- */
+.desempenho-header {
+  display: flex;
+  justify-content: space-between; /* Texto na esquerda, ícone na direita */
+  align-items: flex-start;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.header-content-left h1 {
   color: #1a3a5a;
   font-size: 1.8rem;
-  margin-bottom: 30px;
+  margin-bottom: 5px;
   font-weight: 800;
   text-transform: uppercase;
 }
 
-/* --- GRID E CARDS --- */
-.layout-grid {
-  display: grid;
-  grid-template-columns: 1.5fr 1fr; /* Esquerda maior que a direita */
-  gap: 30px;
-  align-items: start; /* Mantém os cards alinhados no topo */
+.header-content-left p {
+  color: #64748b;
 }
 
-/* Ajuste principal para evitar que os cards fiquem pequenos */
+.header-icons {
+  display: flex;
+  align-items: center;
+}
+
+.icon-wrapper {
+  cursor: pointer;
+  position: relative;
+  font-size: 2.2rem;
+  color: #1a3a5a;
+}
+
+/* --- GRID E CARDS (Estilo do seu 1º print) --- */
+.layout-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 30px;
+  align-items: start;
+}
+
 .card-upload, .card-historico {
   background: white;
   border-radius: 12px;
   padding: 25px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
   border-top: 5px solid #1a3a5a;
-  min-width: 400px; /* GARANTE QUE OS CARDS NÃO ENCOLHAM ALÉM DISSO */
-  width: 100%;      /* Ocupa o espaço disponível dentro da coluna do grid */
+  min-width: 400px;
+  width: 100%;
 }
 
 .card-upload h3, .card-historico h3 {
@@ -41,23 +67,19 @@
   margin-bottom: 25px;
 }
 
-/* --- FORMULÁRIO --- */
+/* --- FORMULÁRIO E INPUTS --- */
 .form-upload {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.input-group {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
 .input-group label {
   font-weight: 700;
   font-size: 0.9rem;
   color: #555;
+  display: block;
+  margin-bottom: 8px;
 }
 
 .input-field {
@@ -67,6 +89,7 @@
   font-size: 1rem;
   outline-color: #1a3a5a;
   width: 100%;
+  box-sizing: border-box;
 }
 
 /* --- ÁREA DE UPLOAD --- */
@@ -84,21 +107,6 @@
   background-color: #edf5ff;
 }
 
-.upload-box input {
-  display: none;
-}
-
-.upload-box label {
-  cursor: pointer;
-  color: #1a3a5a;
-}
-
-.upload-box p {
-  margin-top: 10px;
-  font-size: 0.9rem;
-  font-weight: 500;
-}
-
 .btn-enviar-contracheque {
   background-color: #1a3a5a;
   color: white;
@@ -111,42 +119,49 @@
   letter-spacing: 1px;
 }
 
-.btn-enviar-contracheque:hover {
-  background-color: #112942;
+/* --- DROPDOWN DO PERFIL --- */
+.dropdown-popup {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  width: 280px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  border: 1px solid #eee;
+  padding: 15px;
+  z-index: 1000;
+}
+
+.user-info-header {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.user-info-header strong { color: #1a3a5a; font-size: 0.9rem; }
+.user-info-header span { color: #888; font-size: 0.75rem; }
+
+.logout-opt {
+  list-style: none;
+  padding: 10px;
+  color: #e74c3c;
+  font-weight: bold;
+  cursor: pointer;
+  border-top: 1px solid #eee;
+  margin-top: 10px;
 }
 
 /* --- HISTÓRICO --- */
-.lista-envios {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
 .item-envio {
   padding: 15px;
   background: #fdfdfd;
   border-left: 4px solid #1a3a5a;
   border-radius: 4px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+  margin-bottom: 15px;
   display: flex;
   flex-direction: column;
   gap: 5px;
-}
-
-.envio-info strong {
-  color: #333;
-  font-size: 0.95rem;
-}
-
-.envio-info span {
-  display: block;
-  font-size: 0.85rem;
-  color: #666;
-}
-
-.envio-data span {
-  font-size: 0.75rem;
-  color: #aaa;
 }
 
 /* --- RESPONSIVIDADE --- */
@@ -154,8 +169,7 @@
   .layout-grid {
     grid-template-columns: 1fr;
   }
-  
   .card-upload, .card-historico {
-    min-width: 100%; /* No celular, ocupa 100% da largura */
+    min-width: 100%;
   }
 }

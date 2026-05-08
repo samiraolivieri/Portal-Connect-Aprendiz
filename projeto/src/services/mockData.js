@@ -45,6 +45,11 @@ export const muralUnidade = [
 
 export const contatos = [
   { id: 1, nome_setor: "Secretaria Acadêmica", responsavel: "Ana Carvalho", email: "anccarvalho@firjan.com.br", unidade_id: 1 },
-  { id: 2, nome_setor: "Acadêmico - professor", responsavel: "Carlos Souza", email: "prof.desemble@gmail.com", telefone: "(21) 3865-0000", unidade_id: 3 },
+  { id: 2, nome_setor: "Acadêmico - professor", responsavel: "Carlos Souza", email: "prof.desemble@gmail.com", unidade_id: 3 },
+  { id: 3, nome_setor: "Acadêmico - estudante", responsavel: "Vanessa Jurema", email: "vanessa@aprendiz.com", unidade_id: 3 },
+  { id: 3, nome_setor: "Acadêmico - estudante", responsavel: "Henrique Correia", email: "henrique@aprendiz.com", unidade_id: 3 },
+  { id: 3, nome_setor: "Acadêmico - estudante", responsavel: "Henrique Correia", email: "alexa@aprendiz.com", unidade_id: 3 },
+  { id: 3, nome_setor: "Acadêmico - estudante", responsavel: "Carlos Eduardo", email: "carlos@aprendiz.com", unidade_id: 3 },
+  { id: 3, nome_setor: "Acadêmico - estudante", responsavel: "Bianca Souza", email: "bianca@aprendiz.com", unidade_id: 3 },
 ];
 

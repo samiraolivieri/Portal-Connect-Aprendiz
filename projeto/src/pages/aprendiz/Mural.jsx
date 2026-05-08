@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom';
+import { FaBell, FaUserCircle, FaFileDownload } from 'react-icons/fa';
 import axios from "axios";
 import "../../styles/mural.css";
 
@@ -66,7 +68,17 @@ const avisosFixos = [
 ];
 
 export default function Mural() {
+  const navigate = useNavigate();
   const [avisosApi, setAvisosApi] = useState([]);
+  
+  // 🔥 DECLARAÇÃO DOS ESTADOS E VARIÁVEIS DO USUÁRIO QUE ESTAVAM FALTANDO
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const usuarioLogado = JSON.parse(localStorage.getItem('usuario')) || { nome: 'Aprendiz', nivel: 'aprendiz' };
+
+  const handleLogout = () => {
+    localStorage.removeItem('usuario');
+    navigate('/');
+  };
 
   useEffect(() => {
     axios.get("http://localhost:5000/api/comunicados")
@@ -74,10 +86,7 @@ export default function Mural() {
         const dadosFormatados = res.data.map((item) => ({
           id: item.id,
           titulo: item.titulo,
-
-          // 🔥 AGORA ACEITA conteudo OU descricao
           descricao: item.descricao || item.conteudo,
-
           local: item.local,
           horario: item.horario,
           tipo: item.tipo || "info",
@@ -98,7 +107,28 @@ export default function Mural() {
 
   return (
     <div className="mural-container">
-      <h1 className="titulo">Mural de Avisos</h1>
+      
+      {/* HEADER AJUSTADO PARA DEIXAR O PERFIL NO CANTO SUPERIOR DIREITO */}
+      <div className="justificativas-header">
+        <h1 className="titulo">Mural de Avisos</h1>
+
+        <div className="header-icons">
+          <div className="icon-wrapper" onClick={() => setIsMenuOpen(!isMenuOpen)} style={{ cursor: 'pointer', position: 'relative' }}>
+            <FaUserCircle />
+            {isMenuOpen && (
+              <div className="dropdown-popup">
+                <div className="user-info-header">
+                  <strong>{usuarioLogado.nome}</strong>
+                  <span>{usuarioLogado.nivel === 'aprendiz' ? 'Aprendiz' : usuarioLogado.nivel} - Petrobras</span>
+                </div>
+                <ul>
+                  <li className="logout-opt" onClick={handleLogout}>Sair do Sistema</li>
+                </ul>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
 
       {/* Destaque fixo */}
       <div className="aviso destaque">

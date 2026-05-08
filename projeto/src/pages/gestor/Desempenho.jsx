@@ -1,10 +1,19 @@
 import React, { useEffect, useState } from 'react';
+import { FaThLarge, FaBell, FaUserCircle, FaComments, FaEnvelope, FaTimes } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom'; // Importe o navigate
+import 'react-calendar/dist/Calendar.css';
 import './Desempenho.css';
 
 const Desempenho = () => {
     const [aprendizes, setAprendizes] = useState([]);
     const [mediaTurma, setMediaTurma] = useState(0);
     const [aproveitamento, setAproveitamento] = useState(0);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const usuarioLogado = JSON.parse(localStorage.getItem('usuario')) || { nome: 'Gestor', cargo: 'Gestor Petrobras' };
+    const handleLogout = () => {
+    localStorage.removeItem('usuario');
+    navigate('/');
+  };
 
     // Estados para o Modal
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -49,10 +58,29 @@ const Desempenho = () => {
 
     return (
         <div className="desempenho-page">
-            <header className="desempenho-header">
-                <h1>Olá, Gestor!</h1>
-                <p>Acompanhe aqui o rendimento acadêmico e técnico da sua turma.</p>
-            </header>
+           <header className="desempenho-header">
+    <div className="header-content-left">
+        <h1>Olá, Gestor!</h1>
+        <p>Acompanhe aqui o rendimento acadêmico e técnico da sua turma.</p>
+    </div>
+
+    <div className="header-icons">
+        <div className="icon-wrapper" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            <FaUserCircle />
+            {isMenuOpen && (
+                <div className="dropdown-popup">
+                    <div className="user-info-header">
+                        <strong>{usuarioLogado.nome}</strong>
+                        <span>{usuarioLogado.nivel === 'gestor' ? 'Gestor' : usuarioLogado.nivel} - Petrobras</span>
+                    </div>
+                    <ul>
+                        <li className="logout-opt" onClick={handleLogout}>Sair do Sistema</li>
+                    </ul>
+                </div>
+            )}
+        </div>
+    </div>
+</header>
 
             <section className="resumo-cards">
                 <div className="card-info">

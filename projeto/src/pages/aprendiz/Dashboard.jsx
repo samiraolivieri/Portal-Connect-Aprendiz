@@ -76,7 +76,7 @@ const Dashboard = () => {
               <div className="dropdown-popup">
                 <div className="user-info-header">
                   <strong>{usuarioLogado.nome}</strong>
-                  <span>Aprendiz - Petrobras</span>
+                  <span>{usuarioLogado.nivel === 'aprendiz' ? 'Aprendiz' : usuarioLogado.nivel} - Petrobras</span>
                 </div>
                 <ul>
                   <li className="logout-opt" onClick={handleLogout}>Sair do Sistema</li>

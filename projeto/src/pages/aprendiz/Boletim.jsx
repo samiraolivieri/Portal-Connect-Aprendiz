@@ -1,11 +1,24 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Boletim.css';
 import { FaBell, FaUserCircle, FaFileDownload } from 'react-icons/fa';
  
 const Boletim = () => {
+  // 1. PRIMEIRO DECLARAMOS TODOS OS HOOKS (Sempre no topo!)
+  const navigate = useNavigate();
   const [dados, setDados] = useState(null);
   const [loading, setLoading] = useState(true);
   const [erro, setErro] = useState(null);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // 2. RECUPERAÇÃO DO USUÁRIO LOGADO (Para corrigir o erro de 'not defined')
+  const usuarioLogado = JSON.parse(localStorage.getItem('usuario')) || { nome: 'Aprendiz', nivel: 'aprendiz' };
+  const usuarioId = usuarioLogado.id; 
+
+  const handleLogout = () => {
+    localStorage.removeItem('usuario');
+    navigate('/');
+  };
  
   useEffect(() => {
     const aprendizId = 1;
@@ -27,8 +40,9 @@ const Boletim = () => {
         setErro(err.message);
         setLoading(false);
       });
-  }, []); // 👈 useEffect DENTRO do componente, antes do return
+  }, []); 
  
+  // 3. RETORNOS CONDICIONAIS (Devem vir obrigatoriamente depois de todos os Hooks)
   if (loading) return <p>Carregando boletim...</p>;
   if (erro)    return <p>Erro: {erro}</p>;
   if (!dados)  return <p>Nenhum dado encontrado.</p>;
@@ -37,9 +51,22 @@ const Boletim = () => {
     <div className="dashboard-container">
       <header className="dash-header">
         <h1>BOLETIM E FREQUÊNCIA</h1>
+        
         <div className="header-icons">
-          <FaBell />
-          <FaUserCircle />
+          <div className="icon-wrapper" onClick={() => setIsMenuOpen(!isMenuOpen)} style={{ cursor: 'pointer' }}>
+            <FaUserCircle />
+            {isMenuOpen && (
+              <div className="dropdown-popup">
+                <div className="user-info-header">
+                  <strong>{usuarioLogado.nome}</strong>
+                  <span>{usuarioLogado.nivel === 'aprendiz' ? 'Aprendiz' : usuarioLogado.nivel} - Petrobras</span>
+                </div>
+                <ul>
+                  <li className="logout-opt" onClick={handleLogout}>Sair do Sistema</li>
+                </ul>
+              </div>
+            )}
+          </div>
         </div>
       </header>
  

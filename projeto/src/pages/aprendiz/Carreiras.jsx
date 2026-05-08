@@ -1,9 +1,20 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
+import { FaBell, FaUserCircle, FaFileDownload } from 'react-icons/fa';
 import "../../styles/carreiras.css";
 
 export default function Carreiras() {
   const [modal, setModal] = useState("");
   const [vagas, setVagas] = useState([]);
+
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const usuarioLogado = JSON.parse(localStorage.getItem('usuario')) || { nome: 'Aprendiz', nivel: 'aprendiz' };
+  const handleLogout = () => {
+    localStorage.removeItem('usuario');
+    navigate('/');
+  };
+
 
   // Busca vagas do back-end
   useEffect(() => {
@@ -13,9 +24,39 @@ export default function Carreiras() {
       .catch((error) => console.log("Erro ao carregar vagas:", error));
   }, []);
 
-  return (
+  
+    return (
     <div className="carreiras-container">
-      <h1 className="titulo">Portal Carreiras</h1>
+      
+      {/* NOVO BLOCO ENVOLVENDO O TÍTULO E O PERFIL NA MESMA LINHA */}
+      <div className="justificativas-header">
+        <h1 className="titulo">Portal Carreiras</h1>
+
+        <div className="header-icons">
+          <div className="icon-wrapper" onClick={() => setIsMenuOpen(!isMenuOpen)} style={{ cursor: 'pointer', position: 'relative' }}>
+            <FaUserCircle />
+            {isMenuOpen && (
+              <div className="dropdown-popup">
+                <div className="user-info-header">
+                  <strong>{usuarioLogado.nome}</strong>
+                  <span>{usuarioLogado.nivel === 'aprendiz' ? 'Aprendiz' : usuarioLogado.nivel} - Petrobras</span>
+                </div>
+                <ul>
+                  <li className="logout-opt" onClick={handleLogout}>Sair do Sistema</li>
+                </ul>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Hero Section e restante do código continuam perfeitamente iguais abaixo... */}
+      <div className="hero">
+        <div>
+          <h2>Construa seu futuro profissional 🚀</h2>
+          <p>Vagas, cursos e eventos em um só lugar.</p>
+        </div>
+      </div>
 
       {/* Hero Section */}
       <div className="hero">

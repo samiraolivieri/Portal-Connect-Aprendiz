@@ -1,77 +1,103 @@
 import React, { useState, useEffect } from 'react';
-import { FaCloudUploadAlt, FaFilePdf, FaHistory } from 'react-icons/fa';
+import { FaCloudUploadAlt, FaFilePdf, FaHistory, FaUserCircle } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 import './Contracheque.css';
 
 const Contracheque = () => {
-  const [aprendizes, setAprendizes] = useState([]); // Lista que virá do banco
+  const navigate = useNavigate();
+  const [aprendizes, setAprendizes] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
   const [aprendizId, setAprendizId] = useState('');
   const [mesReferencia, setMesReferencia] = useState('');
-  const [ultimosEnvios, setUltimosEnvios] = useState([]); // Histórico real
+  const [ultimosEnvios, setUltimosEnvios] = useState([]);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // 1. Busca os aprendizes cadastrados para preencher o Select
+  const usuarioLogado = JSON.parse(localStorage.getItem('usuario')) || { nome: 'Gestor', cargo: 'Gestor Petrobras' };
+
+  const handleLogout = () => {
+    localStorage.removeItem('usuario');
+    navigate('/');
+  };
+
   useEffect(() => {
-    fetch('http://localhost:5000/api/auth/aprendizes') // Verifique se sua rota de usuários é essa
+    fetch('http://localhost:5000/api/auth/aprendizes')
       .then(res => res.json())
       .then(data => setAprendizes(data))
       .catch(err => console.error("Erro ao carregar aprendizes:", err));
 
-    // 2. Busca o histórico de envios (lado direito)
+    carregarEnvios();
+  }, []);
+
+  const carregarEnvios = () => {
     fetch('http://localhost:5000/api/contracheque/todos')
       .then(res => res.json())
       .then(data => setUltimosEnvios(data))
       .catch(err => console.error("Erro ao carregar histórico:", err));
-  }, []);
+  };
 
-  // 3. Função para enviar o formulário
- // Função para buscar os envios (vamos isolar ela para usar em dois lugares)
- const carregarEnvios = () => {
-  fetch('http://localhost:5000/api/contracheque/todos')
-    .then(res => res.json())
-    .then(data => setUltimosEnvios(data))
-    .catch(err => console.error("Erro ao carregar histórico:", err));
-};
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-
-  if (!selectedFile || !aprendizId || !mesReferencia) {
-    alert("Por favor, preencha todos os campos e selecione um arquivo.");
-    return;
-  }
-
-  const formData = new FormData();
-  formData.append('aprendiz_id', aprendizId);
-  formData.append('mes_referencia', mesReferencia);
-  formData.append('arquivo', selectedFile);
-
-  try {
-    const response = await fetch('http://localhost:5000/api/contracheque/upload', {
-      method: 'POST',
-      body: formData,
-    });
-
-    if (response.ok) {
-      alert("Contracheque liberado com sucesso!");
-      setSelectedFile(null);
-      setAprendizId('');
-      setMesReferencia('');
-      
-      // --- O PULO DO GATO ---
-      carregarEnvios(); // Chama a função para atualizar a lista na hora!
-    } else {
-      alert("Erro ao enviar contracheque.");
+    if (!selectedFile || !aprendizId || !mesReferencia) {
+      alert("Por favor, preencha todos os campos e selecione um arquivo.");
+      return;
     }
-  } catch (error) {
-    console.error("Erro na requisição:", error);
-  }
-};
+
+    const formData = new FormData();
+    formData.append('aprendiz_id', aprendizId);
+    formData.append('mes_referencia', mesReferencia);
+    formData.append('arquivo', selectedFile);
+
+    try {
+      const response = await fetch('http://localhost:5000/api/contracheque/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        alert("Contracheque liberado com sucesso!");
+        setSelectedFile(null);
+        setAprendizId('');
+        setMesReferencia('');
+        carregarEnvios();
+      } else {
+        alert("Erro ao enviar contracheque.");
+      }
+    } catch (error) {
+      console.error("Erro na requisição:", error);
+    }
+  };
 
   return (
     <div className="contracheque-container">
-      <h1 className="titulo-pagina">GERENCIAMENTO DE CONTRACHEQUES</h1>
+      
+      {/* HEADER EXATAMENTE IGUAL AO SEU PRIMEIRO PRINT */}
+      <header className="desempenho-header">
+        <div className="header-content-left">
+          <h1 className="titulo-pagina">GERENCIAMENTO DE CONTRACHEQUES</h1>
+        </div>
 
+        <div className="header-icons">
+          <div className="icon-wrapper" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            <FaUserCircle />
+            {isMenuOpen && (
+              <div className="dropdown-popup">
+                <div className="user-info-header">
+                  <strong>{usuarioLogado.nome}</strong>
+                  <span>{usuarioLogado.cargo}</span>
+                </div>
+                <ul>
+                  <li className="logout-opt" onClick={handleLogout}>Sair do Sistema</li>
+                </ul>
+              </div>
+            )}
+          </div>
+        </div>
+      </header>
+
+      {/* GRID DO SEU PRIMEIRO PRINT */}
       <div className="layout-grid">
+        
         {/* COLUNA ESQUERDA: FORMULÁRIO */}
         <section className="card-upload">
           <h3><FaCloudUploadAlt /> NOVO UPLOAD</h3>
@@ -142,6 +168,7 @@ const handleSubmit = async (e) => {
             )}
           </div>
         </section>
+
       </div>
     </div>
   );

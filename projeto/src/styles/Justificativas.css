@@ -92,3 +92,58 @@
   @media (max-width: 768px) {
     .atestado-grid { grid-template-columns: 1fr; }
   }
+
+  /* --- DROPDOWN DO PERFIL --- */
+.dropdown-popup {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  width: 280px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  border: 1px solid #eee;
+  padding: 15px;
+  z-index: 1000;
+}
+
+.user-info-header {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.user-info-header strong { color: #1a3a5a; font-size: 0.9rem; }
+.user-info-header span { color: #888; font-size: 0.75rem; }
+
+.logout-opt {
+  list-style: none;
+  padding: 10px;
+  color: #e74c3c;
+  font-weight: bold;
+  cursor: pointer;
+  border-top: 1px solid #eee;
+  margin-top: 10px;
+}
+
+/* Alinha o título na esquerda e o perfil na direita */
+.justificativas-header {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;            
+  width: 100%;
+  margin-bottom: 30px;            /* Mantém o espaçamento em relação à tabela */
+}
+
+/* Remove margens padrão do h1 que possam desalinhá-lo verticalmente */
+.justificativas-header h1 {
+  margin: 0;
+}
+
+/* Garante o tamanho e destaque do ícone de perfil */
+.justificativas-header .icon-wrapper {
+  font-size: 2.2rem;
+  color: #1a3a5a;                 /* Mantém o tom azul escuro padrão do seu sistema */
+  display: flex;
+  align-items: center;
+}

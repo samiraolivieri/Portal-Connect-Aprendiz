@@ -28,7 +28,9 @@
     font-weight: bold;
     cursor: pointer;
     display: flex;
+    /* margin-left: 1350px; */
     gap: 8px;
+
   }
   
   .btn-novo:hover {
@@ -163,6 +165,7 @@
     font-weight: 600;
     transition: 0.2s ease;
   }
+    
   
   .filtros button:hover {
     background: #eef4fb;

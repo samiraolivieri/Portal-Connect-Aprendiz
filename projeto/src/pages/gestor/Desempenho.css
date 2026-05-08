@@ -114,3 +114,58 @@
     padding: 40px;
     color: #94a3b8;
 }
+
+/* Atualize/adicione estas regras */
+
+.desempenho-header {
+    display: flex;
+    justify-content: space-between; /* Empurra o texto para a esquerda e o ícone para a direita */
+    align-items: flex-start;
+    margin-bottom: 30px;
+    position: relative; /* Importante para o posicionamento do dropdown */
+}
+
+.header-content-left h1 {
+    color: #002b5c;
+    margin-bottom: 5px;
+}
+
+.header-icons {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.icon-wrapper {
+    cursor: pointer;
+    position: relative;
+    font-size: 2.2rem; /* Tamanho do ícone de perfil */
+    color: #002b5c;
+    transition: transform 0.2s;
+}
+
+.icon-wrapper:hover {
+    transform: scale(1.05);
+}
+
+/* Ajuste do dropdown para não ser cortado */
+.dropdown-popup {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    width: 250px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    border: 1px solid #eee;
+    padding: 15px;
+    z-index: 1000;
+    text-align: left; /* Garante que o texto dentro do popup fique à esquerda */
+}
+
+.logout-opt {
+    color: #e74c3c !important; /* Vermelho para o botão de sair */
+    font-weight: bold;
+    border-top: 1px solid #eee;
+    margin-top: 10px;
+}

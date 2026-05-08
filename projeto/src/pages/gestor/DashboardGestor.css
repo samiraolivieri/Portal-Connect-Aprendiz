@@ -168,3 +168,193 @@
   box-shadow: 0 4px 10px rgba(0,0,0,0.2);
   z-index: 1000;
 }
+
+
+/**IMPLEMENTANDO A PARTE DO CSS DE CONTATO E PERFIL/
+
+/* Estilo Base do Pop-up (Dropdown) */
+.dropdown-popup {
+  position: absolute;
+  top: 45px; /* Fica logo abaixo do ícone */
+  right: 0;
+  width: 280px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  border: 1px solid #eee;
+  padding: 15px;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.dropdown-popup h4 {
+  margin: 0 0 10px 0;
+  color: #1a3a5a;
+  font-size: 0.9rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 8px;
+}
+
+.dropdown-popup ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dropdown-popup li {
+  padding: 10px;
+  font-size: 0.85rem;
+  color: #002b5c;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.dropdown-popup li:hover {
+  background: #f5f8fa;
+}
+
+/* Detalhes específicos do Perfil */
+.user-info-header {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.user-info-header strong { color: #1a3a5a; font-size: 0.9rem; }
+.user-info-header span { color: #888; font-size: 0.75rem; }
+
+.logout-opt {
+  color: #d9534f !important; /* Vermelho para o Sair */
+  font-weight: bold;
+}
+
+/* Animação para o pop-up aparecer suavemente */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsividade simples */
+@media (max-width: 768px) {
+  .section-docs-container, 
+  .dashboard-content-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================================
+   ESTILOS DO SUPORTE FLUTUANTE (NOVO)
+   ============================================================ */
+
+.floating-contact {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background-color: #1a3a5a;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  z-index: 999;
+}
+
+.floating-contact:hover {
+  transform: translateY(-5px);
+  background-color: #2a4a6a;
+}
+
+.contact-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: flex-end; 
+  align-items: flex-end;
+  z-index: 10000;
+  backdrop-filter: blur(2px);
+  
+  /* --- AQUI ESTÁ A CORREÇÃO --- */
+  pointer-events: none; /* Faz o mouse atravessar o overlay invisível */
+  opacity: 0;           /* Começa invisível */
+  transition: opacity 0.3s ease;
+}
+
+/* Criamos uma classe para ativar o modal */
+.contact-overlay.active {
+  display: flex;
+  opacity: 1;
+  pointer-events: auto; /* Permite cliques apenas quando o modal está aberto */
+}
+.contact-window {
+  width: 320px;
+  background: white;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  animation: slideUp 0.3s ease-out;
+
+  /* --- AQUI ESTÁ O SEGREDO DO RECUO --- */
+  margin-right: 50px; /* Ajuste esse valor para afastar mais ou menos da direita */
+}
+
+.contact-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #f0f4f8;
+  padding-bottom: 10px;
+}
+
+.contact-header h4 {
+  margin: 0;
+  color: #1a3a5a;
+}
+
+.btn-close-contact {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: #888;
+  cursor: pointer;
+}
+
+.contact-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.contact-card {
+  background: #f8fafc;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #edf2f7;
+}
+
+.contact-info strong {
+  display: block;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.contact-info span {
+  color: #666;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+
+.contact-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}

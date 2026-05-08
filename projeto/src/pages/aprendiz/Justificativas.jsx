@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import '../../styles/Justificativas.css';
 
 import { FaCloudUploadAlt, FaHistory, FaFileAlt } from 'react-icons/fa';
+import { FaBell, FaUserCircle, FaFileDownload } from 'react-icons/fa';
 import axios from 'axios';
 
 const Justificativas = () => {
-  const usuarioLogado = localStorage.getItem("usuario");
-  const usuarioObj = usuarioLogado ? JSON.parse(usuarioLogado) : null;
-  const userId = usuarioObj ? usuarioObj.id : '';
+  const usuarioLogado = JSON.parse(localStorage.getItem('usuario')) || { id: 0, nome: 'Aprendiz', nivel: 'aprendiz' };
+  const userId = usuarioLogado.id;
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   const estadoInicial = {
     titulo: '',
@@ -74,10 +77,31 @@ const Justificativas = () => {
     }
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('usuario');
+    navigate('/');
+  };
+
   return (
     <div className="atestado-container">
       <header className="dash-header">
         <h1>REGISTRO DE JUSTIFICATIVAS</h1>
+        <div className="header-icons">
+                  <div className="icon-wrapper" onClick={() => setIsMenuOpen(!isMenuOpen)} style={{ cursor: 'pointer' }}>
+                    <FaUserCircle />
+                    {isMenuOpen && (
+                      <div className="dropdown-popup">
+                        <div className="user-info-header">
+                          <strong>{usuarioLogado.nome}</strong>
+                          <span>{usuarioLogado.nivel === 'aprendiz' ? 'Aprendiz' : usuarioLogado.nivel} - Petrobras</span>
+                        </div>
+                        <ul>
+                          <li className="logout-opt" onClick={handleLogout}>Sair do Sistema</li>
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                </div>
       </header>
 
       <div className="atestado-grid">

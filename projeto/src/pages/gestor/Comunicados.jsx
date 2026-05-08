@@ -9,9 +9,19 @@ import {
   FaEye
 } from "react-icons/fa";
 
+import { FaThLarge, FaBell, FaUserCircle, FaComments, FaEnvelope, FaTimes } from 'react-icons/fa';
+
 export default function Comunicados() {
   const [busca, setBusca] = useState("");
   const [filtro, setFiltro] = useState("Todos");
+
+  const usuarioLogado = JSON.parse(localStorage.getItem('usuario')) || { nome: 'Gestor', cargo: 'Gestor Petrobras' };
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  
+   const handleLogout = () => {
+    localStorage.removeItem('usuario');
+    navigate('/');
+  };
 
   const [comunicados, setComunicados] = useState([
     {
@@ -141,9 +151,26 @@ export default function Comunicados() {
           <FaBullhorn /> Comunicados Oficiais
         </h1>
 
-        <button className="btn-novo" onClick={abrirNovo}>
-          <FaPlus /> Criar Comunicado
-        </button>
+       
+
+
+        {/* IMPLEMENTAÇÃO DO MENU DE USUÁRIO */}
+                  <div className="icon-wrapper" onClick={() => setIsMenuOpen(!isMenuOpen)} style={{ cursor: 'pointer', position: 'relative' }}>
+                    <FaUserCircle />
+                    {isMenuOpen && (
+                      <div className="dropdown-popup">
+                        <div className="user-info-header">
+                          <strong>{usuarioLogado.nome}</strong>
+        
+                          <span>{usuarioLogado.nivel === 'gestor' ? 'Gestor' : usuarioLogado.nivel} - Petrobras</span>
+                        </div>
+                        <ul>
+                          <li className="logout-opt" onClick={handleLogout}>Sair do Sistema</li>
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+
       </header>
 
       {/* Busca */}
@@ -170,7 +197,15 @@ export default function Comunicados() {
             </button>
           )
         )}
+
+        <button className="btn-novo" onClick={abrirNovo}>
+          <FaPlus /> Criar Comunicado
+        </button>
+        
+        
       </section>
+      
+
 
       {/* Tabela */}
       <section className="tabela-box">

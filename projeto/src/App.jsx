@@ -29,21 +29,27 @@ import Pedagogo from "./pages/pedagogo/Pedagogo";
 function App() {
   const location = useLocation();
 
-  // Definição das condições de visualização
+  // 1. Identifica se é página de login
   const isLoginPage = location.pathname === "/" || location.pathname === "/login";
-  const isGestorPage = location.pathname.startsWith("/gestor/dashboard");
-  const isPedagogoPage = location.pathname.startsWith("/pedagogo/dashboard");
 
-  // Ajuste de layout para o pedagogo (conforme sua lógica anterior)
-  const layoutClass = isPedagogoPage ? "" : "app-layout";
-  const contentClass = isPedagogoPage ? "" : "content";
+  // 2. Identifica o tipo de usuário pela URL (Melhorado com startsWith simplificado)
+  const isGestorRoute = location.pathname.startsWith("/gestor");
+  const isPedagogoRoute = location.pathname.startsWith("/pedagogo");
+
+  // 3. Define qual Sidebar exibir
+  const renderSidebar = () => {
+    if (isLoginPage) return null;
+    if (isGestorRoute || isPedagogoRoute) return <SidebarGestor />;
+    return <Sidebar />;
+  };
+
+  // Ajuste de layout
+  const layoutClass = isLoginPage ? "" : "app-layout";
+  const contentClass = isLoginPage ? "" : "content";
 
   return (
     <div className={layoutClass}>
-      {/* Lógica da Sidebar: Se não for login, escolhe qual mostrar */}
-      {!isLoginPage && (
-        (isGestorPage || isPedagogoPage) ? <SidebarGestor /> : <Sidebar />
-      )}
+      {renderSidebar()}
 
       <main className={contentClass}>
         <Routes>
@@ -66,7 +72,7 @@ function App() {
           <Route path="/gestor/comunicados" element={<Comunicados />} />
 
           {/* Rotas do Pedagogo */}
-          <Route path="/pedagogo" element={<Pedagogo />} />
+          <Route path="/pedagogo/dashboard" element={<Pedagogo />} /> {/* Ajustado para manter o padrão /pedagogo/dashboard */}
           <Route path="/pedagogo/gerirturmas" element={<GerirTurmas />} />
           <Route path="/pedagogo/publicarmaterial" element={<PublicarMaterial />} />
           <Route path="/pedagogo/justificativas" element={<JustificativasPedagogo />} />
