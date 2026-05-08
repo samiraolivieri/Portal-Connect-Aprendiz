@@ -3,17 +3,10 @@ import { useNavigate } from 'react-router-dom';
 
 import '../../styles/Justificativas.css';
 
-import { FaCloudUploadAlt, FaHistory, FaFileAlt } from 'react-icons/fa';
+import { FaCloudUploadAlt, FaHistory, FaFileAlt, FaComments, FaTimes, FaEnvelope  } from 'react-icons/fa';
 import { FaBell, FaUserCircle, FaFileDownload } from 'react-icons/fa';
 import '../../styles/Justificativas.css';
-import { 
-  FaCloudUploadAlt, 
-  FaHistory, 
-  FaFileAlt, 
-  FaComments, 
-  FaTimes, 
-  FaEnvelope 
-} from 'react-icons/fa';
+
 import axios from 'axios';
 
 const Justificativas = () => {

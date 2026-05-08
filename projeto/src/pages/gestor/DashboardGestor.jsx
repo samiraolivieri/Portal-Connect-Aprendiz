@@ -228,9 +228,7 @@ const DashboardGestor = () => {
       )}
 
       {/* POPUP DE CONTATO DO MURAL (Se necessário) */}
-      {contatoSelecionado && (
-        <ContatoPopup contato={contatoSelecionado} onClose={() => setContatoSelecionado(null)} />
-      )}
+      
     </div>
   );
 };

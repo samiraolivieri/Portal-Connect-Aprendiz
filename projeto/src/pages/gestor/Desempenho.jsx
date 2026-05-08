@@ -1,14 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { FaThLarge, FaBell, FaUserCircle, FaComments, FaEnvelope, FaTimes } from 'react-icons/fa';
+import { FaThLarge, FaBell, FaUserCircle, FaComments, FaEnvelope, FaTimes, FaBriefcase } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom'; // Importe o navigate
 import 'react-calendar/dist/Calendar.css';
 import './Desempenho.css';
-import { 
-  FaBriefcase, 
-  FaComments, 
-  FaTimes, 
-  FaEnvelope 
-} from 'react-icons/fa';
 
 const Desempenho = () => {
     const [aprendizes, setAprendizes] = useState([]);

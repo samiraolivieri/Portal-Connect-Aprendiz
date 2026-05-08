@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; // Adicionado para o logout funcionar
 import '../../styles/gestor/Justificativas.css';
-import { FaThLarge, FaBell, FaUserCircle, FaComments, FaEnvelope, FaTimes } from 'react-icons/fa';
+import { FaFileAlt, FaThLarge, FaBell, FaUserCircle, FaComments, FaEnvelope, FaTimes } from 'react-icons/fa';
 
 const GestaoAprendizes = () => {
   const navigate = useNavigate(); // Inicializado o hook de navegação

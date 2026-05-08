@@ -1,19 +1,18 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../../styles/comunicados.css";
-import { 
-  FaBullhorn, 
-  FaPlus, 
-  FaSearch, 
-  FaEdit, 
-  FaTrash, 
-  FaEye, 
-  FaComments, 
-  FaTimes, 
-  FaEnvelope 
+import {
+  FaBullhorn,
+  FaPlus,
+  FaSearch,
+  FaEdit,
+  FaTrash,
+  FaEye,
+  FaComments,
+  FaTimes,
+  FaEnvelope, FaThLarge, FaBell, FaUserCircle
 } from "react-icons/fa";
 
-import { FaThLarge, FaBell, FaUserCircle, FaComments, FaEnvelope, FaTimes } from 'react-icons/fa';
 const API_URL = "http://localhost:5000/api/comunicados/comunicados";
 
 export default function Comunicados() {
@@ -22,32 +21,29 @@ export default function Comunicados() {
   const [comunicados, setComunicados] = useState([]);
   const [aprendizes, setAprendizes] = useState([]); // Para a lista de contatos
 
-  const usuarioLogado = JSON.parse(localStorage.getItem('usuario')) || { nome: 'Gestor', cargo: 'Gestor Petrobras' };
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  
-   const handleLogout = () => {
+
+  const handleLogout = () => {
     localStorage.removeItem('usuario');
     navigate('/');
   };
 
-  
-  const usuarioLogado = localStorage.getItem("usuario");
-  const usuarioObj = usuarioLogado ? JSON.parse(usuarioLogado) : null;
-  const userId = usuarioObj ? usuarioObj.id : null;
+  const usuarioLogado = JSON.parse(localStorage.getItem('usuario')) || { id: null, nome: 'Gestor', nivel: 'gestor' };
+  const userId = usuarioLogado.id;
 
-  const contatoPedagoga = { 
-    nome: "Vilma Nascimento", 
-    cargo: "Pedagogia", 
-    email: "amaior@ensino.com", 
-    tel: "(21) 88888-8888" 
+  const contatoPedagoga = {
+    nome: "Vilma Nascimento",
+    cargo: "Pedagogia",
+    email: "amaior@ensino.com",
+    tel: "(21) 88888-8888"
   };
 
   const estadoInicial = {
     id: null,
     autor_id: userId,
     titulo: "",
-    conteudo: "",     
-    tipo_alvo: "Todos", 
+    conteudo: "",
+    tipo_alvo: "Todos",
     prioridade: "Normal",
     status: "Publicado",
     descricao: "",
@@ -113,7 +109,7 @@ export default function Comunicados() {
       } else {
         await axios.post(API_URL, dadosParaEnviar);
       }
-      
+
       carregarComunicados();
       setMostrarModal(false);
       alert("Sucesso!");
@@ -150,28 +146,26 @@ export default function Comunicados() {
           <FaBullhorn /> Comunicados Oficiais
         </h1>
 
-       
+
 
 
         {/* IMPLEMENTAÇÃO DO MENU DE USUÁRIO */}
-                  <div className="icon-wrapper" onClick={() => setIsMenuOpen(!isMenuOpen)} style={{ cursor: 'pointer', position: 'relative' }}>
-                    <FaUserCircle />
-                    {isMenuOpen && (
-                      <div className="dropdown-popup">
-                        <div className="user-info-header">
-                          <strong>{usuarioLogado.nome}</strong>
-        
-                          <span>{usuarioLogado.nivel === 'gestor' ? 'Gestor' : usuarioLogado.nivel} - Petrobras</span>
-                        </div>
-                        <ul>
-                          <li className="logout-opt" onClick={handleLogout}>Sair do Sistema</li>
-                        </ul>
-                      </div>
-                    )}
-                  </div>
+        <div className="icon-wrapper" onClick={() => setIsMenuOpen(!isMenuOpen)} style={{ cursor: 'pointer', position: 'relative' }}>
+          <FaUserCircle />
+          {isMenuOpen && (
+            <div className="dropdown-popup">
+              <div className="user-info-header">
+                <strong>{usuarioLogado.nome}</strong>
 
-        <h1><FaBullhorn /> Comunicados Oficiais</h1>
-        <button className="btn-novo" onClick={abrirNovo}><FaPlus /> Criar Comunicado</button>
+                <span>{usuarioLogado.nivel === 'gestor' ? 'Gestor' : usuarioLogado.nivel} - Petrobras</span>
+              </div>
+              <ul>
+                <li className="logout-opt" onClick={handleLogout}>Sair do Sistema</li>
+              </ul>
+            </div>
+          )}
+        </div>
+
       </header>
 
       <section className="barra-busca">
@@ -183,8 +177,10 @@ export default function Comunicados() {
         {["Todos", "Publicados", "Rascunhos", "Urgentes", "Expirados"].map((item) => (
           <button key={item} className={filtro === item ? "ativo" : ""} onClick={() => setFiltro(item)}>{item}</button>
         ))}
+        <button className="btn-novo" onClick={abrirNovo}><FaPlus /> Criar Comunicado</button>
+
       </section>
-      
+
 
 
       <section className="tabela-box">
@@ -263,7 +259,7 @@ export default function Comunicados() {
             <h2>{modoEdicao ? "Editar Comunicado" : "Novo Comunicado"}</h2>
             <input type="text" placeholder="Título" value={form.titulo} onChange={(e) => setForm({ ...form, titulo: e.target.value })} />
             <input type="text" placeholder="Conteúdo Breve (ex: RH, Operacional)" value={form.conteudo} onChange={(e) => setForm({ ...form, conteudo: e.target.value })} />
-            
+
             <select value={form.tipo_alvo} onChange={(e) => setForm({ ...form, tipo_alvo: e.target.value })}>
               <option value="Todos">Todos</option>
               <option value="Aprendizes">Aprendizes</option>

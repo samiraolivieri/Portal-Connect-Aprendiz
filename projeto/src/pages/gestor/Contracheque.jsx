@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { FaCloudUploadAlt, FaFilePdf, FaHistory, FaUserCircle } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import './Contracheque.css';
 import { 
@@ -9,7 +8,8 @@ import {
   FaHistory, 
   FaComments,
   FaTimes,
-  FaEnvelope 
+  FaEnvelope,
+  FaUserCircle
 } from 'react-icons/fa';
 import './Contracheque.css';
 const Contracheque = () => {
