@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import "./PublicarMaterial.css";
 // ✅ Importação dos ícones necessários para o modal e botões
@@ -8,7 +9,10 @@ import {
   FaTimes, 
   FaUserTie, 
   FaUsers, 
-  FaCloudUploadAlt 
+  FaCloudUploadAlt,
+  FaBell, 
+  FaUserCircle, 
+  FaFileDownload 
 } from "react-icons/fa";
 
 export default function PublicarMaterial() {
@@ -20,6 +24,16 @@ export default function PublicarMaterial() {
     // ✅ Estados para o Modal de Contatos
     const [aprendizes, setAprendizes] = useState([]);
     const [showContactModal, setShowContactModal] = useState(false);
+
+    const usuarioLogado = JSON.parse(localStorage.getItem('usuario')) || { nome: 'Aprendiz', nivel: 'aprendiz' };
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const navigate = useNavigate();
+ 
+ const handleLogout = () => {
+    localStorage.removeItem('usuario');
+    navigate('/');
+  };
+ 
 
     // ✅ Informação fixa do Gestor (Sérgio Carvalho)
     const contatoGestor = { 
@@ -84,7 +98,28 @@ export default function PublicarMaterial() {
     return (
         <div className="gerir-turmas-container">
             {/* ✅ Título com o emoji padronizado */}
-            <h2 className="titulo-pagina"> Publicar Material</h2>
+
+            <header className="header-principal" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+            <h2 className="titulo-pagina" style={{ margin: 0 }}>Publicar Material</h2>
+
+            <div className="perfil-header" style={{ position: 'relative' }}>
+                <div className="icon-wrapper" onClick={() => setIsMenuOpen(!isMenuOpen)} style={{ cursor: 'pointer' }}>
+                    <FaUserCircle size={40} />
+                    
+                    {isMenuOpen && (
+                        <div className="dropdown-popup">
+                            <div className="user-info-header">
+                                <strong>{usuarioLogado.nome}</strong>
+                                <span>{usuarioLogado.nivel === 'pedagogia' ? 'Pedagogia' : usuarioLogado.nivel} - Petrobras</span>
+                            </div>
+                            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                                <li className="logout-opt" onClick={handleLogout}>Sair do Sistema</li>
+                            </ul>
+                        </div>
+                    )}
+                </div>
+            </div>
+        </header>
             
             <div className="layout-grid">
                 {/* PAINEL ESQUERDO: FORMULÁRIO */}

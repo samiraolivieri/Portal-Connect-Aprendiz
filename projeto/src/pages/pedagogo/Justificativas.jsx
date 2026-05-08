@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { FaBell, FaUserCircle, FaFileDownload } from 'react-icons/fa';
+ 
 import axios from 'axios';
 import '../../styles/gestor/Justificativas.css';
 import { 
@@ -21,6 +24,16 @@ const GestaoAprendizes = () => {
   // ✅ Estados para o Modal de Contatos
   const [aprendizes, setAprendizes] = useState([]);
   const [showContactModal, setShowContactModal] = useState(false);
+
+  const usuarioLogado = JSON.parse(localStorage.getItem('usuario')) || { nome: 'Aprendiz', nivel: 'aprendiz' };
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
+ 
+ const handleLogout = () => {
+    localStorage.removeItem('usuario');
+    navigate('/');
+  };
+ 
 
   // ✅ Informação fixa do Gestor (Sérgio Carvalho)
   const contatoGestor = { 
@@ -68,6 +81,23 @@ const GestaoAprendizes = () => {
         <h1 style={{ color: '#1a3a5a', display: 'flex', alignItems: 'center', gap: '12px' }}>
           <FaUserFriends /> GESTÃO DE APRENDIZES
         </h1>
+
+        <div className="header-icons">
+          <div className="icon-wrapper" onClick={() => setIsMenuOpen(!isMenuOpen)} style={{ cursor: 'pointer' }}>
+              <FaUserCircle size={40} />
+            {isMenuOpen && (
+              <div className="dropdown-popup">
+                <div className="user-info-header">
+                  <strong>{usuarioLogado.nome}</strong>
+                  <span>{usuarioLogado.nivel === 'pedagogia' ? 'Pedagogia' : usuarioLogado.nivel} - Petrobras</span>
+                </div>
+                <ul>
+                  <li className="logout-opt" onClick={handleLogout}>Sair do Sistema</li>
+                </ul>
+              </div>
+            )}
+          </div>
+        </div>
       </header>
       
       <table className="tabela-atividades">

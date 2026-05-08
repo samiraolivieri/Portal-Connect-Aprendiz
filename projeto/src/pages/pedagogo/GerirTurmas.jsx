@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
+import { FaBell, FaUserCircle, FaFileDownload } from 'react-icons/fa';
 import axios from "axios";
 import "./GerirTurmas.css";
 // ✅ Importação dos ícones necessários
@@ -14,6 +16,15 @@ export default function GerirTurmas() {
     const [listaAlunos, setListaAlunos] = useState([]);
     const [listaUcs, setListaUcs] = useState([]);
     const [showContactModal, setShowContactModal] = useState(false);
+
+    const usuarioLogado = JSON.parse(localStorage.getItem('usuario')) || { nome: 'Aprendiz', nivel: 'aprendiz' };
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const navigate = useNavigate();
+ 
+    const handleLogout = () => {
+    localStorage.removeItem('usuario');
+    navigate('/');
+  };
 
     // ✅ CORRIGIDO: Removida a redeclaração. Agora é apenas o objeto fixo como no Contracheque.
     const contatoGestor = { 
@@ -107,19 +118,49 @@ export default function GerirTurmas() {
         }
     };
 
-    const handleVisualizar = async (turma) => {
-        try {
-            const response = await axios.get(`http://localhost:5000/api/turmas/${turma.id}/detalhes`);
-            setDetalhesTurma({ ...turma, alunos: response.data.alunos });
-            setIsModalOpen(true);
-        } catch (error) {
-            alert("Erro ao carregar detalhes");
-        }
-    };
+   const handleVisualizar = async (turma) => {
+    try {
+        const response = await axios.get(`http://localhost:5000/api/turmas/${turma.id}/detalhes`);
+        // Aqui garantimos que o instrutor seja salvo no estado
+        setDetalhesTurma({ 
+            ...turma, 
+            alunos: response.data.alunos,
+            instrutor: response.data.instrutor // Certifique-se que o backend envia essa chave
+        });
+        setIsModalOpen(true);
+    } catch (error) {
+        alert("Erro ao carregar detalhes");
+    }
+};
 
     return (
-        <div className="gerir-turmas-container">
-            <h2 className="titulo-pagina">Gerenciamento de Turmas</h2>
+        
+  <div className="gerir-turmas-container">
+    
+    {/* CABEÇALHO ALINHADO */}
+    <header className="header-principal">
+      <h2 className="titulo-pagina">Gerenciamento de Turmas</h2>
+      
+      <div className="perfil-header">
+        <div className="icon-wrapper" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          <FaUserCircle size={40} />
+          
+          {isMenuOpen && (
+            <div className="dropdown-popup">
+              <div className="user-info-header">
+                <strong>{usuarioLogado.nome}</strong>
+                <span>{usuarioLogado.nivel === 'pedagogia' ? 'Pedagogia' : usuarioLogado.nivel} - Petrobras</span>
+              </div>
+              <ul>
+                <li className="logout-opt" onClick={handleLogout}>Sair do Sistema</li>
+              </ul>
+            </div>
+          )}
+        </div>
+      </div>
+    </header>
+
+    {/* Resto do seu código (Cards, Tabelas, etc) */}
 
             {/* Cadastro de Turma */}
             <div className="card-turma">
@@ -200,20 +241,25 @@ export default function GerirTurmas() {
 
             {/* MODAL DE DETALHES DA TURMA */}
             {isModalOpen && detalhesTurma && (
-                <div className="modal-overlay">
-                    <div className="modal-content">
-                        <h2>{detalhesTurma.nome}</h2>
-                        <p><strong>Curso:</strong> {detalhesTurma.curso}</p>
-                        <p><strong>Total de Alunos:</strong> {detalhesTurma.alunos.length}</p>
-                        <ul style={{ maxHeight: '200px', overflowY: 'auto' }}>
-                            {detalhesTurma.alunos.map(aluno => (
-                                <li key={aluno.id}>{aluno.nome}</li>
-                            ))}
-                        </ul>
-                        <button onClick={() => setIsModalOpen(false)} className="btn-adicionar" style={{ marginTop: '20px', width: '100%' }}>Fechar</button>
-                    </div>
-                </div>
-            )}
+    <div className="modal-overlay">
+        <div className="modal-content">
+            <h2>{detalhesTurma.nome}</h2>
+            <p><strong>Curso:</strong> {detalhesTurma.curso}</p>
+            <p><strong>Período:</strong> {detalhesTurma.periodo}</p>
+            
+            {/* ✅ LINHA DO INSTRUTOR ADICIONADA */}
+            <p><strong>Instrutor Responsável:</strong> {detalhesTurma.instrutor || "Não atribuído"}</p>
+            
+            <p><strong>Total de Alunos:</strong> {detalhesTurma.alunos.length}</p>
+            <ul style={{ maxHeight: '200px', overflowY: 'auto' }}>
+                {detalhesTurma.alunos.map(aluno => (
+                    <li key={aluno.id}>{aluno.nome}</li>
+                ))}
+            </ul>
+            <button onClick={() => setIsModalOpen(false)} className="btn-adicionar" style={{ marginTop: '20px', width: '100%' }}>Fechar</button>
+        </div>
+    </div>
+)}
 
             {/* BOTÃO FLUTUANTE DE CONTATOS */}
             <div className="floating-contact" onClick={() => setShowContactModal(true)}>

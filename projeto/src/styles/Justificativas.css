@@ -1,6 +1,7 @@
 .atestado-container {
     padding: 20px;
     animation: fadeIn 0.5s ease-in;
+    background-color: transparent;
   }
   
   .atestado-grid {
@@ -89,6 +90,12 @@
   .status-badge-pendente { background: #fff3cd; color: #856404; }
   .status-badge-recusado { background: #ffcdcd; color: #850404; }
   
-  @media (max-width: 768px) {
-    .atestado-grid { grid-template-columns: 1fr; }
-  }
+  /* --- RESPONSIVIDADE --- */
+@media (max-width: 900px) {
+    .layout-grid { flex-direction: column; }
+}
+
+@media (max-width: 768px) {
+    .form-turma { flex-direction: column; align-items: stretch; }
+    .full-width { flex: 1; }
+}
