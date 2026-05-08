@@ -1,6 +1,10 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
+import { FaBell, FaUserCircle, FaFileDownload } from 'react-icons/fa';
 import axios from "axios";
 import "./GerirTurmas.css";
+// ✅ Importação dos ícones necessários
+import { FaComments, FaEnvelope, FaTimes, FaUserTie, FaUsers } from "react-icons/fa";
 
 export default function GerirTurmas() {
     const [turmas, setTurmas] = useState([]);
@@ -8,12 +12,28 @@ export default function GerirTurmas() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [detalhesTurma, setDetalhesTurma] = useState(null);
 
-    // Estados para Lançamento de Notas
+    // Estados para Lançamento de Notas e Contatos
     const [listaAlunos, setListaAlunos] = useState([]);
     const [listaUcs, setListaUcs] = useState([]);
-    const [novaNota, setNovaNota] = useState({ aluno_id: "", uc_id: "", valor_nota: "" });
+    const [showContactModal, setShowContactModal] = useState(false);
 
-    // Estados para Lançamento de Frequência - CORRIGIDO
+    const usuarioLogado = JSON.parse(localStorage.getItem('usuario')) || { nome: 'Aprendiz', nivel: 'aprendiz' };
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const navigate = useNavigate();
+ 
+    const handleLogout = () => {
+    localStorage.removeItem('usuario');
+    navigate('/');
+  };
+
+    // ✅ CORRIGIDO: Removida a redeclaração. Agora é apenas o objeto fixo como no Contracheque.
+    const contatoGestor = { 
+        nome: "Sérgio Carvalho", 
+        email: "sergio.carvalho@petrobras.com.br", 
+        telefone: "(21) 99999-7777" 
+    };
+
+    const [novaNota, setNovaNota] = useState({ aluno_id: "", uc_id: "", valor_nota: "" });
     const [novaFrequencia, setNovaFrequencia] = useState({ 
         aluno_id: "", 
         uc_id: "", 
@@ -38,8 +58,8 @@ export default function GerirTurmas() {
     const fetchDadosLancamento = async () => {
         try {
             const res = await axios.get("http://localhost:5000/api/turmas/dados/lancamento");
-            setListaAlunos(res.data.alunos);
-            setListaUcs(res.data.ucs);
+            setListaAlunos(res.data.alunos || []);
+            setListaUcs(res.data.ucs || []);
         } catch (error) {
             console.error("Erro ao carregar dados de lançamento:", error);
         }
@@ -74,7 +94,6 @@ export default function GerirTurmas() {
     };
 
     const handleLancarFrequencia = async () => {
-        // Validação usando data_aula
         if (!novaFrequencia.aluno_id || !novaFrequencia.uc_id || !novaFrequencia.data_aula || !novaFrequencia.valor_frequencia) {
             alert("Preencha todos os campos da frequência.");
             return;
@@ -99,19 +118,49 @@ export default function GerirTurmas() {
         }
     };
 
-    const handleVisualizar = async (turma) => {
-        try {
-            const response = await axios.get(`http://localhost:5000/api/turmas/${turma.id}/detalhes`);
-            setDetalhesTurma({ ...turma, alunos: response.data.alunos });
-            setIsModalOpen(true);
-        } catch (error) {
-            alert("Erro ao carregar detalhes");
-        }
-    };
+   const handleVisualizar = async (turma) => {
+    try {
+        const response = await axios.get(`http://localhost:5000/api/turmas/${turma.id}/detalhes`);
+        // Aqui garantimos que o instrutor seja salvo no estado
+        setDetalhesTurma({ 
+            ...turma, 
+            alunos: response.data.alunos,
+            instrutor: response.data.instrutor // Certifique-se que o backend envia essa chave
+        });
+        setIsModalOpen(true);
+    } catch (error) {
+        alert("Erro ao carregar detalhes");
+    }
+};
 
     return (
-        <div className="gerir-turmas-container">
-            <h2 className="titulo-pagina">Gerenciamento de Turmas</h2>
+        
+  <div className="gerir-turmas-container">
+    
+    {/* CABEÇALHO ALINHADO */}
+    <header className="header-principal">
+      <h2 className="titulo-pagina">Gerenciamento de Turmas</h2>
+      
+      <div className="perfil-header">
+        <div className="icon-wrapper" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          <FaUserCircle size={40} />
+          
+          {isMenuOpen && (
+            <div className="dropdown-popup">
+              <div className="user-info-header">
+                <strong>{usuarioLogado.nome}</strong>
+                <span>{usuarioLogado.nivel === 'pedagogia' ? 'Pedagogia' : usuarioLogado.nivel} - Petrobras</span>
+              </div>
+              <ul>
+                <li className="logout-opt" onClick={handleLogout}>Sair do Sistema</li>
+              </ul>
+            </div>
+          )}
+        </div>
+      </div>
+    </header>
+
+    {/* Resto do seu código (Cards, Tabelas, etc) */}
 
             {/* Cadastro de Turma */}
             <div className="card-turma">
@@ -145,7 +194,7 @@ export default function GerirTurmas() {
                 </div>
             </div>
 
-            {/* Lançamento de Frequência - CORRIGIDO */}
+            {/* Lançamento de Frequência */}
             <div className="card-turma">
                 <h3 className="titulo-secao">Lançamento de Frequência</h3>
                 <div className="form-turma">
@@ -161,7 +210,6 @@ export default function GerirTurmas() {
                             {listaUcs.map(u => <option key={u.id} value={u.id}>{u.nome_uc}</option>)}
                         </select>
                     </div>
-                    {/* Campo corrigido para usar data_aula */}
                     <div className="input-group">
                         <input type="date" className="input-field" value={novaFrequencia.data_aula} onChange={(e) => setNovaFrequencia({...novaFrequencia, data_aula: e.target.value})} />
                     </div>
@@ -191,31 +239,84 @@ export default function GerirTurmas() {
                 </table>
             </div>
 
-           {/* MODAL */}
-{isModalOpen && detalhesTurma && (
+            {/* MODAL DE DETALHES DA TURMA */}
+            {isModalOpen && detalhesTurma && (
     <div className="modal-overlay">
         <div className="modal-content">
             <h2>{detalhesTurma.nome}</h2>
             <p><strong>Curso:</strong> {detalhesTurma.curso}</p>
-            <p><strong>ID da Turma:</strong> {detalhesTurma.id}</p>
-            <p><strong>Instrutor:</strong> {detalhesTurma.instrutor || "Não informado"}</p>
-            <p><strong>Total de Alunos:</strong> {detalhesTurma.alunos.length}</p>
+            <p><strong>Período:</strong> {detalhesTurma.periodo}</p>
             
+            {/* ✅ LINHA DO INSTRUTOR ADICIONADA */}
+            <p><strong>Instrutor Responsável:</strong> {detalhesTurma.instrutor || "Não atribuído"}</p>
+            
+            <p><strong>Total de Alunos:</strong> {detalhesTurma.alunos.length}</p>
             <ul style={{ maxHeight: '200px', overflowY: 'auto' }}>
                 {detalhesTurma.alunos.map(aluno => (
                     <li key={aluno.id}>{aluno.nome}</li>
                 ))}
             </ul>
-            
-            <button 
-                onClick={() => setIsModalOpen(false)} 
-                className="btn-adicionar" 
-                style={{ marginTop: '20px', width: '100%' }}>
-                Fechar
-            </button>
+            <button onClick={() => setIsModalOpen(false)} className="btn-adicionar" style={{ marginTop: '20px', width: '100%' }}>Fechar</button>
         </div>
     </div>
 )}
+
+            {/* BOTÃO FLUTUANTE DE CONTATOS */}
+            <div className="floating-contact" onClick={() => setShowContactModal(true)}>
+                <FaComments />
+                <span>Contatos</span>
+            </div>
+
+            {/* MODAL DE CONTATOS */}
+            {showContactModal && (
+                <div className="contact-overlay active" onClick={() => setShowContactModal(false)}>
+                    <div className="contact-window" onClick={(e) => e.stopPropagation()}>
+                        <div className="contact-header">
+                            <h4>Lista de Contatos</h4>
+                            <button className="btn-close-contact" onClick={() => setShowContactModal(false)}>
+                                <FaTimes />
+                            </button>
+                        </div>
+                        
+                        <div className="contact-list" style={{ maxHeight: '450px', overflowY: 'auto' }}>
+                            {/* SEÇÃO: GESTÃO */}
+                            <div style={{ padding: '10px 5px', fontWeight: 'bold', color: '#1a3a5a', fontSize: '0.9rem' }}>
+                                GESTÃO
+                            </div>
+                            <div className="contact-card" style={{ borderLeft: '4px solid #1a3a5a' }}>
+                                <strong>{contatoGestor.nome}</strong>
+                                <div className="contact-actions">
+                                    <a href={`mailto:${contatoGestor.email}`} className="action-link mail">
+                                        <FaEnvelope /> Email
+                                    </a>
+                                    {contatoGestor.telefone && <span className="action-link phone">{contatoGestor.telefone}</span>}
+                                </div>
+                            </div>
+
+                            <hr style={{ margin: '15px 0', opacity: '0.1' }} />
+
+                            {/* SEÇÃO: APRENDIZES */}
+                            <div style={{ padding: '10px 5px', fontWeight: 'bold', color: '#1a3a5a', fontSize: '0.9rem' }}>
+                                APRENDIZES CADASTRADOS
+                            </div>
+                            {listaAlunos.length > 0 ? (
+                                listaAlunos.map((aluno) => (
+                                    <div key={aluno.id} className="contact-card">
+                                        <strong>{aluno.nome}</strong> <span> | Aprendiz</span>
+                                        <div className="contact-actions">
+                                            <a href={`mailto:${aluno.email}`} className="action-link mail" title={aluno.email}>
+                                                <FaEnvelope /> Email
+                                            </a>
+                                        </div>
+                                    </div>
+                                ))
+                            ) : (
+                                <p style={{ padding: '10px', fontSize: '0.8rem' }}>Nenhum aprendiz encontrado.</p>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

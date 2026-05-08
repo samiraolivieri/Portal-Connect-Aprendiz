@@ -3,6 +3,12 @@ import { FaThLarge, FaBell, FaUserCircle, FaComments, FaEnvelope, FaTimes } from
 import { useNavigate } from 'react-router-dom'; // Importe o navigate
 import 'react-calendar/dist/Calendar.css';
 import './Desempenho.css';
+import { 
+  FaBriefcase, 
+  FaComments, 
+  FaTimes, 
+  FaEnvelope 
+} from 'react-icons/fa';
 
 const Desempenho = () => {
     const [aprendizes, setAprendizes] = useState([]);
@@ -15,9 +21,20 @@ const Desempenho = () => {
     navigate('/');
   };
 
-    // Estados para o Modal
+    // Estados para o Modal de Relatório
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [alunoRelatorio, setAlunoRelatorio] = useState(null);
+
+    // Estado para o Popup de Contatos
+    const [showContactModal, setShowContactModal] = useState(false);
+
+    // Informação fixa da Pedagoga
+    const contatoPedagoga = { 
+        nome: "Vilma Nascimento", 
+        cargo: "Pedagogia", 
+        email: "amaior@ensino.com", 
+        tel: "(21) 88888-8888" 
+    };
 
     useEffect(() => {
         const fetchDesempenho = async () => {
@@ -42,10 +59,8 @@ const Desempenho = () => {
         fetchDesempenho();
     }, []);
 
-    // Função que busca os detalhes e abre o modal
     const handleVisualizarRelatorio = async (id) => {
         try {
-            // Agora esta rota retorna { nome: "...", notas: [...], frequencias: [...] }
             const response = await fetch(`http://localhost:5000/api/desempenho/${id}`);
             const data = await response.json();
             setAlunoRelatorio(data);
@@ -96,6 +111,7 @@ const Desempenho = () => {
                     <h2>{aprendizes.length}</h2>
                 </div>
             </section>
+
             <section className="tabela-container">
                 <h3>Detalhamento por Aprendiz</h3>
                 <table className="tabela-desempenho">
@@ -142,8 +158,6 @@ const Desempenho = () => {
                 <div className="modal-overlay">
                     <div className="modal-content">
                         <h2>Relatório: {alunoRelatorio.nome}</h2>
-                        
-                        {/* SEÇÃO DE NOTAS */}
                         <div style={{ marginTop: '20px' }}>
                             <p><strong>Notas por UC:</strong></p>
                             <ul style={{ maxHeight: '150px', overflowY: 'auto', paddingLeft: '20px', marginBottom: '15px' }}>
@@ -158,8 +172,6 @@ const Desempenho = () => {
                                 )}
                             </ul>
                         </div>
-
-                        {/* SEÇÃO DE FREQUÊNCIA (NOVA) */}
                         <div style={{ marginTop: '10px', borderTop: '1px solid #eee', paddingTop: '10px' }}>
                             <p><strong>Frequência por UC:</strong></p>
                             <ul style={{ maxHeight: '150px', overflowY: 'auto', paddingLeft: '20px' }}>
@@ -175,13 +187,66 @@ const Desempenho = () => {
                                 )}
                             </ul>
                         </div>
-                        
-                        <button 
-                            onClick={() => setIsModalOpen(false)} 
-                            className="btn-adicionar" 
-                            style={{ marginTop: '20px', width: '100%' }}>
+                        <button onClick={() => setIsModalOpen(false)} className="btn-adicionar" style={{ marginTop: '20px', width: '100%' }}>
                             Fechar
                         </button>
+                    </div>
+                </div>
+            )}
+
+            {/* BOTÃO FLUTUANTE DE CONTATOS */}
+            <div className="floating-contact" onClick={() => setShowContactModal(true)}>
+                <FaComments />
+                <span>Contatos</span>
+            </div>
+
+            {/* MODAL DE SUPORTE E LISTA DE ALUNOS */}
+            {showContactModal && (
+                <div className="contact-overlay active" onClick={() => setShowContactModal(false)}>
+                    <div className="contact-window" onClick={(e) => e.stopPropagation()}>
+                        <div className="contact-header">
+                            <h4>Lista de Contatos</h4>
+                            <button className="btn-close-contact" onClick={() => setShowContactModal(false)}>
+                                <FaTimes />
+                            </button>
+                        </div>
+                        
+                        <div className="contact-list" style={{ maxHeight: '450px', overflowY: 'auto' }}>
+                            
+                           {/* SEÇÃO: PEDAGOGIA */}
+                                         <div style={{ padding: '10px 5px', fontWeight: 'bold', color: '#1a3a5a', fontSize: '0.9rem' }}>
+                                           PEDAGOGIA
+                                         </div>
+                                         <div className="contact-card" style={{ borderLeft: '4px solid #2e7d32' }}>
+                                           <strong>{contatoPedagoga.nome}</strong> <span> | {contatoPedagoga.cargo}</span>
+                                           <div className="contact-actions">
+                                             <a href={`mailto:${contatoPedagoga.email}`} className="action-link mail">
+                                               <FaEnvelope /> Email
+                                             </a>
+                                             <a href={`tel:${contatoPedagoga.tel}`} className="action-link phone">{contatoPedagoga.tel}</a>
+                                           </div>
+                                         </div>
+                           
+                                         <hr style={{ margin: '15px 0', opacity: '0.1' }} />
+                            {/* SEÇÃO: APRENDIZES (DO BANCO) */}
+                            <div style={{ padding: '10px 5px', fontWeight: 'bold', color: '#1a3a5a', fontSize: '0.9rem' }}>
+                                APRENDIZES
+                            </div>
+                            {aprendizes.length > 0 ? (
+                                aprendizes.map((aluno) => (
+                                    <div key={aluno.id} className="contact-card">
+                                        <strong>{aluno.nome}</strong> <span> | Aprendiz</span>
+                                        <div className="contact-actions">
+                                            <a href={`mailto:${aluno.email}`} className="action-link mail" title={aluno.email}>
+                                                <FaEnvelope /> Email
+                                            </a>
+                                        </div>
+                                    </div>
+                                ))
+                            ) : (
+                                <p style={{ padding: '10px', fontSize: '0.8rem' }}>Carregando aprendizes...</p>
+                            )}
+                        </div>
                     </div>
                 </div>
             )}

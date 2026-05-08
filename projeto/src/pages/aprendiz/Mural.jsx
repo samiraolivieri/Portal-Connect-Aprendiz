@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { FaBell, FaUserCircle, FaFileDownload } from 'react-icons/fa';
 import axios from "axios";
 import "../../styles/mural.css";
+// Adicionado ícones para o modal e botão flutuante
+import { FaComments, FaTimes, FaEnvelope } from 'react-icons/fa';
 
 /* 🔥 AVISOS FIXOS */
 const avisosFixos = [
@@ -79,6 +81,14 @@ export default function Mural() {
     localStorage.removeItem('usuario');
     navigate('/');
   };
+  // Estados para o Modal de Contatos
+  const [showContactModal, setShowContactModal] = useState(false);
+
+  // Lista de contatos suporte padrão do sistema
+  const contatosSuporte = [
+    { nome: "Sérgio Carvalho", cargo: "Gestor", email: "serginho@empresa.com", tel: "(21) 99999-9999" },
+    { nome: "Vilma Nascimento", cargo: "Pedagogia", email: "amaior@ensino.com", tel: "(21) 88888-8888" }
+  ];
 
   useEffect(() => {
     axios.get("http://localhost:5000/api/comunicados")
@@ -175,6 +185,40 @@ export default function Mural() {
 
             </div>
           ))}
+      </div>
+
+      {/* --- MODAL DE CONTATOS --- */}
+      {showContactModal && (
+        <div className="contact-overlay active" onClick={() => setShowContactModal(false)}>
+          <div className="contact-window" onClick={(e) => e.stopPropagation()}>
+            <div className="contact-header">
+              <h4>Contatos Responsáveis</h4>
+              <button className="btn-close-contact" onClick={() => setShowContactModal(false)}>
+                <FaTimes />
+              </button>
+            </div>
+            <div className="contact-list">
+              {contatosSuporte.map((c, index) => (
+                <div key={index} className="contact-card">
+                  <strong>{c.nome}</strong>
+                  <span> | {c.cargo}</span>
+                  <div className="contact-actions">
+                    <a href={`mailto:${c.email}`} className="action-link mail">
+                      <FaEnvelope /> Email
+                    </a>
+                    <a href={`tel:${c.tel}`} className="action-link phone">{c.tel}</a>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* BOTÃO FLUTUANTE */}
+      <div className="floating-contact" onClick={() => setShowContactModal(true)}>
+        <FaComments />
+        <span>Contatos</span>
       </div>
     </div>
   );

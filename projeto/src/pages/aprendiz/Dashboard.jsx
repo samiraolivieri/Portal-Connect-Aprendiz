@@ -12,7 +12,9 @@ import {
   FaComments,
   FaEnvelope,
   FaTimes,
-  FaDownload
+  FaDownload,
+  FaClock,
+  FaCheckCircle
 } from 'react-icons/fa';
 
 const Dashboard = () => {
@@ -87,10 +89,40 @@ const Dashboard = () => {
         </div>
       </header>
 
-      <section className="atividades-section">
-        <h3>CALENDÁRIO DE ATIVIDADES</h3>
-        <div className="calendar-wrapper" style={{ display: 'flex', justifyContent: 'center', padding: '10px' }}>
-          <Calendar onChange={setDate} value={date} />
+      {/* SEÇÃO CARDS: Calendário e Resumo */}
+      <section className="atividades-section-container">
+        <div className="calendar-wrapper-card">
+          <Calendar onChange={setDate} value={date} locale="pt-BR" />
+        </div>
+
+        <div className="info-extra-card">
+          <h3><FaClock /> RESUMO DE ATIVIDADES</h3>
+          
+          <div className="proximo-evento-destaque">
+            <span>Próxima Aula:</span>
+            <strong>Desenvolvimento Web com React (SENAI)</strong>
+            <small>Amanhã às 08:00h</small>
+          </div>
+
+          <div className="status-prazos-list">
+            <div className="status-item">
+              <FaCheckCircle className="icon-green" />
+              <span><strong>2</strong> entregas concluídas</span>
+            </div>
+            <div className="status-item">
+              <FaClock className="icon-orange" />
+              <span><strong>1</strong> prazo pendente (15/05)</span>
+            </div>
+            <div className="status-item">
+              <FaBookOpen className="icon-blue" />
+              <span>Frequência acumulada: <strong>92%</strong></span>
+            </div>
+          </div>
+
+          <div className="botoes-acao-card">
+            <button className="btn-view-mural" onClick={() => navigate('/mural')}>Ver Mural</button>
+            <button className="btn-secundario-card" onClick={() => navigate('/justificativas')}>Justificar Falta</button>
+          </div>
         </div>
       </section>
 
@@ -153,7 +185,6 @@ const Dashboard = () => {
             <div className="doc-icon-circle green-icon"><FaBookOpen /></div>
             <div className="doc-text">
               <h4>Material Pedagógico</h4>
-              <p>Instituição: SENAI</p>
               <span className="doc-status update">{listaMateriais.length} arquivo(s)</span>
             </div>
             <button className="btn-view-doc" onClick={() => setShowMaterialModal(true)}>Acessar</button>
@@ -161,9 +192,9 @@ const Dashboard = () => {
         </div>
       </section>
 
-      {/* --- MODAIS --- */}
+      {/* --- RENDERIZAÇÃO DOS MODAIS --- */}
       
-      {/* Modal Contatos Suporte */}
+      {/* Modal de Suporte/Contatos */}
       {showContactModal && (
         <div className="contact-overlay active" onClick={() => setShowContactModal(false)}>
           <div className="contact-window" onClick={(e) => e.stopPropagation()}>
@@ -187,7 +218,7 @@ const Dashboard = () => {
         </div>
       )}
 
-      {/* Modal Contracheques */}
+      {/* Modal de Contracheques */}
       {showPaycheckModal && (
         <div className="contact-overlay active" onClick={() => setShowPaycheckModal(false)}>
           <div className="contact-window" onClick={(e) => e.stopPropagation()}>
@@ -199,24 +230,28 @@ const Dashboard = () => {
               {listaContracheques.length > 0 ? (
                 listaContracheques.map((item) => (
                   <div key={item.id} className="contact-card">
-                    <div className="contact-info">
-                      <strong>Competência: {item.mes_referencia}</strong>
-                      <p style={{ fontSize: '0.85rem', color: '#555' }}>Empresa: Petrobras</p>
-                    </div>
+                    <strong>Competência: {item.mes_referencia}</strong>
                     <div className="contact-actions">
-                      <a href={`http://localhost:5000/${item.caminho_arquivo}`} target="_blank" rel="noopener noreferrer" className="action-link mail" style={{ backgroundColor: '#007bff' }}>
-                        <FaDownload style={{marginRight: '5px'}}/> Visualizar
+                      {/* URL configurada para a subpasta /contracheques/ */}
+                      <a 
+                        href={`http://localhost:5000/uploads/contracheques/${item.caminho_arquivo.split(/[\\/]/).pop()}`} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="action-link mail" 
+                        style={{ backgroundColor: '#1a3a5a', color: 'white' }}
+                      >
+                        <FaDownload /> Baixar PDF
                       </a>
                     </div>
                   </div>
                 ))
-              ) : <p style={{padding: '20px'}}>Nenhum contracheque.</p>}
+              ) : <p style={{padding: '20px'}}>Nenhum contracheque disponível.</p>}
             </div>
           </div>
         </div>
       )}
 
-      {/* Modal Materiais */}
+      {/* Modal de Materiais */}
       {showMaterialModal && (
         <div className="contact-overlay active" onClick={() => setShowMaterialModal(false)}>
           <div className="contact-window" onClick={(e) => e.stopPropagation()}>
@@ -229,12 +264,20 @@ const Dashboard = () => {
                 listaMateriais.map((mat) => (
                   <div key={mat.id} className="contact-card">
                     <strong>{mat.titulo}</strong>
-                    <a href={`http://localhost:5000/uploads/${mat.arquivo_path}`} target="_blank" rel="noopener noreferrer" className="action-link mail" style={{ backgroundColor: '#28a745' }}>
-                      <FaDownload style={{marginRight: '5px'}}/> Baixar Material
+                    <p style={{fontSize: '0.8rem', color: '#666'}}>{mat.descricao}</p>
+                    {/* URL configurada para a raiz da pasta /uploads/ */}
+                    <a 
+                      href={`http://localhost:5000/uploads/${mat.arquivo_path.split(/[\\/]/).pop()}`} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="action-link mail" 
+                      style={{ backgroundColor: '#2e7d32', color: 'white' }}
+                    >
+                      <FaDownload /> Acessar Arquivo
                     </a>
                   </div>
                 ))
-              ) : <p style={{padding: '20px'}}>Nenhum material disponível.</p>}
+              ) : <p style={{padding: '20px'}}>Nenhum material publicado.</p>}
             </div>
           </div>
         </div>

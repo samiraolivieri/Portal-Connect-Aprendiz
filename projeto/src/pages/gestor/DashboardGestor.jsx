@@ -22,18 +22,21 @@ const DashboardGestor = () => {
 
   // 3. Estados de Contato
   const [showContactModal, setShowContactModal] = useState(false);
-  const [contatoSelecionado, setContatoSelecionado] = useState(null);
+  const [aprendizes, setAprendizes] = useState([]);
 
-  const contatosSuporte = [
-    { nome: "Sérgio Carvalho", cargo: "Gestor", email: "serginho@empresa.com", tel: "(21) 99999-9999" },
-    { nome: "Vilma Nascimento", cargo: "Pedagogia", email: "amaior@ensino.com", tel: "(21) 88888-8888" }
-  ];
+  // Informação fixa da Pedagoga
+  const contatoPedagoga = { 
+    nome: "Vilma Nascimento", 
+    cargo: "Pedagogia", 
+    email: "amaior@ensino.com", 
+    tel: "(21) 88888-8888" 
+  };
 
-  // --- LÓGICA DE DADOS ---
+  // --- LÓGICA DE CARREGAMENTO DE DADOS ---
 
   const carregarVisitas = async () => {
     try {
-      const gestorId = usuarioLogado.id || 1; 
+      const gestorId = usuarioLogado.id || 1;
       const response = await axios.get(`http://localhost:5000/api/visitas/listar/${gestorId}`);
       setMinhasVisitas(response.data);
     } catch (error) {
@@ -41,8 +44,19 @@ const DashboardGestor = () => {
     }
   };
 
+  const carregarAprendizes = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/api/auth/aprendizes');
+      setAprendizes(response.data);
+    } catch (error) {
+      console.error("Erro ao carregar aprendizes:", error);
+    }
+  };
+
   useEffect(() => {
     carregarVisitas();
+    carregarAprendizes();
+
     const buscarDadosGrafico = async () => {
       try {
         const response = await axios.get('http://localhost:5000/api/visitas/desempenho-turma');
@@ -83,19 +97,18 @@ const DashboardGestor = () => {
   return (
     <div className="dashboard-container">
       <header className="dash-header">
-        <h1> <FaThLarge /> GESTÃO DE APRENDIZES</h1>
+        <h2>Bem-vindo, {usuarioLogado?.nome}</h2>
         
         <div className="header-icons">
-          
-          {/* IMPLEMENTAÇÃO DO MENU DE USUÁRIO */}
+          <FaBell />
+          {/* Menu de Usuário com Logout */}
           <div className="icon-wrapper" onClick={() => setIsMenuOpen(!isMenuOpen)} style={{ cursor: 'pointer', position: 'relative' }}>
             <FaUserCircle />
             {isMenuOpen && (
               <div className="dropdown-popup">
                 <div className="user-info-header">
                   <strong>{usuarioLogado.nome}</strong>
-
-                  <span>{usuarioLogado.nivel === 'gestor' ? 'Gestor' : usuarioLogado.nivel} - Petrobras</span>
+                  <span>{usuarioLogado.nivel === 'gestor' ? 'Gestor' : 'Administrador'} - Petrobras</span>
                 </div>
                 <ul>
                   <li className="logout-opt" onClick={handleLogout}>Sair do Sistema</li>
@@ -162,25 +175,53 @@ const DashboardGestor = () => {
         <span>Contatos</span>
       </div>
 
-      {/* MODAL DE CONTATOS (Suporte) */}
+      {/* MODAL DE CONTATOS (Unificado: Pedagogia + Alunos do Banco) */}
       {showContactModal && (
         <div className="contact-overlay active" onClick={() => setShowContactModal(false)}>
           <div className="contact-window" onClick={(e) => e.stopPropagation()}>
             <div className="contact-header">
-              <h4>Contatos Responsáveis</h4>
-              <button className="btn-close-contact" onClick={() => setShowContactModal(false)}><FaTimes /></button>
+              <h4>Lista de Contatos</h4>
+              <button className="btn-close-contact" onClick={() => setShowContactModal(false)}>
+                <FaTimes />
+              </button>
             </div>
-            <div className="contact-list">
-              {contatosSuporte.map((c, index) => (
-                <div key={index} className="contact-card">
-                  <strong>{c.nome}</strong>
-                  <span>{c.cargo}</span>
-                  <div className="contact-actions">
-                    <a href={`mailto:${c.email}`} className="action-link mail"><FaEnvelope /> Email</a>
-                    <a href={`tel:${c.tel}`} className="action-link phone">{c.tel}</a>
-                  </div>
+            
+            <div className="contact-list" style={{ maxHeight: '450px', overflowY: 'auto' }}>
+              
+              {/* SEÇÃO: PEDAGOGIA */}
+              <div style={{ padding: '10px 5px', fontWeight: 'bold', color: '#1a3a5a', fontSize: '0.9rem' }}>
+                PEDAGOGIA
+              </div>
+              <div className="contact-card">
+                <strong>{contatoPedagoga.nome}</strong> <span> | {contatoPedagoga.cargo}</span>
+                <div className="contact-actions">
+                  <a href={`mailto:${contatoPedagoga.email}`} className="action-link mail">
+                    <FaEnvelope /> Email
+                  </a>
+                  <a href={`tel:${contatoPedagoga.tel}`} className="action-link phone">{contatoPedagoga.tel}</a>
                 </div>
-              ))}
+              </div>
+
+              <hr style={{ margin: '15px 0', opacity: '0.1' }} />
+
+              {/* SEÇÃO: APRENDIZES (DINÂMICO DO SEU BANCO) */}
+              <div style={{ padding: '10px 5px', fontWeight: 'bold', color: '#1a3a5a', fontSize: '0.9rem' }}>
+                APRENDIZES CADASTRADOS
+              </div>
+              {aprendizes.length > 0 ? (
+                aprendizes.map((aluno) => (
+                  <div key={aluno.id} className="contact-card">
+                    <strong>{aluno.nome}</strong> <span> | Aprendiz</span>
+                    <div className="contact-actions">
+                      <a href={`mailto:${aluno.email}`} className="action-link mail" title={aluno.email}>
+                        <FaEnvelope /> Email
+                      </a>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p style={{ padding: '10px', fontSize: '0.8rem' }}>Nenhum aprendiz encontrado.</p>
+              )}
             </div>
           </div>
         </div>

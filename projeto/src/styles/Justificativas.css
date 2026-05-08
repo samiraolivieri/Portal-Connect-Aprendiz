@@ -1,6 +1,7 @@
 .atestado-container {
     padding: 20px;
     animation: fadeIn 0.5s ease-in;
+    background-color: transparent;
   }
   
   .atestado-grid {
@@ -89,11 +90,20 @@
   .status-badge-pendente { background: #fff3cd; color: #856404; }
   .status-badge-recusado { background: #ffcdcd; color: #850404; }
   
+
+@media (max-width: 900px) {
+    .layout-grid { flex-direction: column; }
+}
+
+@media (max-width: 768px) {
+    .form-turma { flex-direction: column; align-items: stretch; }
+    .full-width { flex: 1; }
+}
   @media (max-width: 768px) {
     .atestado-grid { grid-template-columns: 1fr; }
   }
 
-  /* --- DROPDOWN DO PERFIL --- */
+
 .dropdown-popup {
   position: absolute;
   top: 50px;
@@ -146,4 +156,30 @@
   color: #1a3a5a;                 /* Mantém o tom azul escuro padrão do seu sistema */
   display: flex;
   align-items: center;
+}
+  .status-Pendente{
+  background-color: #fef7e2;
+    color: #99861b;
+  border-radius: 10px;
+  display: inline;
+
+  padding: 5px;
+}
+.status-Recusado{
+  background-color: #ffc9c5;
+  color: #991b1b;
+  display: inline;
+
+  border-radius: 10px;
+  padding: 5px;
+}
+.status-Aprovado{
+  background-color: #e2feed;
+    display: inline;
+
+
+    color: #1f991b;
+  border-radius: 10px;
+  padding: 5px;
+
 }

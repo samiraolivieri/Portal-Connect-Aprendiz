@@ -3,6 +3,8 @@ import React from 'react';
 import './Sidebar.css';
 import logo from '../../assets/logocompletaconnect2.png';
 import { FaThLarge, FaFileAlt, FaBullhorn, FaBriefcase } from 'react-icons/fa';
+import { BiSolidReport } from "react-icons/bi";
+import { GrWorkshop } from "react-icons/gr";
 
 const Sidebar = () => {
   const location = useLocation();
@@ -19,7 +21,7 @@ const Sidebar = () => {
           </Link>
           
           <Link to="/boletim" className={location.pathname === "/boletim" ? "active" : ""}>
-            <li><FaFileAlt /> Boletim/Frequência</li>
+            <li><BiSolidReport /> Boletim/Frequência</li>
           </Link>
           
           <Link to="/justificativas" className={location.pathname === "/justificativas" ? "active" : ""}>
@@ -27,10 +29,10 @@ const Sidebar = () => {
           </Link>
 
           <Link to="/mural" className={location.pathname === "/mural" ? "active" : ""}>
-            <li><FaFileAlt /> Mural de Avisos</li>
+            <li><FaBullhorn /> Mural de Avisos</li>
           </Link>
           <Link to="/carreiras" className={location.pathname === "/carreiras" ? "active" : ""}>
-            <li><FaFileAlt /> Portal Carreiras</li>
+            <li><GrWorkshop /> Portal Carreiras</li>
           </Link>
         </ul>
       </nav>

@@ -29,14 +29,121 @@
 }
 
 /* Seção principal dos cards */
-/* Seção principal onde está o calendário */
-.atividades-section {
-  background-color: #fff; /* Fundo branco para combinar com o resto */
-  border: none;           /* Removemos a borda laranja */
-  border-radius: 12px;
-  padding: 25px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); /* Sombra mais suave para combinar com os outros cards */
+/* Seção do Calendário modificada */
+/* Seção que envolve o conteúdo e o calendário */
+/* Container pai agora é apenas um grid invisível */
+.atividades-section-container {
+  display: grid;
+  grid-template-columns: 350px 1fr; /* Calendário fixo e info ocupa o resto */
+  gap: 24px;
+  margin-bottom: 24px;
 }
+
+/* Estilo para ambos os cards (Calendário e Info) */
+.calendar-wrapper-card, .info-extra-card {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Ajustes específicos do Card de Informações */
+.info-extra-card h3 {
+  font-size: 0.85rem;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-prazos-list {
+  margin: 15px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.status-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  color: #444;
+}
+
+.icon-green { color: #2e7d32; }
+.icon-orange { color: #e67e22; }
+
+.btn-view-mural {
+  margin-top: auto; /* Empurra o botão para o fim do card */
+  background: transparent;
+  border: 1.5px solid #1a3a5a;
+  color: #1a3a5a;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: fit-content;
+}
+
+.btn-view-mural:hover {
+  background: #1a3a5a;
+  color: #fff;
+}
+
+/* Destaque para o próximo compromisso */
+.proximo-evento-destaque {
+  background: #f0f4f8;
+  padding: 12px;
+  border-left: 4px solid #1a3a5a;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.proximo-evento-destaque span {
+  font-size: 0.75rem;
+  color: #666;
+  text-transform: uppercase;
+}
+
+.proximo-evento-destaque strong {
+  font-size: 0.95rem;
+  color: #1a3a5a;
+  margin: 4px 0;
+}
+
+/* Agrupamento de botões */
+.botoes-acao-card {
+  display: flex;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.btn-secundario-card {
+  background: #f8fafc;
+  border: 1.5px solid #cbd5e0;
+  color: #4a5568;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-secundario-card:hover {
+  background: #edf2f7;
+}
+
+.icon-blue { color: #1a3a5a; }
 
 .atividades-section h3 {
   margin-top: 0;

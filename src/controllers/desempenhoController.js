@@ -1,4 +1,3 @@
-
 const DesempenhoModel = require('../models/desempenho');
 const db = require('../config/db');
 
@@ -55,5 +54,6 @@ exports.obterDetalhesDesempenho = async (req, res) => {
         console.error("Erro ao buscar relatório:", err);
         res.status(500).json({ error: "Erro ao buscar relatório" });
     }
-
 };
+
+

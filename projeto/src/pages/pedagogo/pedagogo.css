@@ -1,0 +1,180 @@
+/* ============================================================
+   1. RESET E ESTRUTURA BASE
+   ============================================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.pedagogo {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    /*background-color: #f8f9fc; /* Cor de fundo suave conforme o print */
+}
+
+/* ============================================================
+   2. HEADER (Saudação e Perfil)
+   ============================================================ */
+.topo-pedagogo {
+   display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 60px 30px 20px 30px; /* Aumentei o primeiro valor (topo) para 60px */
+    width: 100%;
+}
+
+.topo-pedagogo h1 {
+    color: #143d7c;
+    font-size: 2.3rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.icon-wrapper {
+    position: relative;
+    color: #143d7c;
+    cursor: pointer;
+}
+
+/* Dropdown flutuante para não quebrar o layout */
+.dropdown-popup {
+    position: absolute;
+    top: 120%;
+    right: 0;
+    background: white;
+    min-width: 200px;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    z-index: 1000;
+}
+
+.logout-opt {
+    color: #dc3545;
+    font-weight: bold;
+    list-style: none;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+}
+
+/* ============================================================
+   3. CONTAINER DE CONTEÚDO E CARDS SUPERIORES
+   ============================================================ */
+.pedagogo .content {
+    padding: 60px 30px 30px 30px; /* Aumentei de 0 para 60px no topo */
+    flex: 1;
+    background-image: url("../assets/imagemFundo2.png");
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: 100% auto;
+}
+
+/* Mantém Busca e Justificativa na mesma linha e mesma altura */
+.container-topo-cards {
+    display: flex;
+    align-items: stretch; /* 🔥 Força alturas iguais */
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.busca-box {
+    flex: 1;
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.painelAcao {
+    width: 280px;
+    flex-shrink: 0;
+    background: #f0fff4; /* Verde bem claro */
+    border: 1.5px solid #28a745;
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centraliza conteúdo verticalmente */
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.painelAcao h3 {
+    color: #28a745;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+}
+
+/* ============================================================
+   4. DASHBOARD GRID (Comunicados, Estatísticas, Materiais)
+   ============================================================ */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Duas colunas principais */
+    gap: 20px;
+}
+
+.box {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.box h3 {
+    color: #143d7c;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* ============================================================
+   5. BOTÕES E INPUTS (Estilo do print)
+   ============================================================ */
+.inputBusca {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fafafa;
+}
+
+.miniBtn {
+    background-color: #143d7c;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.botaoSecundario {
+    width: 100%;
+    background: transparent;
+    border: 1.5px solid #28a745;
+    color: #28a745;
+    padding: 8px;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.botaoSecundario:hover {
+    background: #28a745;
+    color: white;
+}
+
+/* O card de materiais fica na esquerda, ocupando uma coluna */
+.dashboard-grid .box:nth-child(3) {
+    grid-column: 1; 
+}

@@ -3,7 +3,7 @@ const cors = require('cors');
 require('dotenv').config();
 const path = require('path');
 
-// 1. IMPORTAÇÃO DAS ROTAS (Uma de cada, sem repetir)
+// 1. IMPORTAÇÃO DAS ROTAS
 const authRoutes = require('./routes/authRoutes');
 const unidadesRoutes = require('./routes/unidadesRoutes');
 const atividadesRoutes = require('./routes/atividadesRoutes');
@@ -21,16 +21,19 @@ const contrachequeRoutes = require('./routes/contrachequeRoutes');
 const turmasRoutes = require('./routes/turmasRoutes');
 const materialRoutes = require('./routes/materialRoutes'); 
 
+
 const app = express();
 
 // 2. MIDDLEWARES
 app.use(cors()); 
 app.use(express.json()); 
 
-// 3. PASTA PÚBLICA (Configurada apenas uma vez)
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+// 3. CONFIGURAÇÃO DE ARQUIVOS ESTÁTICOS (CORRIGIDA)
+// path.resolve garante que o Express encontre a pasta uploads na raiz, 
+// mesmo que o servidor seja iniciado de dentro da pasta /src
+app.use('/uploads', express.static(path.resolve(__dirname, '..', 'uploads')));
 
-// 4. REGISTRO DAS ROTAS DA API (Organizadas para fácil leitura)
+// 4. REGISTRO DAS ROTAS DA API
 app.use('/api/auth', authRoutes);
 app.use('/api/unidades', unidadesRoutes);
 app.use('/api/atividades', atividadesRoutes);
@@ -56,6 +59,7 @@ app.listen(PORT, () => {
     🚀 PORTAL CONNECT - BACKEND INICIADO
     📡 Servidor rodando na porta: ${PORT}
     🔗 URL base: http://localhost:${PORT}
+    📂 Uploads: ${path.resolve(__dirname, '..', 'uploads')}
     ====================================================
     `);
 });

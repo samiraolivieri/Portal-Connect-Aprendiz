@@ -24,32 +24,32 @@ import Comunicados from './pages/gestor/Comunicados.jsx';
 import GerirTurmas from './pages/pedagogo/GerirTurmas.jsx';
 import PublicarMaterial from './pages/pedagogo/PublicarMaterial.jsx';
 import JustificativasPedagogo from './pages/pedagogo/Justificativas.jsx';
-import Pedagogo from "./pages/pedagogo/Pedagogo";
+import VisitasPedagogo from './pages/pedagogo/Visitas.jsx';
 
+import Pedagogo from "./pages/pedagogo/Pedagogo.jsx";
+import SidebarPedagogo from './components/pedagogo/Sidebar.jsx';
 function App() {
   const location = useLocation();
 
-  // 1. Identifica se é página de login
+  // 1. Definição das condições de visualização (Simplificadas para evitar telas em branco)
   const isLoginPage = location.pathname === "/" || location.pathname === "/login";
+  
+  // Agora as variáveis verificam o prefixo da rota inteira
+  const isGestorPage = location.pathname.startsWith("/gestor");
+  const isPedagogoPage = location.pathname.startsWith("/pedagogo");
 
-  // 2. Identifica o tipo de usuário pela URL (Melhorado com startsWith simplificado)
-  const isGestorRoute = location.pathname.startsWith("/gestor");
-  const isPedagogoRoute = location.pathname.startsWith("/pedagogo");
-
-  // 3. Define qual Sidebar exibir
-  const renderSidebar = () => {
-    if (isLoginPage) return null;
-    if (isGestorRoute || isPedagogoRoute) return <SidebarGestor />;
-    return <Sidebar />;
-  };
-
-  // Ajuste de layout
-  const layoutClass = isLoginPage ? "" : "app-layout";
-  const contentClass = isLoginPage ? "" : "content";
+  // Ajuste de layout para o pedagogo (conforme sua lógica anterior)
+const layoutClass = "app-layout";
+const contentClass = "content";
 
   return (
     <div className={layoutClass}>
-      {renderSidebar()}
+      {/* 3. Lógica da Sidebar: Se não for login, decide qual mostrar */}
+      {!isLoginPage && (
+  isGestorPage ? <SidebarGestor /> :
+  isPedagogoPage ? <SidebarPedagogo /> :
+  <Sidebar />
+)}
 
       <main className={contentClass}>
         <Routes>
@@ -67,15 +67,17 @@ function App() {
           {/* Rotas do Gestor */}
           <Route path="/gestor/dashboard" element={<DashboardGestor />} />
           <Route path="/gestor/desempenho" element={<Desempenho />} />
-          <Route path="/gestor/contracheques" element={<Contracheque />} />
+          <Route path="/gestor/contracheque" element={<Contracheque />} />
           <Route path="/gestor/justificativas" element={<JustificativasGestor />} />
           <Route path="/gestor/comunicados" element={<Comunicados />} />
 
           {/* Rotas do Pedagogo */}
-          <Route path="/pedagogo/dashboard" element={<Pedagogo />} /> {/* Ajustado para manter o padrão /pedagogo/dashboard */}
+          <Route path="/pedagogo/" element={<Pedagogo />} />         
           <Route path="/pedagogo/gerirturmas" element={<GerirTurmas />} />
           <Route path="/pedagogo/publicarmaterial" element={<PublicarMaterial />} />
           <Route path="/pedagogo/justificativas" element={<JustificativasPedagogo />} />
+          <Route path="/pedagogo/visitas" element={<VisitasPedagogo />} />
+
         </Routes>
       </main>
     </div>

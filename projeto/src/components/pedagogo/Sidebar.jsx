@@ -4,18 +4,19 @@ import logo from '../../assets/logocompletaconnect2.png';
 
 import {
   FaUsers,
-  FaFileAlt,
   FaCheckCircle,
-  FaClipboardList,
-  FaBoxOpen
+  FaBoxOpen,
+  FaThLarge,
+  FaFileAlt
 } from 'react-icons/fa';
+import { MdHomeWork } from "react-icons/md";
 
 const SidebarPedagogo = () => {
   const location = useLocation();
 
   return (
-    <aside className="sidebar-pedagogo">
-      
+    <aside className="sidebar sidebar-pedagogo">
+
       <div className="logo-container">
         <img src={logo} alt="Logo" className="sidebar-logo" />
       </div>
@@ -24,23 +25,22 @@ const SidebarPedagogo = () => {
         <ul>
 
           <Link to="/pedagogo" className={location.pathname === "/pedagogo" ? "active" : ""}>
+            <li><FaThLarge /> Dashboard</li>
+          </Link>
+
+          <Link to="/pedagogo/gerirturmas" className={location.pathname === "/pedagogo/gerirturmas" ? "active" : ""}>
             <li><FaUsers /> Gerir Turmas</li>
           </Link>
 
-          <Link to="/pedagogo/info" className={location.pathname === "/pedagogo/info" ? "active" : ""}>
-            <li><FaFileAlt /> Inserir Info Acadêmicas</li>
+          <Link to="/pedagogo/justificativas" className={location.pathname === "/pedagogo/justificativas" ? "active" : ""}>
+            <li><FaFileAlt /> Validar Justificativa</li>
           </Link>
 
-          <Link to="/pedagogo/atestados" className={location.pathname === "/pedagogo/atestados" ? "active" : ""}>
-            <li><FaCheckCircle /> Validar Atestados</li>
-          </Link>
-
-          <Link to="/pedagogo/abonar" className={location.pathname === "/pedagogo/abonar" ? "active" : ""}>
-            <li><FaClipboardList /> Abonar Faltas</li>
-          </Link>
-
-          <Link to="/pedagogo/material" className={location.pathname === "/pedagogo/material" ? "active" : ""}>
+          <Link to="/pedagogo/publicarmaterial" className={location.pathname === "/pedagogo/publicarmaterial" ? "active" : ""}>
             <li><FaBoxOpen /> Publicar Material</li>
+          </Link>
+          <Link to="/pedagogo/visitas" className={location.pathname === "/pedagogo/visitas" ? "active" : ""}>
+            <li><MdHomeWork /> Validar Visitas</li>
           </Link>
 
         </ul>
