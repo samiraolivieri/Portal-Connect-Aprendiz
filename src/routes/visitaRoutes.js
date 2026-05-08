@@ -45,5 +45,24 @@ router.get('/desempenho-turma', async (req, res) => {
         res.status(500).json({ error: "Erro ao carregar dados do banco" });
     }
 });
+router.put('/atualizar-status/:id', async (req, res) => {
+    const { id } = req.params;
+    const { novoStatus } = req.body; 
+
+    try {
+        const sql = `
+            UPDATE visitas_tecnicas 
+            SET status = ? 
+            WHERE id = ?
+        `;
+        
+        await db.query(sql, [novoStatus, id]);
+        
+        res.status(200).json({ message: `Status atualizado para ${novoStatus}` });
+    } catch (error) {
+        console.error("Erro ao atualizar status:", error);
+        res.status(500).json({ error: "Erro ao atualizar dados no banco" });
+    }
+});
 
 module.exports = router;

@@ -102,7 +102,7 @@ const DashboardGestor = () => {
   return (
     <div className="dashboard-container">
       <header className="dash-header">
-        <h1> <FaThLarge /> GESTÃO DE APRENDIZES</h1>
+        <h2>Bem-vindo, {usuarioLogado?.nome}</h2>
         
         <div className="header-icons">
           <FaBell />
