@@ -11,7 +11,7 @@ Este projeto foi desenvolvido de forma colaborativa pelos seguintes integrantes:
 * **Livia Fontoura Alves da Silva**
 * **Lorena Cavalcante de Oliveira**
 * **Mayra Vianna Domingos**
-* **Samira Olivieri** (Integração Técnica, UI/UX, Banco de Dados e Git)
+* **Samira Olivieri**
 
 ## 🛠️ Tecnologias Utilizadas
 
