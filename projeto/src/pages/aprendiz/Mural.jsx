@@ -120,7 +120,7 @@ export default function Mural() {
       
       {/* HEADER AJUSTADO PARA DEIXAR O PERFIL NO CANTO SUPERIOR DIREITO */}
       <div className="justificativas-header">
-        <h1 className="titulo">Mural de Avisos</h1>
+        <h1>MURAL DE AVISOS</h1>
 
         <div className="header-icons">
           <div className="icon-wrapper" onClick={() => setIsMenuOpen(!isMenuOpen)} style={{ cursor: 'pointer', position: 'relative' }}>

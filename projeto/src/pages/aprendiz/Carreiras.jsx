@@ -39,7 +39,7 @@ export default function Carreiras() {
       
       {/* NOVO BLOCO ENVOLVENDO O TÍTULO E O PERFIL NA MESMA LINHA */}
       <div className="justificativas-header">
-        <h1 className="titulo">Portal Carreiras</h1>
+        <h1 className="titulo">PORTAL CARREIRAS</h1>
 
         <div className="header-icons">
           <div className="icon-wrapper" onClick={() => setIsMenuOpen(!isMenuOpen)} style={{ cursor: 'pointer', position: 'relative' }}>
@@ -78,7 +78,7 @@ export default function Carreiras() {
       {/* Stats Cards */}
       <div className="stats">
         <div className="stat-card" onClick={() => setModal("vagas")}>
-          <h3>{3 + vagas.length}</h3>
+          <h3>{6 + vagas.length}</h3>
           <p>Vagas Abertas</p>
         </div>
 

@@ -1,24 +1,24 @@
 const db = require("../config/db");
 
-// 🔎 Buscar aluno
 exports.buscarAprendiz = async (req, res) => {
+  const { nome } = req.params;
+  const { turma_id } = req.query;
+
   try {
-    const nome = req.params.nome;
-    const turmaId = req.query.turma_id;
+    let query = "SELECT id, nome FROM usuarios WHERE nome LIKE ? AND nivel = 'aprendiz'";
+    let params = [`%${nome}%`];
 
-    const [rows] = await db.query(
-      `SELECT id, nome, email, nivel
-       FROM usuarios
-       WHERE nivel = 'aprendiz'
-       AND turma_id = ?
-       AND LOWER(nome) LIKE LOWER(?)`,
-      [turmaId, `${nome}%`]
-    );
+    // Só adiciona o filtro de turma se o turma_id for válido (não null/undefined)
+    if (turma_id && turma_id !== 'null') {
+      query += " AND turma_id = ?";
+      params.push(turma_id);
+    }
 
-    res.json(rows);
+    const [usuarios] = await db.execute(query, params);
+    res.json(usuarios);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ erro: error.message });
+    res.status(500).send("Erro ao buscar");
   }
 };
 
@@ -60,11 +60,11 @@ exports.atualizarJustificativa = async (req, res) => {
     const { status } = req.body;
 
     await db.query(
-  `UPDATE atestados_justificativas
+      `UPDATE atestados_justificativas
    SET status_instituicao = ?
    WHERE id = ?`,
-  [status, id]
-);
+      [status, id]
+    );
 
     res.json({ mensagem: `Justificativa ${status}!` });
   } catch (error) {

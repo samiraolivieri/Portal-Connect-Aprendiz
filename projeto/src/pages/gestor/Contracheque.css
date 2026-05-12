@@ -10,7 +10,8 @@
 /* --- HEADER COM PERFIL (Igual ao Desempenho) --- */
 .desempenho-header {
   display: flex;
-  justify-content: space-between; /* Texto na esquerda, ícone na direita */
+  justify-content: space-between;
+  /* Texto na esquerda, ícone na direita */
   align-items: flex-start;
   margin-bottom: 30px;
   position: relative;
@@ -40,136 +41,302 @@
   color: #1a3a5a;
 }
 
-/* --- GRID E CARDS (Estilo do seu 1º print) --- */
+/* --- GRID E CARDS --- */
+
 .layout-grid {
+
   display: grid;
+
   grid-template-columns: 1.5fr 1fr;
+  /* Esquerda maior que a direita */
+
   gap: 30px;
+
   align-items: start;
+  /* Mantém os cards alinhados no topo */
+
 }
 
-.card-upload, .card-historico {
+
+
+/* Ajuste principal para evitar que os cards fiquem pequenos */
+
+.card-upload,
+.card-historico {
+
   background: white;
+
   border-radius: 12px;
+
   padding: 25px;
+
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+
   border-top: 5px solid #1a3a5a;
+
   min-width: 400px;
+  /* GARANTE QUE OS CARDS NÃO ENCOLHAM ALÉM DISSO */
+
   width: 100%;
+  /* Ocupa o espaço disponível dentro da coluna do grid */
+
 }
 
-.card-upload h3, .card-historico h3 {
+
+
+.card-upload h3,
+.card-historico h3 {
+
   display: flex;
+
   align-items: center;
+
   gap: 10px;
+
   font-size: 1.1rem;
+
   color: #333;
+
   margin-bottom: 25px;
+
 }
 
-/* --- FORMULÁRIO E INPUTS --- */
+
+
+/* --- FORMULÁRIO --- */
+
 .form-upload {
+
   display: flex;
+
   flex-direction: column;
+
   gap: 20px;
+
 }
+
+
+
+.input-group {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 8px;
+
+}
+
+
 
 .input-group label {
+
   font-weight: 700;
+
   font-size: 0.9rem;
+
   color: #555;
-  display: block;
-  margin-bottom: 8px;
+
 }
+
+
 
 .input-field {
+
   padding: 12px;
+
   border: 1px solid #ddd;
+
   border-radius: 6px;
+
   font-size: 1rem;
+
   outline-color: #1a3a5a;
+
   width: 100%;
-  box-sizing: border-box;
+
 }
+
+
 
 /* --- ÁREA DE UPLOAD --- */
+
 .upload-box {
+
   border: 2px dashed #1a3a5a;
+
   padding: 30px;
+
   text-align: center;
+
   border-radius: 8px;
+
   background-color: #f8fbff;
+
   cursor: pointer;
+
   transition: background 0.3s;
+
 }
+
+
 
 .upload-box:hover {
+
   background-color: #edf5ff;
+
 }
+
+
+
+.upload-box input {
+
+  display: none;
+
+}
+
+
+
+.upload-box label {
+
+  cursor: pointer;
+
+  color: #1a3a5a;
+
+}
+
+
+
+.upload-box p {
+
+  margin-top: 10px;
+
+  font-size: 0.9rem;
+
+  font-weight: 500;
+
+}
+
+
 
 .btn-enviar-contracheque {
+
   background-color: #1a3a5a;
+
   color: white;
+
   border: none;
+
   padding: 15px;
+
   border-radius: 6px;
+
   font-weight: 800;
+
   cursor: pointer;
+
   transition: background 0.3s;
+
   letter-spacing: 1px;
+
 }
 
-/* --- DROPDOWN DO PERFIL --- */
-.dropdown-popup {
-  position: absolute;
-  top: 50px;
-  right: 0;
-  width: 280px;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-  border: 1px solid #eee;
-  padding: 15px;
-  z-index: 1000;
+
+
+.btn-enviar-contracheque:hover {
+
+  background-color: #112942;
+
 }
 
-.user-info-header {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 10px;
-}
 
-.user-info-header strong { color: #1a3a5a; font-size: 0.9rem; }
-.user-info-header span { color: #888; font-size: 0.75rem; }
-
-.logout-opt {
-  list-style: none;
-  padding: 10px;
-  color: #e74c3c;
-  font-weight: bold;
-  cursor: pointer;
-  border-top: 1px solid #eee;
-  margin-top: 10px;
-}
 
 /* --- HISTÓRICO --- */
-.item-envio {
-  padding: 15px;
-  background: #fdfdfd;
-  border-left: 4px solid #1a3a5a;
-  border-radius: 4px;
-  margin-bottom: 15px;
+
+.lista-envios {
+
   display: flex;
+
   flex-direction: column;
-  gap: 5px;
+
+  gap: 15px;
+
 }
 
+
+
+.item-envio {
+
+  padding: 15px;
+
+  background: #fdfdfd;
+
+  border-left: 4px solid #1a3a5a;
+
+  border-radius: 4px;
+
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 5px;
+
+}
+
+
+
+.envio-info strong {
+
+  color: #333;
+
+  font-size: 0.95rem;
+
+}
+
+
+
+.envio-info span {
+
+  display: block;
+
+  font-size: 0.85rem;
+
+  color: #666;
+
+}
+
+
+
+.envio-data span {
+
+  font-size: 0.75rem;
+
+  color: #aaa;
+
+}
+
+
+
 /* --- RESPONSIVIDADE --- */
+
 @media (max-width: 900px) {
+
   .layout-grid {
+
     grid-template-columns: 1fr;
+
   }
-  .card-upload, .card-historico {
+
+
+
+  .card-upload,
+  .card-historico {
+
     min-width: 100%;
+    /* No celular, ocupa 100% da largura */
+
   }
+
 }

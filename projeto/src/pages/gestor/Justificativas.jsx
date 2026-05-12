@@ -52,20 +52,16 @@ const GestaoAprendizes = () => {
   return (
     <div className="gestao-container">
 
-      <header className="dash-header">
-  <div className="titulo-pagina">
-    <h1>
-      <FaFileAlt className="icon-titulo" /> 
-      Validação de Justificativas
-    </h1>
-  </div>
-</header>
+
 
       
       {/* HEADER CORRIGIDO: TÍTULO E PERFIL JUNTOS NA MESMA LINHA */}
       <div className="justificativas-header">
-        <h1>GESTÃO DE APRENDIZES</h1>
         
+        <h1>
+      <FaFileAlt className="icon-titulo" /> 
+      Validação de Justificativas
+    </h1>
         <div className="icon-wrapper" onClick={() => setIsMenuOpen(!isMenuOpen)} style={{ cursor: 'pointer', position: 'relative' }}>
           <FaUserCircle />
           {isMenuOpen && (

@@ -37,7 +37,9 @@ const Boletim = () => {
   ];
 
   useEffect(() => {
-    const aprendizId = 1;
+     const usuario = JSON.parse(localStorage.getItem("usuario"));
+     const aprendizId = usuario.id;
+ 
     const url = `http://localhost:5000/api/boletim/aprendiz/${aprendizId}`;
     
     fetch(url)

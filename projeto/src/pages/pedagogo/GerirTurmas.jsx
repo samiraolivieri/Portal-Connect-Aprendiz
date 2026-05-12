@@ -139,7 +139,7 @@ export default function GerirTurmas() {
     
     {/* CABEÇALHO ALINHADO */}
     <header className="header-principal">
-      <h2 className="titulo-pagina">Gerenciamento de Turmas</h2>
+      <h1> <FaUsers size={60}  />  &nbsp; &nbsp;Gerenciamento de Turmas</h1>
       
       <div className="perfil-header">
         <div className="icon-wrapper" onClick={() => setIsMenuOpen(!isMenuOpen)}>

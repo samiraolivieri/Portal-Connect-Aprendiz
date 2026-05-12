@@ -69,7 +69,7 @@ const Desempenho = () => {
         <div className="desempenho-page">
            <header className="desempenho-header">
     <div className="header-content-left">
-        <h1>Olá, Gestor!</h1>
+        <h1> <FaBriefcase/>Desempenho dos Aprendizes!</h1>
         <p>Acompanhe aqui o rendimento acadêmico e técnico da sua turma.</p>
     </div>
 

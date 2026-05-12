@@ -3,14 +3,18 @@
   padding: 30px;
   width: 100%;
   box-sizing: border-box;
+  
 }
 
-.titulo-pagina {
+.header-principal h1 {
   color: #1a3a5a;
-  font-size: 1.8rem;
-  margin-bottom: 30px;
+  font-size: 2.3rem;
+  /* margin-bottom: 30px; */
   font-weight: 800;
   text-transform: uppercase;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 30px 20px 30px;
 }
 
 /* --- CARDS (Mesmo padrão do contracheque) --- */

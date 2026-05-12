@@ -2,19 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "./pedagogo.css";
 import axios from 'axios';
-import { 
-  FaBullhorn, 
-  FaUserGraduate, 
-  FaChartLine, 
-  FaBook, 
-  FaSearch, 
+import {
+  FaBullhorn,
+  FaUserGraduate,
+  FaChartLine,
+  FaBook,
+  FaSearch,
   FaClipboardList,
   FaComments,
   FaTimes,
   FaEnvelope,
   FaUserTie,
   FaUsers,
-  FaUserCircle 
+  FaUserCircle
 } from "react-icons/fa";
 
 export default function Pedagogo() {
@@ -23,10 +23,9 @@ export default function Pedagogo() {
 
   // Estados para controle de Modais
   const [abrirComunicado, setAbrirComunicado] = useState(false);
-  const [abrirMaterial, setAbrirMaterial] = useState(false);
   const [abrirPendencias, setAbrirPendencias] = useState(false);
   const [showContactModal, setShowContactModal] = useState(false);
-  
+
   // Estados de Dados
   const [justificativas, setJustificativas] = useState([]);
   const [comunicados, setComunicados] = useState([]);
@@ -40,20 +39,20 @@ export default function Pedagogo() {
     materiais: 0
   });
 
-  const contatoGestor = { 
-    nome: "Sérgio Carvalho", 
-    email: "sergio.carvalho@petrobras.com.br", 
-    tel: "(21) 99999-7777" 
+  const contatoGestor = {
+    nome: "Sérgio Carvalho",
+    email: "sergio.carvalho@petrobras.com.br",
+    tel: "(21) 99999-7777"
   };
 
-  const [tituloMaterial, setTituloMaterial] = useState("");
-  const [descricaoMaterial, setDescricaoMaterial] = useState("");
-  const [linkMaterial, setLinkMaterial] = useState("");
   const [titulo, setTitulo] = useState("");
   const [conteudo, setConteudo] = useState("");
 
-  const usuarioLogado = JSON.parse(localStorage.getItem('usuario')) || { id: 0, nome: 'Pedagogo', nivel: 'pedagogo' };
+  const usuarioLogado = JSON.parse(localStorage.getItem('usuario')) || {};
   const turmaId = usuarioLogado?.turma_id;
+
+  // ADICIONE ESTA LINHA PARA DEBUGAR:
+  console.log("Usuário logado no LocalStorage:", usuarioLogado);
   const nomeExibicao = usuarioLogado ? usuarioLogado.nome : "Pedagogo(a)";
 
   const handleLogout = () => {
@@ -84,22 +83,31 @@ export default function Pedagogo() {
   };
 
   useEffect(() => {
-    if (!turmaId) return;
     carregarDadosIniciais();
   }, [turmaId]);
 
   const buscarAluno = async (valor) => {
-    setBusca(valor);
-    if (valor.trim() === "") {
-      setResultadoBusca([]);
-      return;
-    }
-    try {
-      const res = await fetch(`http://localhost:5000/api/pedagogo/buscar/${valor}?turma_id=${turmaId}`);
-      const data = await res.json();
-      setResultadoBusca(data);
-    } catch (err) { console.error(err); }
-  };
+  setBusca(valor);
+  
+  if (valor.trim() === "") {
+    setResultadoBusca([]);
+    return;
+  }
+
+  try {
+    // Removemos o 'if (!turmaId) return' para permitir a busca global
+    const res = await fetch(`http://localhost:5000/api/pedagogo/buscar/${valor}?turma_id=${turmaId}`);
+    
+    if (!res.ok) throw new Error("Erro na resposta do servidor");
+    
+    const data = await res.json();
+    setResultadoBusca(Array.isArray(data) ? data : []); 
+    
+  } catch (err) { 
+    console.error("Erro na busca:", err); 
+    setResultadoBusca([]); 
+  }
+};
 
   const publicarComunicado = async () => {
     try {
@@ -112,23 +120,13 @@ export default function Pedagogo() {
     } catch (err) { console.error(err); }
   };
 
-  const publicarMaterial = async () => {
-    try {
-      await fetch("http://localhost:5000/api/pedagogo/materiais", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ titulo: tituloMaterial, descricao: descricaoMaterial, link_material: linkMaterial, turma_id: turmaId })
-      });
-      setTituloMaterial(""); setDescricaoMaterial(""); setLinkMaterial(""); setAbrirMaterial(false); carregarDadosIniciais();
-    } catch (err) { console.error(err); }
-  };
 
   return (
     <div className="pedagogo">
       {/* ✅ HEADER COM PERFIL À DIREITA */}
       <header className="topo-pedagogo">
-        <h1><FaUserGraduate /> Olá, {nomeExibicao}!</h1>
-        
+        <h1><FaUserGraduate /> &nbsp; &nbsp;Olá, {nomeExibicao}!</h1>
+
         <div className="header-icons">
           <div className="icon-wrapper" onClick={() => setIsMenuOpen(!isMenuOpen)}>
             <FaUserCircle size={40} />
@@ -149,7 +147,7 @@ export default function Pedagogo() {
 
       <div className="main">
         <div className="content">
-          
+
           {/* ✅ CARDS LADO A LADO: BUSCA E JUSTIFICATIVA */}
           <div className="container-topo-cards">
             <div className="box busca-box">
@@ -192,29 +190,11 @@ export default function Pedagogo() {
               <button className="miniBtn" onClick={() => setAbrirComunicado(true)}>Novo comunicado</button>
             </div>
 
-            <div className="box">
-              <h3><FaChartLine /> Estatísticas</h3>
-              <div className="stats-info">
-                <p>👥 Alunos: <strong>{estatisticas.alunos || 0}</strong></p>
-                <p>📈 Presença: <strong>{estatisticas.presenca ? Number(estatisticas.presenca).toFixed(1) : 0}%</strong></p>
-                <p>📚 Materiais: <strong>{estatisticas.materiais || 0}</strong></p>
-              </div>
-            </div>
-
-            <div className="box">
-              <h3><FaBook /> Materiais</h3>
-              <div className="lista-scroll">
-                {materiais.map((m) => (
-                  <div key={m.id} className="item-lista"><p>{m.titulo}</p></div>
-                ))}
-              </div>
-              <button className="miniBtn" onClick={() => setAbrirMaterial(true)}>Publicar material</button>
-            </div>
           </div>
         </div>
       </div>
 
-     {/* MODAIS */}
+      {/* MODAIS */}
 
       {abrirComunicado && (
 
@@ -230,7 +210,7 @@ export default function Pedagogo() {
 
             <div className="acoesModal">
 
-              <button className="fecharBtn" onClick={() => setAbrirComunicado(false)}>Cancelar</button>
+              <button className="miniBtn cancelBtn" onClick={() => setAbrirComunicado(false)}>Cancelar</button>
 
               <button className="miniBtn" onClick={publicarComunicado}>Publicar</button>
 
@@ -243,34 +223,6 @@ export default function Pedagogo() {
       )}
 
 
-
-      {abrirMaterial && (
-
-        <div className="overlay">
-
-          <div className="modal">
-
-            <h2>Novo Material</h2>
-
-            <input type="text" placeholder="Título" value={tituloMaterial} onChange={(e) => setTituloMaterial(e.target.value)} />
-
-            <textarea placeholder="Descrição" value={descricaoMaterial} onChange={(e) => setDescricaoMaterial(e.target.value)} />
-
-            <input type="text" placeholder="Link do material" value={linkMaterial} onChange={(e) => setLinkMaterial(e.target.value)} />
-
-            <div className="acoesModal">
-
-              <button className="fecharBtn" onClick={() => setAbrirMaterial(false)}>Cancelar</button>
-
-              <button className="miniBtn" onClick={publicarMaterial}>Publicar</button>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      )}
 
 
 
@@ -338,7 +290,7 @@ export default function Pedagogo() {
 
             </div>
 
-           
+
 
             <div className="contact-list" style={{ maxHeight: '450px', overflowY: 'auto' }}>
 

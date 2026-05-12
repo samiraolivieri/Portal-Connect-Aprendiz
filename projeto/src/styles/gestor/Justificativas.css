@@ -89,3 +89,18 @@
 .btn-verificar:hover {
     background-color: #2a6fdf;
 }
+
+.justificativas-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.justificativas-header h1{
+    margin: 0;
+    color: #1a3a5a;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+

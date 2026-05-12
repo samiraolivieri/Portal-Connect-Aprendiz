@@ -12,7 +12,7 @@ import { contatos } from '../../services/mockData.js'; // Certifique-se de impor
 const DashboardGestor = () => {
   // 1. Estados de Autenticação e Menu
   const navigate = useNavigate();
-  const usuarioLogado = JSON.parse(localStorage.getItem('usuario')) || { nome: 'Gestor', cargo: 'Gestor Petrobras' };
+  const usuarioLogado = JSON.parse(localStorage.getItem('usuario')) ||  { id: 0, nome: 'Gestor' };
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   // 2. Estados de Visitas e Gráficos
@@ -23,6 +23,8 @@ const DashboardGestor = () => {
   // 3. Estados de Contato
   const [showContactModal, setShowContactModal] = useState(false);
   const [aprendizes, setAprendizes] = useState([]);
+
+   const usuarioId = usuarioLogado.id; 
 
   // Informação fixa da Pedagoga
   const contatoPedagoga = { 
@@ -97,10 +99,10 @@ const DashboardGestor = () => {
   return (
     <div className="dashboard-container">
       <header className="dash-header">
-        <h2>Bem-vindo, {usuarioLogado?.nome}</h2>
+        <h1>Bem-vindo, {usuarioLogado.nome}</h1>
         
         <div className="header-icons">
-          <FaBell />
+    
           {/* Menu de Usuário com Logout */}
           <div className="icon-wrapper" onClick={() => setIsMenuOpen(!isMenuOpen)} style={{ cursor: 'pointer', position: 'relative' }}>
             <FaUserCircle />
@@ -108,7 +110,7 @@ const DashboardGestor = () => {
               <div className="dropdown-popup">
                 <div className="user-info-header">
                   <strong>{usuarioLogado.nome}</strong>
-                  <span>{usuarioLogado.nivel === 'gestor' ? 'Gestor' : 'Administrador'} - Petrobras</span>
+                  <span>{usuarioLogado.nivel === 'gestor' ? 'Gestor' : usuarioLogado.nivel} - Petrobras</span>
                 </div>
                 <ul>
                   <li className="logout-opt" onClick={handleLogout}>Sair do Sistema</li>
