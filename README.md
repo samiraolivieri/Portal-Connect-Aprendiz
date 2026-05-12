@@ -1,6 +1,17 @@
-# Portal Connect Aprendiz 🚀
+# Portal Connect 🚀
 
 O **Portal Connect** é uma plataforma de gestão acadêmica e administrativa desenvolvida para otimizar a comunicação e o acompanhamento de jovens aprendizes. O grande diferencial do projeto é que ele **triangula informações críticas** entre a gestão da empresa, o corpo pedagógico e o aprendiz, integrando em um único ambiente o gerenciamento de turmas, lançamento de notas e contracheques, controle de frequências, análise de justificativas de faltas e a disponibilização de materiais pedagógicos.
+
+## 👥 Equipe de Desenvolvimento
+
+Este projeto foi desenvolvido de forma colaborativa pelos seguintes integrantes:
+
+* **Ismael Santana Teixeira**
+* **Istefane Guilherme do Nascimento**
+* **Livia Fontoura Alves da Silva**
+* **Lorena Cavalcante de Oliveira**
+* **Mayra Vianna Domingos**
+* **Samira Olivieri**
 
 ## 🛠️ Tecnologias Utilizadas
 
