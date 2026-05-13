@@ -59,13 +59,7 @@ export default function Carreiras() {
         </div>
       </div>
 
-      {/* Hero Section e restante do código continuam perfeitamente iguais abaixo... */}
-      <div className="hero">
-        <div>
-          <h2>Construa seu futuro profissional 🚀</h2>
-          <p>Vagas, cursos e eventos em um só lugar.</p>
-        </div>
-      </div>
+    
 
       {/* Hero Section */}
       <div className="hero">
